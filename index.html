@@ -18,8 +18,10 @@
   .mut{color:var(--mut);font-size:14px}
   img{max-width:100%;border-radius:10px;border:1px solid #222c42;display:block}
   figure{margin:0}
-  .span{grid-column:1/-1}
-  .span.narrow img{max-width:560px;margin:0 auto}
+  /* the radii figures are dense (12 tick labels, 66 cell values) — a 2-col cell shrinks their
+     text below readable size, so they stack near their native width instead */
+  .stack{display:grid;gap:26px}
+  .stack img{max-width:790px;margin:0 auto}
   figcaption{color:var(--mut);font-size:13px;margin-top:6px}
   audio{width:100%;margin-top:6px}
   .row{display:flex;justify-content:space-between;align-items:baseline}
@@ -56,15 +58,21 @@
   </div>
 
   <h2>Three radii — the pre-gate that decided whether to train at all</h2>
-  <div class="grid">
+  <div class="stack">
     <figure><img src="assets/fig/fig1_coverage_radius.png"><figcaption><b>Coverage</b>: the prompt library's convex hull reaches real 8-s windows at CLAP cosine 0.86→0.88→0.90 (K=12/24/36), +0.16 over trivial baselines.</figcaption></figure>
     <figure><img src="assets/fig/fig10_mfcc_fad.png"><figcaption><b>Musicality</b>: a texture-aware MFCC-Fréchet distance shows frozen output is 8.6× closer to real-music timbre than a fine-tuned generator.</figcaption></figure>
-    <figure class="span"><img src="assets/fig/fig8_tolerance_map.png"><figcaption><b>Tolerance</b>: interpolating two prompt embeddings goes off-manifold for 39% of all 66 pairs → never interpolate conditions; mix natively. (Shown full width so the 66 cell values stay legible.)</figcaption></figure>
-    <figure class="span narrow"><img src="assets/fig/fig5_tsne_coverage.png"><figcaption><b>Honest caveat</b>: t-SNE shows the library occupies only one region of the real cloud; the high absolute cosine is partly laion-clustering inflation.</figcaption></figure>
+    <figure><img src="assets/fig/fig8_tolerance_map.png"><figcaption><b>Tolerance</b>: interpolating two prompt embeddings goes off-manifold for 39% of all 66 pairs → never interpolate conditions; mix natively.</figcaption></figure>
+    <figure><img src="assets/fig/fig5_tsne_coverage.png"><figcaption><b>Honest caveat</b>: t-SNE shows the library occupies only one region of the real cloud; the high absolute cosine is partly laion-clustering inflation.</figcaption></figure>
   </div>
 
   <h2>Architecture</h2>
   <figure><img src="assets/fig/fig0_architecture.png"><figcaption>Shared EEG→laion bridge feeds two independent heads: a retrieval head (Part 1) and a prompt-mixture head driving the frozen generator (Part 2).</figcaption></figure>
+
+  <h2>Part 1 evidence — retrieving the song the subject heard</h2>
+  <p class="mut">Readout of the <i>same</i> aligned embedding used in the card above: each held-out EEG window is matched to the nearest of 14 <b>song centroids</b> built from the heard audio's laion-CLAP vectors. 10% subject-groups held out (seed&nbsp;0).</p>
+  <div class="grid">
+    <figure class="span narrow"><img src="assets/fig/fig11_song_confusion.png"><figcaption><b>14-way song confusion</b>, true song&nbsp;×&nbsp;retrieved song. Cell colour is row-normalised (per-song recall); the numbers are window counts. Strongly dominant diagonal → <b>top-1 88.2%</b> (chance 7.1%). T0–T9 = NMED-T songs, H0–H3 = NMED-H (Bollywood) songs. This centroid readout (88.2%) is consistent with the 84.9% end-to-end <i>retrieve→play</i> figure — the same alignment measured from two angles.</figcaption></figure>
+  </div>
 
   <h2>Listen — what the frozen generator produces</h2>
   <p class="mut">One native MusicGen sample per genre prompt in the library (the styles the EEG head can select). These are the generator's own outputs — no fine-tuning. (Reference audio of the actual heard songs is not published for copyright.)</p>

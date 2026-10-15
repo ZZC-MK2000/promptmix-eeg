@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 from figstyle import fit_text, save
 
 
-def box(ax, fig, x, y, w, h, text, fc, fs=9.5, tc="black"):
+def box(ax, fig, x, y, w, h, text, fc, fs=12, tc="black"):
     p = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.012", fc=fc, ec="#333", lw=1.2)
     ax.add_patch(p)
     t = ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fs, color=tc)
@@ -30,7 +30,7 @@ def box(ax, fig, x, y, w, h, text, fc, fs=9.5, tc="black"):
     return p
 
 
-def header(ax, fig, panel, cx, y, text, color, fs=10.5):
+def header(ax, fig, panel, cx, y, text, color, fs=13):
     t = ax.text(cx, y, text, ha="center", va="center", fontsize=fs, color=color, weight="bold")
     fig.canvas.draw()
     used = fit_text(fig, panel, t, margin=0.94)
@@ -70,20 +70,20 @@ def main():
     ax.add_patch(p2)
     header(ax, fig, p2, 9.15, 3.1, "PART 2 — GENERATION   (pleasant music, by construction)",
            "#8e2b1f")
-    box(ax, fig, 6.7, 1.85, 1.6, 0.9, "tiny projection\n(134K) → weights", "#f5b7b1", fs=8.5)
-    box(ax, fig, 8.5, 1.85, 1.5, 0.9, "frozen 12-prompt\nlibrary", "#f5b7b1", fs=8.5)
-    box(ax, fig, 10.2, 1.85, 1.4, 0.9, "FROZEN\nMusicGen", "#e6b0aa", fs=8.5)
+    box(ax, fig, 6.7, 1.85, 1.6, 0.9, "tiny projection\n(134K) → weights", "#f5b7b1", fs=11)
+    box(ax, fig, 8.5, 1.85, 1.5, 0.9, "frozen 12-prompt\nlibrary", "#f5b7b1", fs=11)
+    box(ax, fig, 10.2, 1.85, 1.4, 0.9, "FROZEN\nMusicGen", "#e6b0aa", fs=11)
     box(ax, fig, 10.2, 0.6, 1.4, 0.85, "32 kHz\nnative audio", "#f9e79f")
     arrow(ax, 8.3, 2.3, 8.5, 2.3); arrow(ax, 10.0, 2.3, 10.2, 2.3)
     arrow(ax, 10.9, 1.85, 10.9, 1.45)
     arrow(ax, 6.0, 2.95, 6.7, 2.3, color="#b03a2e")
     note = ax.text(6.7, 1.35, "argmax / B-cat / top-k mix\n(no condition interpolation)",
-                   fontsize=7.5, color="#8e2b1f", ha="left", va="center")
+                   fontsize=10, color="#8e2b1f", ha="left", va="center")
     fig.canvas.draw()
     fit_text(fig, p2, note, margin=0.62)
 
     ax.set_title("PromptMix-EEG: decoupled alignment (retrieval) and generation (frozen prompt-mixing)",
-                 fontsize=11, pad=14)
+                 fontsize=13.5, pad=14)
     save(fig, "fig0_architecture.png")
 
 
