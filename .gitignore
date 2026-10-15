@@ -2,6 +2,7 @@
 data/
 # --- large result artifacts (regenerate by running code/) ---
 results/**/*.npy
+results/**/*.npz
 results/**/*.wav
 results/**/*.log
 results/**/listen/

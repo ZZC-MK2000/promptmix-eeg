@@ -6,9 +6,12 @@ Two jobs:
      identical frequency axis and identical colour scale, for the demo page's comparison table.
      Only the STIMULUS tiles are derived from copyrighted audio, and only as images: the stimulus
      waveform is never published.
-  2. results/stim_vs_gen/cos_matrix.json — per-row laion-CLAP cosine between the generated clip and
-     its own stimulus (own) vs the mean cosine to the other 13 stimuli (others). "own vs others" is
-     the comparator; a bare own=0.48 must not be read against 1.0.
+  2. results/stim_vs_gen/cos_matrix.json (+ assets/pairs.json for the demo page) — per-row
+     laion-CLAP cosine of each generated clip against (a) its own stimulus, (b) the other 13
+     stimuli of this corpus, and (c) the 4,132-clip FMA pool. (b) is a saturated comparator --
+     two unrelated stimuli already score ~0.87 against each other -- so (c) is the informative
+     one, and the (b) margin is the control that shows whether any pull is song-level or merely
+     corpus-level. Also caches embeddings in emb.npz so re-analysis needs no CLAP pass.
 
 Needs the mainv2 workspace for the laion-CLAP helper (external to this repo).
 
@@ -79,6 +82,29 @@ def main():
     print(f"floor: mean cos between two different stimuli {ref_ref:.4f}, "
           f"between two different generations {gen_gen:.4f}")
 
+    # generic-music comparator: the whole FMA pool (4,132 8-s clips), not the other 13 stimuli.
+    # The 14 stimuli are mutually ~0.87 similar, so "vs the other 13" is a saturated comparator;
+    # distance to a broad, diverse pool asks a different question: is the output pulled toward
+    # this corpus at all, rather than sitting at the centre of generic music?
+    F = np.load(ROOT / "data" / "fma8s" / "cond.npy").astype(np.float32)
+    F = F / (np.linalg.norm(F, axis=1, keepdims=True) + 1e-8)
+    GF, RF = G @ F.T, R @ F.T
+    gen_fma_mean, gen_fma_max = GF.mean(1), GF.max(1)
+    stim_fma_mean = RF.mean(1)
+    fma_fma = offdiag(F @ F.T)
+    margin_fma = own - gen_fma_mean
+    t_fma = float(margin_fma.mean() / (margin_fma.std(ddof=1) / np.sqrt(n)))
+    # the control that decides what the FMA margin actually means: if the 13 WRONG stimuli gain the
+    # same margin, the pull is corpus-level, not song-level.
+    margin_fma_others = others - gen_fma_mean
+    t_fma_others = float(margin_fma_others.mean() / (margin_fma_others.std(ddof=1) / np.sqrt(n)))
+    print(f"FMA pool {F.shape[0]} clips, pool-internal mean cos {fma_fma:.4f}")
+    print(f"gen -> FMA mean {gen_fma_mean.mean():.4f} (best clip in pool {gen_fma_max.mean():.4f}) | "
+          f"real stimulus -> FMA mean {stim_fma_mean.mean():.4f}")
+    print(f"own vs FMA   : margin {margin_fma.mean():+.4f} t={t_fma:.1f} "
+          f"own>FMA in {(margin_fma > 0).sum()}/{n}")
+    print(f"other-13 vs FMA (control): margin {margin_fma_others.mean():+.4f} t={t_fma_others:.1f}")
+
     TILES.mkdir(parents=True, exist_ok=True)
     for r, wref, sr, wgen, gsr in clips:
         fig, ax = plt.subplots(figsize=(3.7, 1.25))
@@ -95,13 +121,30 @@ def main():
         "mean_margin": float(margin.mean()),
         "margin_t": float(margin.mean() / (margin.std(ddof=1) / np.sqrt(n))),
         "rows_own_above_others": int((margin > 0).sum()),
+        "fma": {
+            "pool": int(F.shape[0]), "pool_internal_cos": fma_fma,
+            "gen_vs_pool_mean": float(gen_fma_mean.mean()),
+            "gen_vs_pool_best_clip": float(gen_fma_max.mean()),
+            "stimulus_vs_pool_mean": float(stim_fma_mean.mean()),
+            "own_minus_pool_mean": float(margin_fma.mean()), "t": t_fma,
+            "rows_own_above_pool": int((margin_fma > 0).sum()),
+            "control_other13_minus_pool_mean": float(margin_fma_others.mean()),
+            "control_t": t_fma_others,
+            "caveat": "own-vs-pool measures pull toward THIS corpus, not song identity: the 14 "
+                      "stimuli are Bollywood/film music and the FMA pool is mostly Western genres, "
+                      "so any clip that merely sounds like the corpus beats the pool baseline.",
+        },
         "rows": [{"row": int(r["row"]), "prompt": int(r["prompt"]), "prompt_text": r["prompt_text"],
                   "gen_file": Path(r["gen_wav"]).name,
                   "cos_own": float(own[i]), "cos_others": float(others[i]),
-                  "margin": float(margin[i]), "zcr": float(r["zcr"])}
+                  "margin": float(margin[i]),
+                  "cos_fma_mean": float(gen_fma_mean[i]), "cos_fma_best": float(gen_fma_max[i]),
+                  "margin_fma": float(margin_fma[i]), "stim_fma_mean": float(stim_fma_mean[i]),
+                  "zcr": float(r["zcr"])}
                  for i, (r, *_ ) in enumerate(clips)],
     }
     OUT.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(OUT / "emb.npz", stim=R, gen=G)   # re-analysis needs no CLAP pass
     json.dump(payload, open(OUT / "cos_matrix.json", "w", encoding="utf-8"), indent=2)
     # the demo page reads the measured numbers straight from this file rather than a hand-typed copy
     web = ROOT / "assets" / "pairs.json"
@@ -125,7 +168,8 @@ def main():
             if col == 0:
                 ax.set_ylabel(f"row {row_no}", fontsize=9)
             else:
-                ax.text(1.01, 0.5, f"CLAP cos {own[j]:.2f}\nvs others {others[j]:.2f}",
+                ax.text(1.01, 0.5, f"own {own[j]:.2f}\nvs FMA pool {gen_fma_mean[j]:.2f}\n"
+                                    f"vs other 13 {others[j]:.2f}",
                         transform=ax.transAxes, ha="left", va="center", fontsize=7.5)
     for ax in axes[-1]:
         ax.set_xlabel("time (s)  ·  0-8 s window  ·  0-8 kHz  ·  colour scale "
@@ -133,6 +177,7 @@ def main():
     fig.tight_layout(rect=[0, 0, 0.97, 0.92])
     fig.suptitle(f"Heard vs generated for the same 8-s EEG window — 5 rows spanning the "
                  f"cosine range\nmean CLAP cos to own stimulus {own.mean():.2f} vs "
+                 f"{gen_fma_mean.mean():.2f} to the {F.shape[0]:,}-clip FMA pool and "
                  f"{others.mean():.2f} to the other {n-1} stimuli", fontsize=TITLE_FS)
     save(fig, "fig12_stim_vs_gen.png")
 

@@ -67,11 +67,11 @@
   <h2>Heard vs generated</h2>
   <p class="lead">Every held-out delivery we have: the stimulus the subject listened to, next to what the frozen generator produced from that same window's EEG.</p>
   <div class="note warn"><b>Why the left column has no audio.</b> The stimulus clips are excerpts of commercially released songs; we can't redistribute them, so the stimulus is shown as a spectrogram only. Everything playable on this page is generated audio. Spectrograms use one common colour scale (−80…−10 dB), one time axis (0–8 s) and one frequency axis (0–8 kHz), so cells are directly comparable.</div>
-  <div class="note"><b>Read the cosine column honestly.</b> Across the 14 pairs, a generated clip sits at CLAP cosine <b>0.644</b> to <i>its own</i> stimulus and <b>0.645</b> to the 13 <i>other</i> stimuli (margin −0.001, t = −0.1, own wins 7/14 — a coin flip). Two unrelated stimulus windows already score 0.869 against each other in this space, so the metric has almost no song-level resolution here. <b>This system is not a reconstruction of what was heard.</b> Song identity is recovered by Part 1 (retrieval, below); Part 2's job is only to produce music that is pleasant and EEG-selected in style.</div>
+  <div class="note"><b>What the cosine column does and does not show.</b> The comparator is the whole <b>FMA pool (4,132 eight-second clips)</b>, not the other 13 stimuli — inside a 14-song corpus two unrelated windows already score 0.869 against each other, so a within-corpus comparator is saturated and cannot show anything. Against generic music the four levels are: our output → FMA pool <b>0.481</b> (the pool's own internal average is 0.497, i.e. that is what "generic music" sits at); a <i>real</i> stimulus → FMA pool <b>0.532</b>; our output → <b>its own</b> stimulus <b>0.644</b>; our output → a <b>different</b> stimulus of this corpus <b>0.645</b>. So the generated clips are decisively <i>not</i> generic music — they are pulled into this corpus's neighbourhood, margin <b>+0.163</b>, t = 5.4, 13/14 rows. But the wrong songs gain exactly the same amount (control margin <b>+0.164</b>, t = 6.6), which is what bounds the claim: <b>the pull is to the corpus, not to the individual song.</b> Song identity is recovered by Part 1 (retrieval, below); Part 2 selects a style and stays inside the generator's own distribution.</div>
   <figure><img src="assets/fig/fig12_stim_vs_gen.png"><figcaption>Five of the fourteen pairs, chosen by rank rather than by eye: the lowest, 25th, 50th, 75th and highest cosine. Left column is the heard stimulus, right column the clip generated from that window's EEG.</figcaption></figure>
   <table>
-    <colgroup><col style="width:6%"><col style="width:32%"><col style="width:32%"><col style="width:18%"><col style="width:12%"></colgroup>
-    <thead><tr><th>window</th><th>heard stimulus — spectrogram only (audio withheld: copyright)</th><th>generated from this window's EEG — playable</th><th>prompt the EEG selected</th><th>CLAP cos<br>own vs other 13</th></tr></thead>
+    <colgroup><col style="width:6%"><col style="width:32%"><col style="width:31%"><col style="width:16%"><col style="width:15%"></colgroup>
+    <thead><tr><th>window</th><th>heard stimulus — spectrogram only (audio withheld: copyright)</th><th>generated from this window's EEG — playable</th><th>prompt the EEG selected</th><th>CLAP cos: own stimulus vs the FMA pool</th></tr></thead>
     <tbody id="pairs"><tr><td colspan="5" class="mut">loading <code>assets/pairs.json</code>…</td></tr></tbody>
   </table>
   <p class="mut">Rows are every delivered window, not a selection. Numbers come straight from
@@ -110,7 +110,7 @@
   <details><summary>Why is there no stimulus audio anywhere on this page?</summary>
   <p>The stimuli are excerpts of commercially released songs, so we can't redistribute the waveform. Spectrograms of them are shown instead, and every playable file here is generated. Raw EEG is also not published (participant privacy).</p></details>
   <details><summary>Is the generated clip a reconstruction of what the subject heard?</summary>
-  <p>No, and that is the point of splitting the system in two. Measured on CLAP embeddings the generated clip is no closer to its own stimulus than to any other stimulus (0.644 vs 0.645). Song identity is what Part 1's retrieval delivers; Part 2 only chooses a style and stays inside the generator's own distribution so the output is musical.</p></details>
+  <p>No — but it is genuinely tied to what was heard at the level of <i>corpus</i>, not song. Against a 4,132-clip FMA pool the generated clips sit much closer to their own stimulus than to generic music (+0.163, t = 5.4, 13/14 rows), so they are not "any random music". The control that bounds the claim: a <i>different</i> stimulus from the same corpus gains exactly as much (+0.164). So the EEG-selected prompt captures the style of this recording set, not which of the 14 songs was playing. Song identity is what Part 1's retrieval delivers (88.2% top-1 held-out).</p></details>
   <details><summary>Why keep the generator frozen?</summary>
   <p>Fine-tuning was tried and measured worse on a texture-aware metric (MFCC-Fréchet 29,472 vs 3,444), and the corpus is small (14 songs). Freezing means every output is by construction a sample the generator already knows how to make.</p></details>
   <details><summary>Why not interpolate between two prompts?</summary>
@@ -123,7 +123,7 @@
     <li>Small corpus (14 songs, 68 subjects); the genre labels collapse toward the corpus's dominant style, so overall accuracy flatters the classifier and κ is the honest number.</li>
     <li>Because condition interpolation is off-manifold, the "mix over prompts" is in practice near-single-prompt; the mixture is only safely expressible as waveform blending.</li>
     <li>Signal metrics (zcr, spectral flatness) do not judge musicality; MFCC-Fréchet helps, but the final gate is human listening, which has not been run.</li>
-    <li>The CLAP cosine used in the table above has poor song-level resolution on this corpus (unrelated stimuli already score 0.869), so it is reported as own-vs-others, never as an absolute similarity.</li>
+    <li>Song-level similarity cannot be measured on this corpus with laion-CLAP: two unrelated stimulus windows already score 0.869 against each other, so the within-corpus comparator is saturated. The FMA-pool comparator fixes that for the corpus-vs-generic question and leaves the song-level question open — a stronger identity metric would need a representation with finer song resolution.</li>
   </ul>
 
   <footer>
@@ -154,9 +154,9 @@ fetch('assets/pairs.json').then(r=>r.json()).then(d=>{
     <td><a href="assets/fig/spectro/row${r.row}_gen.png" target="_blank" rel="noopener"><img loading="lazy" src="assets/fig/spectro/row${r.row}_gen.png" alt="spectrogram of the generated clip, window ${r.row}"></a>
         <audio controls preload="none" src="assets/audio/pairs/${r.gen_file}"></audio></td>
     <td>${r.prompt_text} <span class="mut">(zcr ${r.zcr.toFixed(3)})</span></td>
-    <td class="cos"><b>${r.cos_own.toFixed(2)}</b> vs ${r.cos_others.toFixed(2)}<br><span class="mut">${r.margin>=0?'+':''}${r.margin.toFixed(2)}</span></td>
+    <td class="cos"><b>${r.cos_own.toFixed(2)}</b> own stimulus<br>vs FMA pool ${r.cos_fma_mean.toFixed(2)} <span class="mut">(+${r.margin_fma.toFixed(2)})</span><br><span class="mut">wrong song ${r.cos_others.toFixed(2)}</span></td>
    </tr>`).join('')
-   + `<tr><td colspan="5" class="mut">mean over ${d.n_pairs} pairs: own ${d.mean_cos_own.toFixed(3)} vs others ${d.mean_cos_others.toFixed(3)} (margin ${d.mean_margin.toFixed(3)}, t = ${d.margin_t.toFixed(1)}); unrelated stimulus pairs score ${d.mean_cos_ref_vs_ref.toFixed(3)}.</td></tr>`;
+   + `<tr><td colspan="5" class="mut">mean over ${d.n_pairs} pairs — own stimulus ${d.mean_cos_own.toFixed(3)} vs the ${d.fma.pool.toLocaleString()}-clip FMA pool ${d.fma.gen_vs_pool_mean.toFixed(3)} (<b>margin +${d.fma.own_minus_pool_mean.toFixed(3)}, t = ${d.fma.t.toFixed(1)}</b>, own wins ${d.fma.rows_own_above_pool}/${d.n_pairs}); control: a <i>wrong</i> stimulus of this corpus gains the same, +${d.fma.control_other13_minus_pool_mean.toFixed(3)} (t = ${d.fma.control_t.toFixed(1)}). Reference points: pool-internal ${d.fma.pool_internal_cos.toFixed(3)}, real stimulus vs pool ${d.fma.stimulus_vs_pool_mean.toFixed(3)}.</td></tr>`;
 }).catch(e=>{
   document.getElementById('pairs').innerHTML =
    `<tr><td colspan="5" class="mut">could not load assets/pairs.json (${e}) — open this page over http, not file://</td></tr>`;
