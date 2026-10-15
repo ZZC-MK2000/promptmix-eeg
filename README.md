@@ -1,3 +1,7 @@
+[![live demo](https://img.shields.io/badge/live%20demo-GitHub%20Pages-blue)](https://zzc-mk2000.github.io/promptmix-eeg/)
+
+> **Live demo (static GitHub Pages):** https://zzc-mk2000.github.io/promptmix-eeg/ — method, figures, and generated audio samples.
+
 # PromptMix-EEG
 
 **Frozen-Generator Music Synthesis from Brain Signals via Prompt-Library Mixture Weights.**
