@@ -1,0 +1,19 @@
+{
+  "steps": 12000,
+  "p_eeg": 0.5,
+  "seconds": 4099.4,
+  "args": {
+    "k": 8,
+    "steps": 12000,
+    "batch": 8,
+    "p_eeg": 0.5,
+    "lr_proj": 0.0001,
+    "lr_lora": 3e-05,
+    "wd": 0.01,
+    "warm_start": "D:\\Projects\\CLaBraM\\mainv3\\results\\gen_eegcond_k8\\ckpt_ep16.pt",
+    "save_every": 2000,
+    "log_every": 200,
+    "val_rows": 1200,
+    "seed": 0
+  }
+}

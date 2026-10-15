@@ -1,0 +1,21 @@
+{
+  "best_val_loss": 2.8966796986262002,
+  "steps": 120810,
+  "k": 8,
+  "seconds": 39632.3,
+  "args": {
+    "k": 8,
+    "epochs": 30,
+    "batch": 8,
+    "lr_proj": 0.0003,
+    "lr_lora": 0.0001,
+    "wd": 0.01,
+    "val_rows": 1200,
+    "seed": 0,
+    "resume": "results/gen_eegcond/pilot_k8_pt8000.pt",
+    "device": "cuda",
+    "outdir": "results/gen_eegcond_k8",
+    "save_every": 1,
+    "max_steps": 0
+  }
+}

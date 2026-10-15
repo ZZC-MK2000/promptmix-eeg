@@ -1,0 +1,18 @@
+{
+  "floor_real_vs_real": 0.665039647731508,
+  "groups": {
+    "frozen_native": {
+      "frechet_to_real": 0.9111967930367078,
+      "mean_cos_to_real_centroid": 0.5536267757415771
+    },
+    "finetuned(mixed2)": {
+      "frechet_to_real": 0.9105949756202665,
+      "mean_cos_to_real_centroid": 0.5721463561058044
+    },
+    "interpolation": {
+      "frechet_to_real": 0.9647580409165768,
+      "mean_cos_to_real_centroid": 0.4666439890861511
+    }
+  },
+  "note": "learned CLAP-space metric; complements the failed zcr/spectral-flatness proxies"
+}

@@ -1,0 +1,33 @@
+{
+  "steps": 3000,
+  "seconds": 4.0,
+  "args": {
+    "steps": 3000,
+    "batch": 64,
+    "lr": 0.001,
+    "wd": 0.01,
+    "dropout": 0.1,
+    "hidden": 256,
+    "target": "true_oracle",
+    "save_every": 500,
+    "log_every": 100,
+    "val_rows": 2000,
+    "seed": 0,
+    "outdir": "results/prompt_classifier_true"
+  },
+  "label_distribution": [
+    120,
+    5164,
+    580,
+    2312,
+    6288,
+    120,
+    0,
+    300,
+    940,
+    524,
+    0,
+    19688
+  ],
+  "oracle_cos_mean": 0.6959052681922913
+}

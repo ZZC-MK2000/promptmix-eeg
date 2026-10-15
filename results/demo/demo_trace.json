@@ -1,0 +1,44 @@
+[
+  {
+    "row": 2,
+    "prompt": 9,
+    "prompt_text": "classic rock with a driving electric guitar riff and live drums",
+    "weights_top3": [
+      [
+        9,
+        0.8976357579231262
+      ],
+      [
+        6,
+        0.07364600151777267
+      ],
+      [
+        0,
+        0.028608262538909912
+      ]
+    ],
+    "cos_to_heard": 0.3863244652748108,
+    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row2__classic.wav"
+  },
+  {
+    "row": 5,
+    "prompt": 0,
+    "prompt_text": "upbeat indian bollywood dance song with dhol and bright synths",
+    "weights_top3": [
+      [
+        0,
+        0.964442253112793
+      ],
+      [
+        7,
+        0.013617745600640774
+      ],
+      [
+        6,
+        0.010522892698645592
+      ]
+    ],
+    "cos_to_heard": 0.7112599015235901,
+    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row5__upbeat.wav"
+  }
+]

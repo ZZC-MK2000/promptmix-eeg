@@ -1,0 +1,11 @@
+# PromptMix-EEG runtime deps (measured versions on the working machine, 2026-10-15)
+python=3.12
+torch==2.11.0            # +cu128 build for RTX 50xx (sm_120)
+transformers==5.17.0
+numpy==2.5.3
+librosa==1.0.0
+scikit-learn==1.9.1
+soundfile==0.14.0
+matplotlib==3.11.2
+scipy==1.18.1
+gradio>=4               # for app.py (the demo website)

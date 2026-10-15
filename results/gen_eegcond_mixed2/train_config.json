@@ -1,0 +1,20 @@
+{
+  "steps": 12000,
+  "p_eeg": 0.5,
+  "seconds": 3979.4,
+  "args": {
+    "k": 8,
+    "steps": 12000,
+    "batch": 8,
+    "p_eeg": 0.5,
+    "lr_proj": 0.0001,
+    "lr_lora": 3e-05,
+    "wd": 0.01,
+    "warm_start": "results/gen_eegcond_mixed/ckpt_s12000.pt",
+    "save_every": 2000,
+    "log_every": 100,
+    "val_rows": 1200,
+    "outdir": "results/gen_eegcond_mixed2",
+    "seed": 0
+  }
+}

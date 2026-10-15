@@ -1,0 +1,870 @@
+{
+  "n_pairs": 66,
+  "zcr_median": 0.10850660689175129,
+  "zcr_mean": 0.14629007037729025,
+  "zcr_max": 0.5099437534809113,
+  "n_safe": 17,
+  "n_dangerous": 26,
+  "native_hi": 0.06,
+  "danger": 0.15,
+  "rows": [
+    {
+      "pair": [
+        0,
+        1
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "melodic indian film ba"
+      ],
+      "zcr": 0.18873263895511627,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        0,
+        2
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "catchy pop song with a"
+      ],
+      "zcr": 0.23671772330999374,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        0,
+        3
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "smooth r&b groove with"
+      ],
+      "zcr": 0.11139055341482162,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        0,
+        4
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "energetic electronic d"
+      ],
+      "zcr": 0.3413780704140663,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        0,
+        5
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "mellow acoustic pop wi"
+      ],
+      "zcr": 0.04524577036499977,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        0,
+        6
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "funky groove with slap"
+      ],
+      "zcr": 0.09872322902083397,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        0,
+        7
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "latin reggaeton beat w"
+      ],
+      "zcr": 0.020745515823364258,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        0,
+        8
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "dreamy ambient synth p"
+      ],
+      "zcr": 0.30624333024024963,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        0,
+        9
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "classic rock with a dr"
+      ],
+      "zcr": 0.4676852375268936,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        0,
+        10
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.10562266036868095,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        0,
+        11
+      ],
+      "prompts": [
+        "upbeat indian bollywoo",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.1599423810839653,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        1,
+        2
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "catchy pop song with a"
+      ],
+      "zcr": 0.07697605714201927,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        1,
+        3
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "smooth r&b groove with"
+      ],
+      "zcr": 0.14152095187455416,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        1,
+        4
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "energetic electronic d"
+      ],
+      "zcr": 0.04295908100903034,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        1,
+        5
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "mellow acoustic pop wi"
+      ],
+      "zcr": 0.09861303120851517,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        1,
+        6
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "funky groove with slap"
+      ],
+      "zcr": 0.06965550221502781,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        1,
+        7
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "latin reggaeton beat w"
+      ],
+      "zcr": 0.17636443674564362,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        1,
+        8
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "dreamy ambient synth p"
+      ],
+      "zcr": 0.05348926968872547,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        1,
+        9
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "classic rock with a dr"
+      ],
+      "zcr": 0.06271868012845516,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        1,
+        10
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.23914609104394913,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        1,
+        11
+      ],
+      "prompts": [
+        "melodic indian film ba",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.034485336393117905,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        2,
+        3
+      ],
+      "prompts": [
+        "catchy pop song with a",
+        "smooth r&b groove with"
+      ],
+      "zcr": 0.07928832992911339,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        2,
+        4
+      ],
+      "prompts": [
+        "catchy pop song with a",
+        "energetic electronic d"
+      ],
+      "zcr": 0.06016829237341881,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        2,
+        5
+      ],
+      "prompts": [
+        "catchy pop song with a",
+        "mellow acoustic pop wi"
+      ],
+      "zcr": 0.03458373248577118,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        2,
+        6
+      ],
+      "prompts": [
+        "catchy pop song with a",
+        "funky groove with slap"
+      ],
+      "zcr": 0.202726311981678,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        2,
+        7
+      ],
+      "prompts": [
+        "catchy pop song with a",
+        "latin reggaeton beat w"
+      ],
+      "zcr": 0.17854289710521698,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        2,
+        8
+      ],
+      "prompts": [
+        "catchy pop song with a",
+        "dreamy ambient synth p"
+      ],
+      "zcr": 0.0951436385512352,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        2,
+        9
+      ],
+      "prompts": [
+        "catchy pop song with a",
+        "classic rock with a dr"
+      ],
+      "zcr": 0.042484816163778305,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        2,
+        10
+      ],
+      "prompts": [
+        "catchy pop song with a",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.06093380227684975,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        2,
+        11
+      ],
+      "prompts": [
+        "catchy pop song with a",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.5099437534809113,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        3,
+        4
+      ],
+      "prompts": [
+        "smooth r&b groove with",
+        "energetic electronic d"
+      ],
+      "zcr": 0.0566064091399312,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        3,
+        5
+      ],
+      "prompts": [
+        "smooth r&b groove with",
+        "mellow acoustic pop wi"
+      ],
+      "zcr": 0.03221635799854994,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        3,
+        6
+      ],
+      "prompts": [
+        "smooth r&b groove with",
+        "funky groove with slap"
+      ],
+      "zcr": 0.13381861336529255,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        3,
+        7
+      ],
+      "prompts": [
+        "smooth r&b groove with",
+        "latin reggaeton beat w"
+      ],
+      "zcr": 0.24250724911689758,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        3,
+        8
+      ],
+      "prompts": [
+        "smooth r&b groove with",
+        "dreamy ambient synth p"
+      ],
+      "zcr": 0.1524624228477478,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        3,
+        9
+      ],
+      "prompts": [
+        "smooth r&b groove with",
+        "classic rock with a dr"
+      ],
+      "zcr": 0.10267278924584389,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        3,
+        10
+      ],
+      "prompts": [
+        "smooth r&b groove with",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.137848861515522,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        3,
+        11
+      ],
+      "prompts": [
+        "smooth r&b groove with",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.02162122819572687,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        4,
+        5
+      ],
+      "prompts": [
+        "energetic electronic d",
+        "mellow acoustic pop wi"
+      ],
+      "zcr": 0.07714726403355598,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        4,
+        6
+      ],
+      "prompts": [
+        "energetic electronic d",
+        "funky groove with slap"
+      ],
+      "zcr": 0.33653706312179565,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        4,
+        7
+      ],
+      "prompts": [
+        "energetic electronic d",
+        "latin reggaeton beat w"
+      ],
+      "zcr": 0.23596598207950592,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        4,
+        8
+      ],
+      "prompts": [
+        "energetic electronic d",
+        "dreamy ambient synth p"
+      ],
+      "zcr": 0.12337501347064972,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        4,
+        9
+      ],
+      "prompts": [
+        "energetic electronic d",
+        "classic rock with a dr"
+      ],
+      "zcr": 0.029864726588129997,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        4,
+        10
+      ],
+      "prompts": [
+        "energetic electronic d",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.05096643231809139,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        4,
+        11
+      ],
+      "prompts": [
+        "energetic electronic d",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.33625762164592743,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        5,
+        6
+      ],
+      "prompts": [
+        "mellow acoustic pop wi",
+        "funky groove with slap"
+      ],
+      "zcr": 0.03829517588019371,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        5,
+        7
+      ],
+      "prompts": [
+        "mellow acoustic pop wi",
+        "latin reggaeton beat w"
+      ],
+      "zcr": 0.028902427293360233,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        5,
+        8
+      ],
+      "prompts": [
+        "mellow acoustic pop wi",
+        "dreamy ambient synth p"
+      ],
+      "zcr": 0.35408082604408264,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        5,
+        9
+      ],
+      "prompts": [
+        "mellow acoustic pop wi",
+        "classic rock with a dr"
+      ],
+      "zcr": 0.11842379346489906,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        5,
+        10
+      ],
+      "prompts": [
+        "mellow acoustic pop wi",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.3010402172803879,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        5,
+        11
+      ],
+      "prompts": [
+        "mellow acoustic pop wi",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.1450631469488144,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        6,
+        7
+      ],
+      "prompts": [
+        "funky groove with slap",
+        "latin reggaeton beat w"
+      ],
+      "zcr": 0.06732748448848724,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        6,
+        8
+      ],
+      "prompts": [
+        "funky groove with slap",
+        "dreamy ambient synth p"
+      ],
+      "zcr": 0.20897044241428375,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        6,
+        9
+      ],
+      "prompts": [
+        "funky groove with slap",
+        "classic rock with a dr"
+      ],
+      "zcr": 0.07571463845670223,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        6,
+        10
+      ],
+      "prompts": [
+        "funky groove with slap",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.24817872047424316,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        6,
+        11
+      ],
+      "prompts": [
+        "funky groove with slap",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.03486120421439409,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        7,
+        8
+      ],
+      "prompts": [
+        "latin reggaeton beat w",
+        "dreamy ambient synth p"
+      ],
+      "zcr": 0.15225185453891754,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        7,
+        9
+      ],
+      "prompts": [
+        "latin reggaeton beat w",
+        "classic rock with a dr"
+      ],
+      "zcr": 0.211796335875988,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        7,
+        10
+      ],
+      "prompts": [
+        "latin reggaeton beat w",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.2580929547548294,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        7,
+        11
+      ],
+      "prompts": [
+        "latin reggaeton beat w",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.19055884331464767,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        8,
+        9
+      ],
+      "prompts": [
+        "dreamy ambient synth p",
+        "classic rock with a dr"
+      ],
+      "zcr": 0.0975365936756134,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        8,
+        10
+      ],
+      "prompts": [
+        "dreamy ambient synth p",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.05933784320950508,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        8,
+        11
+      ],
+      "prompts": [
+        "dreamy ambient synth p",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.06896673887968063,
+      "safe": false,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        9,
+        10
+      ],
+      "prompts": [
+        "classic rock with a dr",
+        "hip hop trap beat with"
+      ],
+      "zcr": 0.20730560272932053,
+      "safe": false,
+      "dangerous": true
+    },
+    {
+      "pair": [
+        9,
+        11
+      ],
+      "prompts": [
+        "classic rock with a dr",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.05150563456118107,
+      "safe": true,
+      "dangerous": false
+    },
+    {
+      "pair": [
+        10,
+        11
+      ],
+      "prompts": [
+        "hip hop trap beat with",
+        "cinematic orchestral a"
+      ],
+      "zcr": 0.3248950093984604,
+      "safe": false,
+      "dangerous": true
+    }
+  ]
+}

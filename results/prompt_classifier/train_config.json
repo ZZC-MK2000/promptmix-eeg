@@ -1,0 +1,32 @@
+{
+  "steps": 3000,
+  "seconds": 5.2,
+  "args": {
+    "steps": 3000,
+    "batch": 64,
+    "lr": 0.001,
+    "wd": 0.01,
+    "dropout": 0.1,
+    "hidden": 256,
+    "save_every": 500,
+    "log_every": 100,
+    "val_rows": 2000,
+    "seed": 0,
+    "outdir": "D:\\Projects\\CLaBraM\\mainv3\\results\\prompt_classifier"
+  },
+  "label_distribution": [
+    675,
+    1422,
+    914,
+    6021,
+    1171,
+    2008,
+    3376,
+    2528,
+    3013,
+    1719,
+    2647,
+    10542
+  ],
+  "oracle_cos_mean": 0.16436685621738434
+}

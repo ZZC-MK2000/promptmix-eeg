@@ -1,0 +1,42 @@
+{
+  "coverage": {
+    "mixture": 0.8789925465118109,
+    "best_single": 0.7968701561292012,
+    "best_prompt_mean": 0.7755016605059306
+  },
+  "oracle_dist": [
+    22848,
+    164,
+    400,
+    220,
+    120,
+    628,
+    7048,
+    1520,
+    60,
+    2084,
+    440,
+    504
+  ],
+  "majority": 0.634032634032634,
+  "cache_coverage": 1.0,
+  "top2_margin": 0.05022500455379486,
+  "val_overall": 0.7321989528795811,
+  "val_balanced": 0.38311200669485557,
+  "val_kappa": 0.554615975862684,
+  "acc_majority": 0.5403141361256545,
+  "prompts": [
+    "upbeat indian bollywood dance song with dhol and bright synths",
+    "melodic indian film ballad with lush strings and bamboo flute",
+    "catchy pop song with airy female vocals and glossy production",
+    "smooth r&b groove with warm bass and crisp rimshot drums",
+    "energetic electronic dance music with a heavy four-on-the-floor kick",
+    "mellow acoustic pop with fingerpicked guitar and soft brushes",
+    "funky groove with slap bass and punchy brass stabs",
+    "latin reggaeton beat with tropical synths and dembow rhythm",
+    "dreamy ambient synth pad with slow evolving textures",
+    "classic rock with a driving electric guitar riff and live drums",
+    "hip hop trap beat with boomy 808 bass and rattling hi-hats",
+    "cinematic orchestral action cue with pounding war drums"
+  ]
+}

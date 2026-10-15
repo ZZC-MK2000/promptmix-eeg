@@ -1,0 +1,20 @@
+# --- do NOT publish raw EEG / derived embeddings (privacy + size) ---
+data/
+# --- large result artifacts (regenerate by running code/) ---
+results/**/*.npy
+results/**/*.wav
+results/**/*.log
+results/**/listen/
+results/**/listen_B/
+results/**/gallery/
+# big training checkpoints (keep only the tiny projection classifier)
+*.pt
+!results/library_b/classifier.pt
+!results/prompt_classifier*/final.pt
+# --- python ---
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+# --- os/editor ---
+.DS_Store
+Thumbs.db

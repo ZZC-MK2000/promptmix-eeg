@@ -1,0 +1,17 @@
+eeg (40336, 512) aud (40336, 512) subjects=68 songs=14
+train 36250 / val 4086 rows; val subjects 7
+  step 500 loss=3.414 [2s]
+  step 1000 loss=3.266 [3s]
+  step 1500 loss=3.202 [3s]
+  step 2000 loss=3.145 [4s]
+  step 2500 loss=3.139 [4s]
+  step 3000 loss=3.042 [5s]
+  step 3500 loss=3.009 [5s]
+  step 4000 loss=3.067 [6s]
+
+[contrastive bridge, held-out] abs-alignment cos(bridge,libmeans)=0.2121 (ridge 0.19)
+[KEY] argmax-prompt readout agreement w/ oracle = 0.2837 (ridge 0.167, chance 0.083)
+[genre clf on contrastive bridge] overall=0.7401 balanced=0.4578 kappa=0.5616 (ridge kappa 0.551)
+[retrieval] 14-way=0.8945  500-pool=0.4821  4146-pool=0.2878
+
+done -> D:\Projects\CLaBraM\promptmix-eeg\results\contrastive_bridge  [8s]

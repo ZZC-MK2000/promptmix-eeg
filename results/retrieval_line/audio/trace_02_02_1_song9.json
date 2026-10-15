@@ -1,0 +1,1436 @@
+{
+  "subject": "02",
+  "run": "02_1",
+  "song": 9,
+  "windows": 142,
+  "song_acc_raw": 0.4859154929577465,
+  "song_acc_smoothed": 0.676056338028169,
+  "window_acc": 0.02112676056338028,
+  "seconds": 1136,
+  "files": [
+    "RETRIEVED_02_02_1_song9.wav",
+    "TRUE_02_02_1_song9.wav"
+  ],
+  "rows": [
+    {
+      "i": 0,
+      "seg": 0,
+      "true_group": 0,
+      "retrieved_group": 39,
+      "vote_song": 9,
+      "cos": 0.1928,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 1,
+      "seg": 1,
+      "true_group": 1,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.4023,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 2,
+      "seg": 2,
+      "true_group": 2,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.4591,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 3,
+      "seg": 3,
+      "true_group": 3,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.3324,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 4,
+      "seg": 4,
+      "true_group": 4,
+      "retrieved_group": 39,
+      "vote_song": 9,
+      "cos": 0.3003,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 5,
+      "seg": 5,
+      "true_group": 5,
+      "retrieved_group": 39,
+      "vote_song": 9,
+      "cos": 0.123,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 6,
+      "seg": 6,
+      "true_group": 6,
+      "retrieved_group": 42,
+      "vote_song": 9,
+      "cos": 0.1257,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 7,
+      "seg": 7,
+      "true_group": 7,
+      "retrieved_group": 39,
+      "vote_song": 9,
+      "cos": 0.1284,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 8,
+      "seg": 8,
+      "true_group": 8,
+      "retrieved_group": 644,
+      "vote_song": 1,
+      "cos": 0.1809,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 9,
+      "seg": 9,
+      "true_group": 9,
+      "retrieved_group": 928,
+      "vote_song": 12,
+      "cos": 0.2296,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 10,
+      "seg": 10,
+      "true_group": 10,
+      "retrieved_group": 928,
+      "vote_song": 12,
+      "cos": 0.2937,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 11,
+      "seg": 11,
+      "true_group": 11,
+      "retrieved_group": 928,
+      "vote_song": 12,
+      "cos": 0.3222,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 12,
+      "seg": 12,
+      "true_group": 12,
+      "retrieved_group": 586,
+      "vote_song": 1,
+      "cos": 0.4009,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 13,
+      "seg": 13,
+      "true_group": 13,
+      "retrieved_group": 644,
+      "vote_song": 1,
+      "cos": 0.3449,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 14,
+      "seg": 14,
+      "true_group": 14,
+      "retrieved_group": 643,
+      "vote_song": 1,
+      "cos": 0.3877,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 15,
+      "seg": 15,
+      "true_group": 15,
+      "retrieved_group": 586,
+      "vote_song": 1,
+      "cos": 0.4135,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 16,
+      "seg": 16,
+      "true_group": 16,
+      "retrieved_group": 928,
+      "vote_song": 12,
+      "cos": 0.295,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 17,
+      "seg": 17,
+      "true_group": 17,
+      "retrieved_group": 888,
+      "vote_song": 12,
+      "cos": 0.4321,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 18,
+      "seg": 18,
+      "true_group": 18,
+      "retrieved_group": 926,
+      "vote_song": 12,
+      "cos": 0.4509,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 19,
+      "seg": 19,
+      "true_group": 19,
+      "retrieved_group": 887,
+      "vote_song": 12,
+      "cos": 0.2421,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 20,
+      "seg": 20,
+      "true_group": 20,
+      "retrieved_group": 138,
+      "vote_song": 6,
+      "cos": 0.3333,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 21,
+      "seg": 21,
+      "true_group": 21,
+      "retrieved_group": 142,
+      "vote_song": 6,
+      "cos": 0.4818,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 22,
+      "seg": 22,
+      "true_group": 22,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.0938,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 23,
+      "seg": 23,
+      "true_group": 23,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.3016,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 24,
+      "seg": 24,
+      "true_group": 24,
+      "retrieved_group": 28,
+      "vote_song": 9,
+      "cos": 0.4216,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 25,
+      "seg": 25,
+      "true_group": 25,
+      "retrieved_group": 87,
+      "vote_song": 6,
+      "cos": 0.1415,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 26,
+      "seg": 26,
+      "true_group": 26,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.3265,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 27,
+      "seg": 27,
+      "true_group": 27,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.2251,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 28,
+      "seg": 28,
+      "true_group": 28,
+      "retrieved_group": 82,
+      "vote_song": 9,
+      "cos": 0.2671,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 29,
+      "seg": 29,
+      "true_group": 29,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.3733,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 30,
+      "seg": 30,
+      "true_group": 30,
+      "retrieved_group": 39,
+      "vote_song": 9,
+      "cos": 0.3453,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 31,
+      "seg": 31,
+      "true_group": 31,
+      "retrieved_group": 499,
+      "vote_song": 4,
+      "cos": 0.1966,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 32,
+      "seg": 32,
+      "true_group": 32,
+      "retrieved_group": 494,
+      "vote_song": 4,
+      "cos": 0.2313,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 33,
+      "seg": 33,
+      "true_group": 33,
+      "retrieved_group": 39,
+      "vote_song": 9,
+      "cos": 0.1547,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 34,
+      "seg": 34,
+      "true_group": 34,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.1542,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 35,
+      "seg": 35,
+      "true_group": 35,
+      "retrieved_group": 74,
+      "vote_song": 9,
+      "cos": 0.2504,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 36,
+      "seg": 36,
+      "true_group": 36,
+      "retrieved_group": 259,
+      "vote_song": 5,
+      "cos": 0.2876,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 37,
+      "seg": 37,
+      "true_group": 37,
+      "retrieved_group": 256,
+      "vote_song": 5,
+      "cos": 0.0762,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 38,
+      "seg": 38,
+      "true_group": 38,
+      "retrieved_group": 325,
+      "vote_song": 5,
+      "cos": -0.0048,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 39,
+      "seg": 39,
+      "true_group": 39,
+      "retrieved_group": 12,
+      "vote_song": 9,
+      "cos": 0.2458,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 40,
+      "seg": 40,
+      "true_group": 40,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.2427,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 41,
+      "seg": 41,
+      "true_group": 41,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.2282,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 42,
+      "seg": 42,
+      "true_group": 42,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.289,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 43,
+      "seg": 43,
+      "true_group": 43,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.421,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 44,
+      "seg": 44,
+      "true_group": 44,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.4423,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 45,
+      "seg": 45,
+      "true_group": 45,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.3579,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 46,
+      "seg": 46,
+      "true_group": 46,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4305,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 47,
+      "seg": 47,
+      "true_group": 47,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.3853,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 48,
+      "seg": 48,
+      "true_group": 48,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.3277,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 49,
+      "seg": 49,
+      "true_group": 49,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.4449,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 50,
+      "seg": 50,
+      "true_group": 50,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.3677,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 51,
+      "seg": 51,
+      "true_group": 51,
+      "retrieved_group": 28,
+      "vote_song": 9,
+      "cos": 0.4567,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 52,
+      "seg": 52,
+      "true_group": 52,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.4318,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 53,
+      "seg": 53,
+      "true_group": 53,
+      "retrieved_group": 67,
+      "vote_song": 9,
+      "cos": 0.3205,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 54,
+      "seg": 54,
+      "true_group": 54,
+      "retrieved_group": 31,
+      "vote_song": 9,
+      "cos": 0.3888,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 55,
+      "seg": 55,
+      "true_group": 55,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.3005,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 56,
+      "seg": 56,
+      "true_group": 56,
+      "retrieved_group": 39,
+      "vote_song": 9,
+      "cos": 0.2121,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 57,
+      "seg": 57,
+      "true_group": 57,
+      "retrieved_group": 39,
+      "vote_song": 9,
+      "cos": 0.3232,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 58,
+      "seg": 58,
+      "true_group": 58,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.2906,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 59,
+      "seg": 59,
+      "true_group": 59,
+      "retrieved_group": 41,
+      "vote_song": 9,
+      "cos": 0.402,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 60,
+      "seg": 60,
+      "true_group": 60,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4621,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 61,
+      "seg": 61,
+      "true_group": 61,
+      "retrieved_group": 40,
+      "vote_song": 9,
+      "cos": 0.4617,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 62,
+      "seg": 62,
+      "true_group": 62,
+      "retrieved_group": 40,
+      "vote_song": 9,
+      "cos": 0.4498,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 63,
+      "seg": 63,
+      "true_group": 63,
+      "retrieved_group": 37,
+      "vote_song": 9,
+      "cos": 0.4236,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 64,
+      "seg": 64,
+      "true_group": 64,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4087,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 65,
+      "seg": 65,
+      "true_group": 65,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4117,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 66,
+      "seg": 66,
+      "true_group": 66,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.3924,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 67,
+      "seg": 67,
+      "true_group": 67,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4255,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 68,
+      "seg": 68,
+      "true_group": 68,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.3738,
+      "song_ok": 1,
+      "window_ok": 1
+    },
+    {
+      "i": 69,
+      "seg": 69,
+      "true_group": 69,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.402,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 70,
+      "seg": 70,
+      "true_group": 70,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4316,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 71,
+      "seg": 71,
+      "true_group": 71,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.395,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 72,
+      "seg": 72,
+      "true_group": 72,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.428,
+      "song_ok": 1,
+      "window_ok": 1
+    },
+    {
+      "i": 73,
+      "seg": 73,
+      "true_group": 72,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.3947,
+      "song_ok": 1,
+      "window_ok": 1
+    },
+    {
+      "i": 74,
+      "seg": 74,
+      "true_group": 72,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.3906,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 75,
+      "seg": 75,
+      "true_group": 73,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.432,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 76,
+      "seg": 76,
+      "true_group": 73,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4519,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 77,
+      "seg": 77,
+      "true_group": 71,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4457,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 78,
+      "seg": 78,
+      "true_group": 74,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.3861,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 79,
+      "seg": 79,
+      "true_group": 72,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.3607,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 80,
+      "seg": 80,
+      "true_group": 1,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.3514,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 81,
+      "seg": 83,
+      "true_group": 15,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.3866,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 82,
+      "seg": 84,
+      "true_group": 75,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.3866,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 83,
+      "seg": 85,
+      "true_group": 75,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.4361,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 84,
+      "seg": 86,
+      "true_group": 15,
+      "retrieved_group": 72,
+      "vote_song": 9,
+      "cos": 0.3956,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 85,
+      "seg": 87,
+      "true_group": 76,
+      "retrieved_group": 28,
+      "vote_song": 9,
+      "cos": 0.421,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 86,
+      "seg": 88,
+      "true_group": 8,
+      "retrieved_group": 28,
+      "vote_song": 9,
+      "cos": 0.4102,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 87,
+      "seg": 89,
+      "true_group": 77,
+      "retrieved_group": 28,
+      "vote_song": 9,
+      "cos": 0.3857,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 88,
+      "seg": 90,
+      "true_group": 78,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4153,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 89,
+      "seg": 91,
+      "true_group": 12,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4346,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 90,
+      "seg": 92,
+      "true_group": 12,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4269,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 91,
+      "seg": 93,
+      "true_group": 13,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.3395,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 92,
+      "seg": 94,
+      "true_group": 13,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.2387,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 93,
+      "seg": 95,
+      "true_group": 25,
+      "retrieved_group": 71,
+      "vote_song": 9,
+      "cos": 0.2936,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 94,
+      "seg": 96,
+      "true_group": 76,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.3401,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 95,
+      "seg": 97,
+      "true_group": 17,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.3447,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 96,
+      "seg": 98,
+      "true_group": 18,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4256,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 97,
+      "seg": 99,
+      "true_group": 79,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.371,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 98,
+      "seg": 100,
+      "true_group": 80,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4145,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 99,
+      "seg": 101,
+      "true_group": 21,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.3745,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 100,
+      "seg": 102,
+      "true_group": 22,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.2057,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 101,
+      "seg": 103,
+      "true_group": 81,
+      "retrieved_group": 83,
+      "vote_song": 9,
+      "cos": 0.2625,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 102,
+      "seg": 104,
+      "true_group": 13,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.2352,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 103,
+      "seg": 105,
+      "true_group": 76,
+      "retrieved_group": 365,
+      "vote_song": 2,
+      "cos": 0.2849,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 104,
+      "seg": 106,
+      "true_group": 26,
+      "retrieved_group": 326,
+      "vote_song": 2,
+      "cos": 0.2437,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 105,
+      "seg": 107,
+      "true_group": 76,
+      "retrieved_group": 337,
+      "vote_song": 2,
+      "cos": 0.2133,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 106,
+      "seg": 108,
+      "true_group": 77,
+      "retrieved_group": 329,
+      "vote_song": 2,
+      "cos": 0.2918,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 107,
+      "seg": 109,
+      "true_group": 8,
+      "retrieved_group": 327,
+      "vote_song": 2,
+      "cos": 0.3345,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 108,
+      "seg": 110,
+      "true_group": 30,
+      "retrieved_group": 329,
+      "vote_song": 2,
+      "cos": 0.453,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 109,
+      "seg": 111,
+      "true_group": 82,
+      "retrieved_group": 329,
+      "vote_song": 2,
+      "cos": 0.3218,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 110,
+      "seg": 112,
+      "true_group": 13,
+      "retrieved_group": 318,
+      "vote_song": 5,
+      "cos": 0.1964,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 111,
+      "seg": 113,
+      "true_group": 22,
+      "retrieved_group": 252,
+      "vote_song": 5,
+      "cos": 0.3697,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 112,
+      "seg": 114,
+      "true_group": 35,
+      "retrieved_group": 406,
+      "vote_song": 2,
+      "cos": 0.1852,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 113,
+      "seg": 115,
+      "true_group": 83,
+      "retrieved_group": 258,
+      "vote_song": 5,
+      "cos": 0.4379,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 114,
+      "seg": 116,
+      "true_group": 35,
+      "retrieved_group": 258,
+      "vote_song": 5,
+      "cos": 0.5197,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 115,
+      "seg": 117,
+      "true_group": 6,
+      "retrieved_group": 259,
+      "vote_song": 5,
+      "cos": 0.6269,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 116,
+      "seg": 118,
+      "true_group": 83,
+      "retrieved_group": 259,
+      "vote_song": 5,
+      "cos": 0.5698,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 117,
+      "seg": 119,
+      "true_group": 3,
+      "retrieved_group": 256,
+      "vote_song": 5,
+      "cos": 0.4176,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 118,
+      "seg": 120,
+      "true_group": 35,
+      "retrieved_group": 258,
+      "vote_song": 5,
+      "cos": 0.1906,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 119,
+      "seg": 121,
+      "true_group": 35,
+      "retrieved_group": 258,
+      "vote_song": 5,
+      "cos": 0.2306,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 120,
+      "seg": 122,
+      "true_group": 35,
+      "retrieved_group": 258,
+      "vote_song": 5,
+      "cos": 0.3003,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 121,
+      "seg": 123,
+      "true_group": 35,
+      "retrieved_group": 252,
+      "vote_song": 5,
+      "cos": 0.4191,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 122,
+      "seg": 124,
+      "true_group": 5,
+      "retrieved_group": 63,
+      "vote_song": 9,
+      "cos": 0.2252,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 123,
+      "seg": 125,
+      "true_group": 5,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.2101,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 124,
+      "seg": 126,
+      "true_group": 5,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.3528,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 125,
+      "seg": 127,
+      "true_group": 35,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.3655,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 126,
+      "seg": 128,
+      "true_group": 35,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4403,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 127,
+      "seg": 129,
+      "true_group": 34,
+      "retrieved_group": 67,
+      "vote_song": 9,
+      "cos": 0.4111,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 128,
+      "seg": 130,
+      "true_group": 36,
+      "retrieved_group": 66,
+      "vote_song": 9,
+      "cos": 0.4165,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 129,
+      "seg": 131,
+      "true_group": 67,
+      "retrieved_group": 68,
+      "vote_song": 9,
+      "cos": 0.4348,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 130,
+      "seg": 132,
+      "true_group": 3,
+      "retrieved_group": 39,
+      "vote_song": 9,
+      "cos": 0.4844,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 131,
+      "seg": 133,
+      "true_group": 36,
+      "retrieved_group": 69,
+      "vote_song": 9,
+      "cos": 0.3553,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 132,
+      "seg": 134,
+      "true_group": 36,
+      "retrieved_group": 326,
+      "vote_song": 2,
+      "cos": 0.3393,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 133,
+      "seg": 135,
+      "true_group": 36,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.203,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 134,
+      "seg": 136,
+      "true_group": 35,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.1607,
+      "song_ok": 1,
+      "window_ok": 0
+    },
+    {
+      "i": 135,
+      "seg": 137,
+      "true_group": 5,
+      "retrieved_group": 223,
+      "vote_song": 8,
+      "cos": 0.363,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 136,
+      "seg": 138,
+      "true_group": 5,
+      "retrieved_group": 236,
+      "vote_song": 8,
+      "cos": 0.3247,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 137,
+      "seg": 139,
+      "true_group": 83,
+      "retrieved_group": 636,
+      "vote_song": 1,
+      "cos": 0.2029,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 138,
+      "seg": 140,
+      "true_group": 83,
+      "retrieved_group": 636,
+      "vote_song": 1,
+      "cos": 0.3082,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 139,
+      "seg": 141,
+      "true_group": 75,
+      "retrieved_group": 326,
+      "vote_song": 2,
+      "cos": 0.3428,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 140,
+      "seg": 142,
+      "true_group": 75,
+      "retrieved_group": 335,
+      "vote_song": 2,
+      "cos": 0.3706,
+      "song_ok": 0,
+      "window_ok": 0
+    },
+    {
+      "i": 141,
+      "seg": 143,
+      "true_group": 83,
+      "retrieved_group": 11,
+      "vote_song": 9,
+      "cos": 0.3544,
+      "song_ok": 1,
+      "window_ok": 0
+    }
+  ]
+}

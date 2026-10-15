@@ -1,0 +1,22 @@
+  lib prompt0 'upbeat indian bollywood dance song' [40s]
+  lib prompt1 'melodic indian film ballad with lu' [67s]
+  lib prompt2 'catchy pop song with airy female v' [95s]
+  lib prompt3 'smooth r&b groove with warm bass a' [123s]
+  lib prompt4 'energetic electronic dance music w' [150s]
+  lib prompt5 'mellow acoustic pop with fingerpic' [179s]
+  lib prompt6 'funky groove with slap bass and pu' [206s]
+  lib prompt7 'latin reggaeton beat with tropical' [234s]
+  lib prompt8 'dreamy ambient synth pad with slow' [261s]
+  lib prompt9 'classic rock with a driving electr' [289s]
+  lib prompt10 'hip hop trap beat with boomy 808 b' [317s]
+  lib prompt11 'cinematic orchestral action cue wi' [345s]
+
+[coverage, new lib] mixture=0.8790 best_single_clip=0.7969 best_prompt_mean=0.7755 uniform=0.7297 global=0.7300
+
+[oracle, new lib] cache coverage=1.000 dist=[22848, 164, 400, 220, 120, 628, 7048, 1520, 60, 2084, 440, 504] majority=0.6340 top2margin=0.0502
+
+[classifier, new lib] val_overall=0.7322 balanced=0.3831 kappa=0.5546 majority=0.5403 chance=0.0833
+(original eval json not found: [Errno 2] No such file or directory: 'D:\\Projects\\CLaBraM\\mainv3\\results\\prompt_classifier\\eval_true_oracle.json')
+=== NEW corpus-matched lib === overall=0.7322 balanced=0.3831 kappa=0.5546 majority=0.5403
+
+done -> D:\Projects\CLaBraM\mainv3\results\library_b  [351s]

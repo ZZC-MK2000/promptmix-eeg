@@ -1,0 +1,15 @@
+{
+  "real_n": 60,
+  "frozen_native": {
+    "n": 60,
+    "fd_to_real": 3444.255385433462
+  },
+  "finetuned": {
+    "n": 43,
+    "fd_to_real": 29471.958855060257
+  },
+  "interpolation": {
+    "n": 15,
+    "fd_to_real": 38904.19680086265
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "corpus_windows": 1103,
+  "queries": 36036,
+  "song_hit_raw": 0.8492618492618492,
+  "song_hit_chance": 0.07142857142857142,
+  "song_hit_constant": 0.07881007881007882,
+  "song_hit_random_shuffled": 0.07176157176157176,
+  "window_hit_raw": 0.030025530025530024,
+  "window_hit_chance": 0.0009066183136899365,
+  "within_song_window_rate": 0.03780271707028943,
+  "best_smooth_window": 9,
+  "best_smooth_acc": 0.8840881340881341,
+  "known_port_ceiling": 0.8428
+}

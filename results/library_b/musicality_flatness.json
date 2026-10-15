@@ -1,0 +1,27 @@
+{
+  "real heard windows": {
+    "median": 0.04262382391505738,
+    "mean": 0.04713197243521982,
+    "n": 14
+  },
+  "delivered mode A (native)": {
+    "median": 0.0032354027210546687,
+    "mean": 0.008940361528639182,
+    "n": 14
+  },
+  "delivered B-cat (native)": {
+    "median": 0.0030342429443109926,
+    "mean": 0.02246065498231848,
+    "n": 8
+  },
+  "delivered B-mix (blend)": {
+    "median": 0.007419872968548003,
+    "mean": 0.026443010445090676,
+    "n": 8
+  },
+  "interpolation OFF-manifold (noise)": {
+    "median": 0.008823674901004329,
+    "mean": 0.016532780767969428,
+    "n": 6
+  }
+}
