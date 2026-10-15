@@ -9,6 +9,7 @@ Sources:
 Run: python src/train/make_figures.py
 """
 import json
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -16,9 +17,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
+sys.path.insert(0, str(Path(__file__).parent))
+from figstyle import TITLE_FS, save
+
 ROOT = Path("D:/Projects/CLaBraM/promptmix-eeg")
-FIG = ROOT.parent / "paper" / "figures"
-FIG.mkdir(parents=True, exist_ok=True)
 R = json.load(open(ROOT / "results" / "gen_eegcond" / "library_radius" / "radius.json"))
 
 # ---- Fig 1: coverage radius (per-target mean +- SE) ----
@@ -36,9 +38,9 @@ for i, m in enumerate(means):
     ax.text(i, m + 0.015, f"{m:.3f}", ha="center", fontsize=9)
 ax.set_xticks(range(len(labels))); ax.set_xticklabels(labels, fontsize=8)
 ax.set_ylabel("CLAP cosine to held-out real window"); ax.set_ylim(0.5, 0.95)
-ax.set_title("Coverage radius: library convex hull spans real 8-s windows")
+ax.set_title("Coverage radius: library convex hull spans real 8-s windows", fontsize=TITLE_FS)
 ax.legend(fontsize=8)
-fig.tight_layout(); fig.savefig(FIG / "fig1_coverage_radius.png", dpi=150); plt.close(fig)
+fig.tight_layout(); save(fig, "fig1_coverage_radius.png")
 
 # ---- Fig 2: tolerance radius (zcr vs alpha per pair) ----
 pairs = sorted(set(tuple(s["pair"]) for s in R["sweep"]))
@@ -53,9 +55,9 @@ for pa, c in zip(pairs, ["#d62728", "#1f77b4", "#2ca02c"]):
 ax.axhspan(0.02, 0.05, color="green", alpha=0.12, label="frozen native band")
 ax.axhline(R["zcr_truth"], ls="--", c="k", lw=1, label=f"real music {R['zcr_truth']:.3f}")
 ax.set_xlabel("interpolation weight alpha"); ax.set_ylabel("zero-crossing rate")
-ax.set_title("Tolerance radius: T5-embedding interpolation goes off-manifold")
+ax.set_title("Tolerance radius: T5-embedding interpolation goes off-manifold", fontsize=TITLE_FS)
 ax.legend(fontsize=7)
-fig.tight_layout(); fig.savefig(FIG / "fig2_tolerance_radius.png", dpi=150); plt.close(fig)
+fig.tight_layout(); save(fig, "fig2_tolerance_radius.png")
 
 # ---- Fig 3: oracle label distribution / chiptune collapse ----
 try:
@@ -80,9 +82,8 @@ if dist is not None or true_dist is not None:
         ax.legend(fontsize=8)
     ax.set_xticks(x); ax.set_xticklabels(list(names.values()), rotation=60, ha="right", fontsize=7)
     ax.set_ylabel("# held-out windows")
-    ax.set_title("Oracle genre distribution: collapse onto chiptune (library-corpus mismatch)")
-    fig.tight_layout(); fig.savefig(FIG / "fig3_oracle_collapse.png", dpi=150); plt.close(fig)
+    ax.set_title("Oracle genre distribution: collapse onto chiptune (library-corpus mismatch)",
+                 fontsize=TITLE_FS)
+    fig.tight_layout(); save(fig, "fig3_oracle_collapse.png")
 
-print("figures written to", FIG)
-for f in sorted(FIG.glob("*.png")):
-    print("  ", f.name)
+print("fig1-3 written")

@@ -339,7 +339,7 @@ The SAME bridge output that retrieves the heard song (84% 14-way, Part 1) also l
 
 MOS (human listening) is the one column we cannot fill autonomously — it is the decisive generation gate. zcr/cos shown for context only (both are imperfect musicality proxies per §9.1).
 
-### 8.5 Key figures (`make_figures.py` → `paper/figures/`)
+### 8.5 Key figures (`code/figures/`, regenerate all with `python code/figures/render_all.py` → `assets/fig/` + `paper/figures/`)
 - ✅ **Fig. 0** `fig0_architecture.png`: two-part architecture diagram (shared bridge → alignment/retrieval branch and generation/frozen-prompt-mixing branch).
 - ✅ **Fig. 1** `fig1_coverage_radius.png`: coverage radius bar (mixture / best-single / best-prompt-mean / uniform / global, mean±SE over 60 targets).
 - ✅ **Fig. 2** `fig2_tolerance_radius.png`: tolerance radius — zcr vs α for the 3 measured prompt pairs, with the frozen-native band and real-music line (jazz↔choir blows to 0.46).
@@ -349,6 +349,10 @@ MOS (human listening) is the one column we cannot fill autonomously — it is th
 - ⬜ **Fig. 6**: listening-test MOS distributions (violin) per method.
 - ✅ **Fig. 7** `fig7_spectrograms.png`: qualitative spectrogram panel — real window / mode A / B-cat / B-mix / interpolation(α=0.25). The native clips (esp. B-cat) show clean note/harmonic structure = music; the interpolation clip is broadband noise-like (zcr 0.49), visually confirming §6.2.
 - ✅ **Fig. 8** `fig8_tolerance_map.png`: full 66-pair tolerance heatmap (zcr at α=0.5) — 26% safe / 39% dangerous, generalizing §6.2.
+- ✅ **Fig. 9** `fig9_retrieval_pool.png`: retrieval top-1 vs candidate pool size 14 → 4,146 (FMA distractors) against the 1/pool chance line — 26.6% at the largest pool, 1103× random.
+- ✅ **Fig. 10** `fig10_mfcc_fad.png`: texture-aware MFCC-Fréchet distance per arm — frozen native 3,444 vs fine-tuned 29,472 vs T5 interpolation 38,904 (frozen 8.6× closer to real).
+
+Every figure is saved with `bbox_inches="tight"` (`code/figures/figstyle.py`) so no title or axis label can be cut off at the canvas edge, and the architecture diagram auto-shrinks each label until it fits inside its box. `make_fig_genre_confusion.py` additionally asserts that the confusion matrix it plots reproduces the overall accuracy in `genre_ci.json`, so a figure cannot silently disagree with the reported number.
 
 ---
 
@@ -393,7 +397,7 @@ We report honestly where automatic musicality metrics fail: zcr, spectral flatne
 - [x] **Evaluation**: `eval_true_oracle.py` (κ / balanced acc / baselines), `bootstrap_genre_ci.py` (95% CIs), `learned_musicality.py` (CLAP-Fréchet), `musicality_metric.py` (spectral flatness negative).
 - [x] **Delivery**: `deliver_mode_a.py`, `deliver_mode_b.py` (B-cat/B-mix), `deliver_library_b.py`, `genre_gallery.py`.
 - [x] **Library ablations**: `library_b_experiment.py` (corpus-matched), `coverage_k24.py` (K=24 size sweep).
-- [x] **Figures**: `make_figures.py`, `make_figures_tsne.py`, `make_figures_spectro.py`, `make_fig_architecture.py` → `paper/figures/` (fig0,1,2,3,4,5,7,8).
+- [x] **Figures**: `render_all.py` drives `make_fig_architecture.py`, `make_figures.py`, `make_figures_tsne.py`, `make_figures_spectro.py`, `make_fig_genre_confusion.py`, `make_fig_compat_map.py`, `make_fig_retrieval_pool.py`, `make_fig_mfcc_fad.py` → `assets/fig/` + `paper/figures/` (fig0–5, 7–10; fig6 awaits the listening test). All CPU-only, reading cached JSON/npy.
 - [x] **Alignment (Part 1)** results: `mainv3/results/retrieval_line/eval.json` (song_hit 0.849).
 - [x] **Data**: EEG corpus (subject-level split, 36036 kept windows), 12/24-prompt libraries, oracle label npys.
 - [x] **Checkpoints**: frozen MusicGen (untouched), LaBraM encoder (frozen), projection layers (`prompt_classifier*/final.pt`, `library_b/classifier.pt`).

@@ -6,6 +6,7 @@ while the interpolation clip is noise-like. Uses existing wavs only.
 Run: python src/train/make_figures_spectro.py
 """
 import glob
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -14,8 +15,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+sys.path.insert(0, str(Path(__file__).parent))
+from figstyle import save
+
 ROOT = Path("D:/Projects/CLaBraM/promptmix-eeg")
-FIG = ROOT.parent / "paper" / "figures"
 SR = 32000
 
 # pick representative clips
@@ -31,7 +34,7 @@ clips = [
     ("interpolation a=.25 (OFF-manifold)", first("results/gen_eegcond/library_radius/sweep_p8_10_a025.wav")),
 ]
 
-fig, axes = plt.subplots(len(clips), 1, figsize=(7.5, 2.1 * len(clips)))
+fig, axes = plt.subplots(len(clips), 1, figsize=(8.4, 2.1 * len(clips)))
 for ax, (label, path) in zip(np.atleast_1d(axes), clips):
     if path is None:
         ax.text(0.5, 0.5, f"{label}: (no file)", ha="center"); ax.axis("off"); continue
@@ -41,13 +44,13 @@ for ax, (label, path) in zip(np.atleast_1d(axes), clips):
         w = w.mean(1)
     ax.specgram(w, Fs=sr, NFFT=1024, noverlap=512, cmap="magma", vmin=-80, vmax=-10)
     zc = float(np.mean(np.abs(np.diff(np.sign(w))))) / 2
-    ax.set_ylabel(label, fontsize=8, rotation=0, ha="left", va="center", labelpad=140)
+    # anchored to the axes (not a fixed point offset) so a long label cannot run under the panel
+    ax.text(-0.02, 0.5, label, transform=ax.transAxes, ha="right", va="center", fontsize=8)
     ax.set_yticks([]); ax.set_xticks([])
     ax.text(0.99, 0.06, f"zcr={zc:.3f}", transform=ax.transAxes, ha="right", color="w", fontsize=8)
-fig.suptitle("Fig 7: spectrograms -- delivered native clips show musical structure; interpolation is noise-like",
+fig.suptitle("Spectrograms: delivered native clips show musical structure, interpolation is noise-like",
              fontsize=9)
-fig.tight_layout(rect=[0, 0, 1, 0.98])
-fig.savefig(FIG / "fig7_spectrograms.png", dpi=140)
-print("wrote", FIG / "fig7_spectrograms.png")
+fig.subplots_adjust(left=0.26, right=0.99, top=0.95, bottom=0.02, hspace=0.45)
+save(fig, "fig7_spectrograms.png", dpi=140)
 for label, path in clips:
     print(f"  {label:38} {Path(path).name if path else 'MISSING'}")

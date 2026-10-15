@@ -24,8 +24,10 @@ promptmix-eeg/
 │   │     learned_musicality.py · musicality_metric.py · mixed_eval.py · score_listen.py · score_identity.py
 │   ├── alignment/             # Part 1: retrieval of the heard song
 │   │     retrieval_eval.py · retrieval_audio.py · second_ridge_*.py · bridge_gap.py
-│   ├── figures/               # paper figures
-│   │     make_figures.py · make_figures_tsne.py · make_figures_spectro.py · make_fig_architecture.py
+│   ├── figures/               # paper figures — run render_all.py to rebuild every PNG from cached results
+│   │     render_all.py · figstyle.py · make_fig_architecture.py · make_figures.py · make_figures_tsne.py
+│   │     make_figures_spectro.py · make_fig_genre_confusion.py · make_fig_compat_map.py
+│   │     make_fig_retrieval_pool.py · make_fig_mfcc_fad.py
 │   ├── shared/                # helpers imported across groups (embed_text/gen_from_enc, CondWidthModel)
 │   │     arms_2x2.py · pilot_multitoken.py
 │   └── legacy/                # earlier fine-tune arms (ep16/mixed2) kept for contrast, not the main route

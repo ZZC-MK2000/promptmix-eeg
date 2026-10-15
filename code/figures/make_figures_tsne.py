@@ -13,8 +13,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+sys.path.insert(0, str(Path(__file__).parent))
+from figstyle import TITLE_FS, save
+
 ROOT = Path("D:/Projects/CLaBraM/promptmix-eeg")
-FIG = ROOT.parent / "paper" / "figures"
 LIBB = ROOT / "results" / "library_b"
 
 
@@ -36,10 +38,10 @@ def main():
     ax.scatter(Z[y == 0, 0], Z[y == 0, 1], s=14, c="#1f77b4", alpha=0.5, label="real held-out windows (400)")
     ax.scatter(Z[y == 1, 0], Z[y == 1, 1], s=60, c="#d62728", marker="X", label="library clips (72)")
     ax.legend(fontsize=9, loc="best")
-    ax.set_title("t-SNE (laion-CLAP): corpus-matched library spans the real-window cloud")
+    ax.set_title("t-SNE (laion-CLAP): corpus-matched library spans the real-window cloud",
+                 fontsize=TITLE_FS)
     ax.set_xticks([]); ax.set_yticks([])
-    fig.tight_layout(); fig.savefig(FIG / "fig5_tsne_coverage.png", dpi=150)
-    print("wrote", FIG / "fig5_tsne_coverage.png")
+    fig.tight_layout(); save(fig, "fig5_tsne_coverage.png")
 
 
 if __name__ == "__main__":
