@@ -1,6 +1,6 @@
 [![live demo](https://img.shields.io/badge/live%20demo-GitHub%20Pages-blue)](https://zzc-mk2000.github.io/promptmix-eeg/)
 
-> **Live demo (static GitHub Pages):** https://zzc-mk2000.github.io/promptmix-eeg/ — method, figures, and generated audio samples.
+> **Live demo (static GitHub Pages):** https://zzc-mk2000.github.io/promptmix-eeg/ — method, a heard-vs-generated spectrogram table (stimulus audio withheld for copyright), retrieval evidence, and playable generated clips.
 
 # PromptMix-EEG
 

@@ -1,6 +1,9 @@
 """Regenerate every paper figure from cached results (CPU only, no GPU, no model training).
 Order matters only in that fig0-3 come from the radius JSONs already on disk.
 
+Not included: make_fig_stim_vs_gen.py (needs the mainv2 laion-CLAP helper and re-embeds 28 clips)
+and code/alignment/song_confusion.py (needs mainv2's gate npz). Run those two directly.
+
 Run: python code/figures/render_all.py
 """
 import subprocess

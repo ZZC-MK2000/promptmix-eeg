@@ -127,7 +127,8 @@ def main():
         oc = mg.audio_encoder.decode(torch.from_numpy(codes[r]).unsqueeze(0).unsqueeze(0).to(device),
                                      audio_scales=[None]).audio_values
         ref = np.asarray(oc.cpu()).reshape(-1)
-        e_ref = unit(clap_embed_audio(clap, proc, csr, ref, device))
+        # ref is 32 kHz: passing csr made CLAP treat it as 48 kHz without resampling
+        e_ref = unit(clap_embed_audio(clap, proc, SR, ref, device))
         zc = zcr(mix); cs = float(e_gen @ e_ref)
         zc_mix.append(zc); cos_mix.append(cs)
         rec.append({"row": int(r), "mode": args.mode,

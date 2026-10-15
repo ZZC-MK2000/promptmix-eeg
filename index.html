@@ -8,10 +8,11 @@
   :root{--bg:#0f1420;--card:#171e2e;--ink:#e8ecf4;--mut:#9aa7bd;--acc:#5aa9e6;--ok:#2b7a2b;--warn:#c0392b}
   *{box-sizing:border-box}
   body{margin:0;font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-  .wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
-  h1{font-size:30px;margin:0 0 6px}
-  .sub{color:var(--mut);margin:0 0 28px}
-  h2{font-size:20px;margin:36px 0 12px;border-bottom:1px solid #26304a;padding-bottom:6px}
+  .wrap{max-width:1000px;margin:0 auto;padding:32px 20px 80px}
+  h1{font-size:32px;margin:0 0 6px}
+  .sub{color:var(--mut);margin:0 0 18px}
+  h2{font-size:21px;margin:44px 0 6px;border-bottom:1px solid #26304a;padding-bottom:6px}
+  h2+p.lead{color:var(--mut);margin:6px 0 16px}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   .card{background:var(--card);border:1px solid #222c42;border-radius:12px;padding:18px}
   .k{font-size:26px;font-weight:700;color:var(--acc)}
@@ -21,17 +22,31 @@
   /* the radii figures are dense (12 tick labels, 66 cell values) — a 2-col cell shrinks their
      text below readable size, so they stack near their native width instead */
   .stack{display:grid;gap:26px}
-  .stack img{max-width:790px;margin:0 auto}
+  .stack img{max-width:820px;margin:0 auto}
   figcaption{color:var(--mut);font-size:13px;margin-top:6px}
   audio{width:100%;margin-top:6px}
   .row{display:flex;justify-content:space-between;align-items:baseline}
-  .tag{font-size:13px;color:var(--mut)}
   ul{margin:8px 0 0 18px;color:var(--mut)}
   li{margin:4px 0}
   code{background:#0b101c;padding:1px 6px;border-radius:5px;color:#cfe3ff;font-size:14px}
   a{color:var(--acc)}
   .pill{display:inline-block;background:#22304d;color:#cfe3ff;border-radius:999px;padding:2px 10px;font-size:13px;margin:2px 6px 2px 0}
   footer{margin-top:48px;color:var(--mut);font-size:13px;border-top:1px solid #26304a;padding-top:16px}
+  .note{background:#1b2436;border-left:3px solid var(--acc);border-radius:0 10px 10px 0;
+        padding:12px 16px;font-size:14px;color:#cfd8e8;margin:14px 0}
+  .note.warn{border-left-color:var(--warn)}
+  table{width:100%;border-collapse:separate;border-spacing:0 10px;font-size:14px;table-layout:fixed}
+  th{text-align:left;color:var(--mut);font-weight:600;font-size:13px;padding:0 8px 2px}
+  td{background:var(--card);border:1px solid #222c42;padding:10px;vertical-align:middle;overflow:hidden}
+  td:first-child{border-radius:12px 0 0 12px;color:var(--mut)}
+  td:last-child{border-radius:0 12px 12px 0}
+  /* with table-layout:fixed the cell width is defined, so the tile can safely fill it */
+  td img{width:100%;height:auto;border-radius:6px;border-color:#0b101c}
+  .cos{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .cos b{color:var(--ink)}
+  details{background:var(--card);border:1px solid #222c42;border-radius:12px;padding:12px 16px;margin:10px 0}
+  summary{cursor:pointer;font-weight:600}
+  details p{color:var(--mut);margin:10px 0 0}
 </style>
 </head>
 <body>
@@ -39,55 +54,82 @@
   <h1>PromptMix-EEG</h1>
   <p class="sub">Brain (EEG) → <b>frozen</b> MusicGen, via mixture weights over a fixed library of native text prompts.<br>
      Musicality is guaranteed <i>by construction</i>: every clip is a sample of the untouched generator under one of its own prompts — the EEG only decides <i>which genre to play and how much to blend</i>.</p>
-
-  <div class="row">
+  <div>
     <span class="pill">two decoupled parts</span><span class="pill">no generator weights touched</span>
-    <span class="pill">32 kHz</span><span class="pill">68 subjects · 14 songs</span>
+    <span class="pill">32 kHz native audio</span><span class="pill">68 subjects · 14 songs</span>
+    <a class="pill" href="https://github.com/ZZC-MK2000/promptmix-eeg">code + paper outline</a>
   </div>
 
-  <h2>The two parts</h2>
-  <div class="grid">
-    <div class="card">
-      <div class="k">84.9%</div>
-      <div><b>Part 1 — Alignment</b>: EEG → laion-CLAP bridge → <i>retrieve the song the subject heard</i> (14-way, held-out subjects; chance 7.1%). In a hard pool of <b>4,146</b> candidate songs it still hits <b>26.6%</b> top-1 = <b>1103× chance</b>.</div>
-    </div>
-    <div class="card">
-      <div class="k">κ 0.55</div>
-      <div><b>Part 2 — Generation</b>: a 134K-param projection layer maps EEG → mixture weights over 12 genre prompts → frozen MusicGen. EEG predicts the heard song's genre at Cohen's κ <b>0.551 [0.528, 0.574]</b> (chance 0). Output is pleasant <i>by construction</i>.</div>
-    </div>
-  </div>
+  <h2>Method</h2>
+  <p class="lead">One shared alignment path, two heads that are deliberately not tied together.</p>
+  <figure><img src="assets/fig/fig0_architecture.png"><figcaption>An 8-s EEG window goes through the frozen LaBraM encoder and a ridge bridge into laion-CLAP space. <b>Part 1</b> reads that vector out as a retrieval query (which song was heard). <b>Part 2</b> reads it as mixture weights over 12 fixed genre prompts feeding the untouched generator. Neither head touches generator weights, and the two are evaluated separately.</figcaption></figure>
 
-  <h2>Three radii — the pre-gate that decided whether to train at all</h2>
+  <h2>Heard vs generated</h2>
+  <p class="lead">Every held-out delivery we have: the stimulus the subject listened to, next to what the frozen generator produced from that same window's EEG.</p>
+  <div class="note warn"><b>Why the left column has no audio.</b> The stimulus clips are excerpts of commercially released songs; we can't redistribute them, so the stimulus is shown as a spectrogram only. Everything playable on this page is generated audio. Spectrograms use one common colour scale (−80…−10 dB), one time axis (0–8 s) and one frequency axis (0–8 kHz), so cells are directly comparable.</div>
+  <div class="note"><b>Read the cosine column honestly.</b> Across the 14 pairs, a generated clip sits at CLAP cosine <b>0.644</b> to <i>its own</i> stimulus and <b>0.645</b> to the 13 <i>other</i> stimuli (margin −0.001, t = −0.1, own wins 7/14 — a coin flip). Two unrelated stimulus windows already score 0.869 against each other in this space, so the metric has almost no song-level resolution here. <b>This system is not a reconstruction of what was heard.</b> Song identity is recovered by Part 1 (retrieval, below); Part 2's job is only to produce music that is pleasant and EEG-selected in style.</div>
+  <figure><img src="assets/fig/fig12_stim_vs_gen.png"><figcaption>Five of the fourteen pairs, chosen by rank rather than by eye: the lowest, 25th, 50th, 75th and highest cosine. Left column is the heard stimulus, right column the clip generated from that window's EEG.</figcaption></figure>
+  <table>
+    <colgroup><col style="width:6%"><col style="width:32%"><col style="width:32%"><col style="width:18%"><col style="width:12%"></colgroup>
+    <thead><tr><th>window</th><th>heard stimulus — spectrogram only (audio withheld: copyright)</th><th>generated from this window's EEG — playable</th><th>prompt the EEG selected</th><th>CLAP cos<br>own vs other 13</th></tr></thead>
+    <tbody id="pairs"><tr><td colspan="5" class="mut">loading <code>assets/pairs.json</code>…</td></tr></tbody>
+  </table>
+  <p class="mut">Rows are every delivered window, not a selection. Numbers come straight from
+  <code>results/stim_vs_gen/cos_matrix.json</code>, written by <code>code/figures/make_fig_stim_vs_gen.py</code>.</p>
+
+  <h2>Part 1 — retrieving the song the subject heard</h2>
+  <p class="lead">The same aligned embedding, read out as a nearest-neighbour query against 14 song centroids built from the heard audio.</p>
   <div class="stack">
-    <figure><img src="assets/fig/fig1_coverage_radius.png"><figcaption><b>Coverage</b>: the prompt library's convex hull reaches real 8-s windows at CLAP cosine 0.86→0.88→0.90 (K=12/24/36), +0.16 over trivial baselines.</figcaption></figure>
-    <figure><img src="assets/fig/fig10_mfcc_fad.png"><figcaption><b>Musicality</b>: a texture-aware MFCC-Fréchet distance shows frozen output is 8.6× closer to real-music timbre than a fine-tuned generator.</figcaption></figure>
-    <figure><img src="assets/fig/fig8_tolerance_map.png"><figcaption><b>Tolerance</b>: interpolating two prompt embeddings goes off-manifold for 39% of all 66 pairs → never interpolate conditions; mix natively.</figcaption></figure>
-    <figure><img src="assets/fig/fig5_tsne_coverage.png"><figcaption><b>Honest caveat</b>: t-SNE shows the library occupies only one region of the real cloud; the high absolute cosine is partly laion-clustering inflation.</figcaption></figure>
+    <figure><img src="assets/fig/fig11_song_confusion.png"><figcaption><b>14-way song confusion</b>, true song × retrieved song, 10% of subject groups held out (seed 0). Cell colour is row-normalised (per-song recall); the numbers are window counts. Strongly dominant diagonal → <b>top-1 88.2%</b> against 7.1% chance. T0–T9 = NMED-T songs, H0–H3 = NMED-H (Bollywood) songs. T3/T4 bleed into each other because those two are genuinely close in CLAP space. The end-to-end retrieve-and-play pipeline scores 84.9% on all 36,036 windows — a different query set, so the two numbers are consistent rather than identical.</figcaption></figure>
+    <figure><img src="assets/fig/fig9_retrieval_pool.png"><figcaption><b>Does it survive a hard pool?</b> Adding real FMA songs as distractors: 0.88 at 14 candidates → <b>0.266 at 4,146</b>, which is 1103× the 1/pool chance line. This is the answer to "84% is only 14-way".</figcaption></figure>
   </div>
 
-  <h2>Architecture</h2>
-  <figure><img src="assets/fig/fig0_architecture.png"><figcaption>Shared EEG→laion bridge feeds two independent heads: a retrieval head (Part 1) and a prompt-mixture head driving the frozen generator (Part 2).</figcaption></figure>
-
-  <h2>Part 1 evidence — retrieving the song the subject heard</h2>
-  <p class="mut">Readout of the <i>same</i> aligned embedding used in the card above: each held-out EEG window is matched to the nearest of 14 <b>song centroids</b> built from the heard audio's laion-CLAP vectors. 10% subject-groups held out (seed&nbsp;0).</p>
-  <div class="grid">
-    <figure class="span narrow"><img src="assets/fig/fig11_song_confusion.png"><figcaption><b>14-way song confusion</b>, true song&nbsp;×&nbsp;retrieved song. Cell colour is row-normalised (per-song recall); the numbers are window counts. Strongly dominant diagonal → <b>top-1 88.2%</b> (chance 7.1%). T0–T9 = NMED-T songs, H0–H3 = NMED-H (Bollywood) songs. This centroid readout (88.2%) is consistent with the 84.9% end-to-end <i>retrieve→play</i> figure — the same alignment measured from two angles.</figcaption></figure>
+  <h2>Part 2 — why the generator stays frozen</h2>
+  <p class="lead">Three measurements we ran <i>before</i> training anything, each of which changed the design.</p>
+  <div class="stack">
+    <figure><img src="assets/fig/fig1_coverage_radius.png"><figcaption><b>Coverage radius</b>: can a convex combination of library clips reach a real 8-s window? Mixture 0.863 vs best single clip 0.754 vs a global-mean predictor (the trivial baseline) 0.704. The +0.16 gap over trivial is the real signal — it says the mixture weights are worth learning.</figcaption></figure>
+    <figure><img src="assets/fig/fig8_tolerance_map.png"><figcaption><b>Tolerance radius</b>: all 66 prompt pairs, embeddings interpolated at weight 0.5, scored by zero-crossing rate (a rough "is this crackly noise" gauge). Only 26% stay inside the safe band; 39% blow past 0.15. This is why we never interpolate conditions and instead pick native prompts or blend waveforms.</figcaption></figure>
+    <figure><img src="assets/fig/fig2_tolerance_radius.png"><figcaption><b>The same effect traced over one weight</b>: three pairs swept from α=0 to 1. jazz↔choir peaks at 0.46 against real music's 0.056 — eight times too crackly to be the intended blend.</figcaption></figure>
+    <figure><img src="assets/fig/fig10_mfcc_fad.png"><figcaption><b>Musicality, texture-first</b>: Fréchet distance over 20 MFCCs to the real windows. Frozen native 3,444 vs LoRA fine-tuned 29,472 vs interpolated 38,904 — the frozen generator is 8.6× closer to real-music timbre. A semantic CLAP-based distance tied frozen and fine-tuned, which is why the texture metric matters.</figcaption></figure>
+    <figure><img src="assets/fig/fig7_spectrograms.png"><figcaption><b>What that looks like</b>: stimulus and three delivered native clips show harmonic ridges and note structure (zcr 0.047–0.111); the interpolated clip is broadband (0.490).</figcaption></figure>
   </div>
 
-  <h2>Listen — what the frozen generator produces</h2>
-  <p class="mut">One native MusicGen sample per genre prompt in the library (the styles the EEG head can select). These are the generator's own outputs — no fine-tuning. (Reference audio of the actual heard songs is not published for copyright.)</p>
+  <h2>Which prompt the EEG picks</h2>
+  <p class="lead">Part 2's selection head, evaluated against the label "which library prompt is closest to the audio actually heard".</p>
+  <div class="stack">
+    <figure><img src="assets/fig/fig4_genre_confusion.png"><figcaption><b>Held-out subjects, corpus-matched library</b>: overall 0.738, Cohen's κ 0.563 [0.54, 0.59] against 0 for chance. The leak is one-directional — most rows dump into <code>bolly-dance</code>, so the head is biased toward the loudest class, and two rows (r&amp;b, ambient) never occur as a true label in this split.</figcaption></figure>
+    <figure><img src="assets/fig/fig3_oracle_collapse.png"><figcaption><b>Why we rebuilt the library</b>: with the original 12 prompts, the square-wave chiptune prompt is spectrally central and swallows 19,700 of ~36,000 windows as an "oracle" label, while lofi/orchestral/choir get almost none. Absolute accuracy on that label set is inflated by the collapse, which is why κ and balanced accuracy are reported instead.</figcaption></figure>
+    <figure><img src="assets/fig/fig5_tsne_coverage.png"><figcaption><b>The caveat on coverage</b>: t-SNE of the same vectors. The 72 library clips sit in one region of the 400 real-window cloud, so "the convex hull spans the data" holds relatively (vs the trivial baseline) but not geometrically. A larger or k-means-seeded library is the fix.</figcaption></figure>
+  </div>
+
+  <h2>Listen — the prompt library</h2>
+  <p class="mut">One native MusicGen sample per genre prompt — the styles the EEG head can select. These are the generator's own outputs, no fine-tuning.</p>
   <div class="grid" id="gallery"></div>
 
-  <h2>Honest limitations</h2>
+  <h2>FAQ</h2>
+  <details><summary>Why is there no stimulus audio anywhere on this page?</summary>
+  <p>The stimuli are excerpts of commercially released songs, so we can't redistribute the waveform. Spectrograms of them are shown instead, and every playable file here is generated. Raw EEG is also not published (participant privacy).</p></details>
+  <details><summary>Is the generated clip a reconstruction of what the subject heard?</summary>
+  <p>No, and that is the point of splitting the system in two. Measured on CLAP embeddings the generated clip is no closer to its own stimulus than to any other stimulus (0.644 vs 0.645). Song identity is what Part 1's retrieval delivers; Part 2 only chooses a style and stays inside the generator's own distribution so the output is musical.</p></details>
+  <details><summary>Why keep the generator frozen?</summary>
+  <p>Fine-tuning was tried and measured worse on a texture-aware metric (MFCC-Fréchet 29,472 vs 3,444), and the corpus is small (14 songs). Freezing means every output is by construction a sample the generator already knows how to make.</p></details>
+  <details><summary>Why not interpolate between two prompts?</summary>
+  <p>We measured all 66 pairs. Interpolating the text embeddings puts the output off-manifold for 39% of pairs — the model produces crackle, not a blend. Mixing is therefore done by selecting native prompts, or by blending waveforms after generation.</p></details>
+  <details><summary>What is still missing?</summary>
+  <p>A human listening test (MOS) on the generated clips — the one gate we cannot run ourselves. The geometry caveat in the t-SNE figure is the second open item.</p></details>
+
+  <h2>Limitations</h2>
   <ul>
-    <li>Small corpus (14 songs, 68 subjects); genre labels collapse toward the corpus's dominant style.</li>
-    <li>The "mix between prompts" is capped by a real finding: interpolating conditions produces noise, so the safe delivery is near-single-prompt.</li>
-    <li>Signal metrics (zcr, spectral flatness) don't judge musicality; MFCC-Fréchet helps but the final gate is human listening (MOS — not yet run).</li>
+    <li>Small corpus (14 songs, 68 subjects); the genre labels collapse toward the corpus's dominant style, so overall accuracy flatters the classifier and κ is the honest number.</li>
+    <li>Because condition interpolation is off-manifold, the "mix over prompts" is in practice near-single-prompt; the mixture is only safely expressible as waveform blending.</li>
+    <li>Signal metrics (zcr, spectral flatness) do not judge musicality; MFCC-Fréchet helps, but the final gate is human listening, which has not been run.</li>
+    <li>The CLAP cosine used in the table above has poor song-level resolution on this corpus (unrelated stimuli already score 0.869), so it is reported as own-vs-others, never as an absolute similarity.</li>
   </ul>
 
   <footer>
-    Code, data-prep, and paper outline: <a href="https://github.com/ZZC-MK2000/promptmix-eeg">github.com/ZZC-MK2000/promptmix-eeg</a> ·
-    raw EEG / embeddings are <b>not</b> published (privacy). Built as a static GitHub Pages demo.
+    Code, figure scripts and paper outline: <a href="https://github.com/ZZC-MK2000/promptmix-eeg">github.com/ZZC-MK2000/promptmix-eeg</a> ·
+    every figure regenerates on CPU with <code>python code/figures/render_all.py</code> ·
+    static GitHub Pages demo, no backend.
   </footer>
 </div>
 
@@ -102,6 +144,23 @@ const clips = [
 ];
 document.getElementById('gallery').innerHTML = clips.map(([f,name])=>
  `<div class="card"><div class="row"><b>${name}</b></div><audio controls preload="none" src="assets/audio/${f}"></audio></div>`).join('');
+
+fetch('assets/pairs.json').then(r=>r.json()).then(d=>{
+  const rows = d.rows.slice().sort((a,b)=>a.row-b.row);
+  document.getElementById('pairs').innerHTML = rows.map(r=>`
+   <tr>
+    <td>row ${r.row}</td>
+    <td><a href="assets/fig/spectro/row${r.row}_ref.png" target="_blank" rel="noopener"><img loading="lazy" src="assets/fig/spectro/row${r.row}_ref.png" alt="spectrogram of the heard stimulus, window ${r.row}"></a></td>
+    <td><a href="assets/fig/spectro/row${r.row}_gen.png" target="_blank" rel="noopener"><img loading="lazy" src="assets/fig/spectro/row${r.row}_gen.png" alt="spectrogram of the generated clip, window ${r.row}"></a>
+        <audio controls preload="none" src="assets/audio/pairs/${r.gen_file}"></audio></td>
+    <td>${r.prompt_text} <span class="mut">(zcr ${r.zcr.toFixed(3)})</span></td>
+    <td class="cos"><b>${r.cos_own.toFixed(2)}</b> vs ${r.cos_others.toFixed(2)}<br><span class="mut">${r.margin>=0?'+':''}${r.margin.toFixed(2)}</span></td>
+   </tr>`).join('')
+   + `<tr><td colspan="5" class="mut">mean over ${d.n_pairs} pairs: own ${d.mean_cos_own.toFixed(3)} vs others ${d.mean_cos_others.toFixed(3)} (margin ${d.mean_margin.toFixed(3)}, t = ${d.margin_t.toFixed(1)}); unrelated stimulus pairs score ${d.mean_cos_ref_vs_ref.toFixed(3)}.</td></tr>`;
+}).catch(e=>{
+  document.getElementById('pairs').innerHTML =
+   `<tr><td colspan="5" class="mut">could not load assets/pairs.json (${e}) — open this page over http, not file://</td></tr>`;
+});
 </script>
 </body>
 </html>

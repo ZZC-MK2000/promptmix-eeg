@@ -144,7 +144,8 @@ def main():
         sf.write(str(rp), ref, SR)
 
         e_gen = unit(clap_embed_audio(clap, proc, SR, w, device))
-        e_ref = unit(clap_embed_audio(clap, proc, csr, ref, device))
+        # ref is 32 kHz: passing csr made CLAP treat it as 48 kHz without resampling
+        e_ref = unit(clap_embed_audio(clap, proc, SR, ref, device))
         cos_gr = float(e_gen @ e_ref)
         zc_gen.append(zcr(w)); zc_ref.append(zcr(ref)); cos_ref.append(cos_gr)
         rec.append({"row": int(r), "pred_prompt": pk, "pred_prompt_text": PROMPTS[pk],

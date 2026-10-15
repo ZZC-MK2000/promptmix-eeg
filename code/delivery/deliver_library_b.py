@@ -104,8 +104,10 @@ def main():
                                      audio_scales=[None]).audio_values
         ref = np.asarray(oc.cpu()).reshape(-1)
         rp = OUT / f"ref__row{r}.wav"; sf.write(str(rp), ref, SR)
+        # ref is 32 kHz: passing csr made CLAP treat it as 48 kHz without resampling, i.e. it
+        # scored a 1.5x-fast stimulus and pulled cos_to_true down
         c = float(unit(clap_embed_audio(clap, proc, SR, w, device)) @
-                  unit(clap_embed_audio(clap, proc, csr, ref, device)))
+                  unit(clap_embed_audio(clap, proc, SR, ref, device)))
         zc.append(zcr(w)); cs.append(c)
         rec.append({"row": int(r), "prompt": pk, "prompt_text": PROMPTS_B[pk],
                     "zcr": zcr(w), "peak": float(np.abs(w).max()), "cos_to_true": c,
