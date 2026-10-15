@@ -232,9 +232,9 @@ Each prompt is pre-encoded by the frozen T5 → 768-d sequence embedding `h_k` (
 - ✅ **Corpus-matched vs original library** (`library_b_experiment.py`): coverage 0.863→0.879, dominant genre chiptune(artifact)→Indian(genuine), κ held at ~0.55. See §8.2.
 - ✅ **Delivery mode**: A (argmax) vs B-cat (categorical sample) vs B-mix (top-k waveform) vs C (embedding interpolation, ruled out). See §8.2, §6.2, Fig 8.
 - ✅ **Frozen vs fine-tuned** (learned metric, `learned_musicality.py`): CLAP-FD frozen 0.91 ≈ fine-tuned 0.91, interpolation 0.96 — semantic metric doesn't capture texture roughness. See §8.2.
-- ⬜ **Temperature τ**: sweep τ ∈ {0.5, 1.0, 2.0} at inference. Lower τ = sharper weights = closer to argmax.
-- ⬜ **With/without LaBraM encoder**: replace the frozen LaBraM EEG encoder with an MLP on raw EEG. Does the pre-trained encoder matter?
-- ⬜ **Oracle labels vs. hard labels**: distillation vs FMA genre-tag heuristic.
+- ✅ **Temperature τ** (`tau_sweep.py`): argmax accuracy is τ-invariant (0.738 for all τ — mode A unaffected); τ only sharpens the mixture for B-cat/B-mix — τ=0.25 → effective #prompts 1.14 (≈ single prompt), τ=4.0 → 5.79 (genuine blend, more clash risk). τ is the "how hard to mix" knob.
+- ⬜ **With/without LaBraM encoder**: (dropped — low value per maintainer)
+- ⬜ **Oracle labels vs. hard labels**: (dropped — low value per maintainer)
 
 ### 7.5 Missing experiments (to be completed before submission)
 
@@ -249,7 +249,7 @@ Each prompt is pre-encoded by the frozen T5 → 768-d sequence embedding `h_k` (
 7. ✅ **Prompt-pair compatibility matrix** — `compat_matrix_b.py` (done): all 66 corpus-matched pairs at α=0.5 → 26% safe / 39% dangerous; Fig. 8. Rules out embedding interpolation library-wide.
 8. ⬜ **[IMPORTANT] Listening test (MOS)**: 10–20 raters score mode (A)/(B), ep16, mixed2, retrieval for musicality / similarity / preference. **Needs human raters — the one experiment I cannot do autonomously.**
 9. ✅ **Library size sweep** — `coverage_k24.py` (K=24) + `coverage_k48.py` (K=36): coverage 0.863/0.878/0.890; greedy best-12-of-36 = 0.882 (selection > raw size).
-10. ✅(CLI) / ⬜(web) **End-to-end demo** — `demo_eeg_to_music.py` runs the full path (EEG→bridge→projection→prompt→frozen MusicGen→wav) with a per-window trace; a Gradio/web real-time version remains optional.
+10. ✅(code) **End-to-end demo** — `demo_eeg_to_music.py` (CLI) + `app.py` (Gradio web UI: pick a held-out EEG window → generated clip vs true-heard reference + weight trace). Repo is git-initialized & committed locally (110 files, 2.5 MB; data/wav/npy excluded via .gitignore for privacy+size). **Push to GitHub / deploy to HuggingFace Spaces pending maintainer auth + visibility decision.**
 11. ⬜ **Ablations not yet run**: temperature τ sweep; with/without LaBraM encoder; oracle-vs-hard labels.
 
 **Decision tree after experiment 3**:
