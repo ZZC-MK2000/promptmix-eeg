@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PromptMix-EEG — brain → frozen-MusicGen, music by construction</title>
+<style>
+  :root{--bg:#0f1420;--card:#171e2e;--ink:#e8ecf4;--mut:#9aa7bd;--acc:#5aa9e6;--ok:#2b7a2b;--warn:#c0392b}
+  *{box-sizing:border-box}
+  body{margin:0;font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+  .wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+  h1{font-size:30px;margin:0 0 6px}
+  .sub{color:var(--mut);margin:0 0 28px}
+  h2{font-size:20px;margin:36px 0 12px;border-bottom:1px solid #26304a;padding-bottom:6px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--card);border:1px solid #222c42;border-radius:12px;padding:18px}
+  .k{font-size:26px;font-weight:700;color:var(--acc)}
+  .mut{color:var(--mut);font-size:14px}
+  img{max-width:100%;border-radius:10px;border:1px solid #222c42;display:block}
+  figure{margin:0}
+  figcaption{color:var(--mut);font-size:13px;margin-top:6px}
+  audio{width:100%;margin-top:6px}
+  .row{display:flex;justify-content:space-between;align-items:baseline}
+  .tag{font-size:13px;color:var(--mut)}
+  ul{margin:8px 0 0 18px;color:var(--mut)}
+  li{margin:4px 0}
+  code{background:#0b101c;padding:1px 6px;border-radius:5px;color:#cfe3ff;font-size:14px}
+  a{color:var(--acc)}
+  .pill{display:inline-block;background:#22304d;color:#cfe3ff;border-radius:999px;padding:2px 10px;font-size:13px;margin:2px 6px 2px 0}
+  footer{margin-top:48px;color:var(--mut);font-size:13px;border-top:1px solid #26304a;padding-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>PromptMix-EEG</h1>
+  <p class="sub">Brain (EEG) → <b>frozen</b> MusicGen, via mixture weights over a fixed library of native text prompts.<br>
+     Musicality is guaranteed <i>by construction</i>: every clip is a sample of the untouched generator under one of its own prompts — the EEG only decides <i>which genre to play and how much to blend</i>.</p>
+
+  <div class="row">
+    <span class="pill">two decoupled parts</span><span class="pill">no generator weights touched</span>
+    <span class="pill">32 kHz</span><span class="pill">68 subjects · 14 songs</span>
+  </div>
+
+  <h2>The two parts</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="k">84.9%</div>
+      <div><b>Part 1 — Alignment</b>: EEG → laion-CLAP bridge → <i>retrieve the song the subject heard</i> (14-way, held-out subjects; chance 7.1%). In a hard pool of <b>4,146</b> candidate songs it still hits <b>26.6%</b> top-1 = <b>1103× chance</b>.</div>
+    </div>
+    <div class="card">
+      <div class="k">κ 0.55</div>
+      <div><b>Part 2 — Generation</b>: a 134K-param projection layer maps EEG → mixture weights over 12 genre prompts → frozen MusicGen. EEG predicts the heard song's genre at Cohen's κ <b>0.551 [0.528, 0.574]</b> (chance 0). Output is pleasant <i>by construction</i>.</div>
+    </div>
+  </div>
+
+  <h2>Three radii — the pre-gate that decided whether to train at all</h2>
+  <div class="grid">
+    <figure><img src="assets/fig/fig1_coverage_radius.png"><figcaption><b>Coverage</b>: the prompt library's convex hull reaches real 8-s windows at CLAP cosine 0.86→0.88→0.90 (K=12/24/36), +0.16 over trivial baselines.</figcaption></figure>
+    <figure><img src="assets/fig/fig8_tolerance_map.png"><figcaption><b>Tolerance</b>: interpolating two prompt embeddings goes off-manifold for 39% of all 66 pairs → never interpolate conditions; mix natively.</figcaption></figure>
+    <figure><img src="assets/fig/fig5_tsne_coverage.png"><figcaption><b>Honest caveat</b>: t-SNE shows the library occupies only one region of the real cloud; the high absolute cosine is partly laion-clustering inflation.</figcaption></figure>
+    <figure><img src="assets/fig/fig10_mfcc_fad.png"><figcaption><b>Musicality</b>: a texture-aware MFCC-Fréchet distance shows frozen output is 8.6× closer to real-music timbre than a fine-tuned generator.</figcaption></figure>
+  </div>
+
+  <h2>Architecture</h2>
+  <figure><img src="assets/fig/fig0_architecture.png"><figcaption>Shared EEG→laion bridge feeds two independent heads: a retrieval head (Part 1) and a prompt-mixture head driving the frozen generator (Part 2).</figcaption></figure>
+
+  <h2>Listen — what the frozen generator produces</h2>
+  <p class="mut">One native MusicGen sample per genre prompt in the library (the styles the EEG head can select). These are the generator's own outputs — no fine-tuning. (Reference audio of the actual heard songs is not published for copyright.)</p>
+  <div class="grid" id="gallery"></div>
+
+  <h2>Honest limitations</h2>
+  <ul>
+    <li>Small corpus (14 songs, 68 subjects); genre labels collapse toward the corpus's dominant style.</li>
+    <li>The "mix between prompts" is capped by a real finding: interpolating conditions produces noise, so the safe delivery is near-single-prompt.</li>
+    <li>Signal metrics (zcr, spectral flatness) don't judge musicality; MFCC-Fréchet helps but the final gate is human listening (MOS — not yet run).</li>
+  </ul>
+
+  <footer>
+    Code, data-prep, and paper outline: <a href="https://github.com/ZZC-MK2000/promptmix-eeg">github.com/ZZC-MK2000/promptmix-eeg</a> ·
+    raw EEG / embeddings are <b>not</b> published (privacy). Built as a static GitHub Pages demo.
+  </footer>
+</div>
+
+<script>
+const clips = [
+ ["00_upbeatindi.wav","upbeat Indian bollywood dance"],["01_melodicindi.wav","melodic Indian film ballad"],
+ ["02_catchypop.wav","catchy pop, airy vocals"],["03_smoothr&b.wav","smooth R&B groove"],
+ ["04_energeticelec.wav","energetic EDM"],["05_mellowacou.wav","mellow acoustic pop"],
+ ["06_funkygroo.wav","funky slap-bass groove"],["07_latinregg.wav","latin reggaeton"],
+ ["08_dreamyambi.wav","dreamy ambient pad"],["09_classicrock.wav","classic rock"],
+ ["10_hiphop.wav","hip-hop trap"],["11_cinematicorch.wav","cinematic orchestral"]
+];
+document.getElementById('gallery').innerHTML = clips.map(([f,name])=>
+ `<div class="card"><div class="row"><b>${name}</b></div><audio controls preload="none" src="assets/audio/${f}"></audio></div>`).join('');
+</script>
+</body>
+</html>
