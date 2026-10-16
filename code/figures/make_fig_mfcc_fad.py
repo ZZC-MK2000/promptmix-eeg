@@ -1,6 +1,10 @@
 """Fig 10 (CPU): texture-aware Fréchet distance (20 MFCCs) from each generation arm to the real
-heard windows. This is the metric that separates frozen from fine-tuned where the semantic
-CLAP-Fréchet distance tied them.
+heard windows, read from results/mfcc_fad_paired/paired.json.
+
+That file is produced by code/evaluation/mfcc_fad_paired.py, which puts every arm on the same 60
+stratified rows and gives each arm exactly one checkpoint. The earlier figure blended four
+checkpoints into the "fine-tuned" arm and used a one-subject prefix for the frozen arm, which
+inflated the ratio to 8.6x / 9.9x.
 
 Run: python code/figures/make_fig_mfcc_fad.py
 """
@@ -17,28 +21,34 @@ sys.path.insert(0, str(Path(__file__).parent))
 from figstyle import TITLE_FS, save
 
 ARMS = [("frozen_native", "frozen native\n(ours)", "#2b7a2b"),
-        ("finetuned", "fine-tuned\n(LoRA)", "#e0a526"),
-        ("interpolation", "T5 interpolation\n(off-manifold)", "#c0392b")]
+        ("finetuned_s12000", "fine-tuned\nmixed s12000", "#e0a526"),
+        ("finetuned_ep16", "fine-tuned\nk8 ep16", "#c87f0f")]
 
 
 def main():
-    d = json.load(open(ROOT / "results" / "mfcc_fad.json", encoding="utf-8"))
-    vals = [d[k]["fd_to_real"] for k, _, _ in ARMS]
+    d = json.load(open(ROOT / "results" / "mfcc_fad_paired" / "paired.json", encoding="utf-8"))
+    arms = [(k, lab, c) for k, lab, c in ARMS if k in d["arms"]]
+    vals = [d["arms"][k]["fd_to_real"] for k, _, _ in arms]
     ratio = vals[1] / vals[0]
 
-    fig, ax = plt.subplots(figsize=(6.0, 3.8))
-    bars = ax.bar(range(len(ARMS)), vals, color=[c for _, _, c in ARMS])
-    for b, k, v in zip(bars, [k for k, _, _ in ARMS], vals):
+    fig, ax = plt.subplots(figsize=(6.4, 3.9))
+    bars = ax.bar(range(len(arms)), vals, color=[c for _, _, c in arms])
+    for b, (k, _, _), v in zip(bars, arms, vals):
         ax.text(b.get_x() + b.get_width() / 2, v + max(vals) * 0.02,
-                f"{v:,.0f} (n={d[k]['n']})", ha="center", fontsize=8.5)
-    ax.set_xticks(range(len(ARMS)))
-    ax.set_xticklabels([lab for _, lab, _ in ARMS], fontsize=9)
+                f"{v:,.0f} (n={d['arms'][k]['n']})", ha="center", fontsize=9)
+    ax.set_xticks(range(len(arms)))
+    ax.set_xticklabels([lab for _, lab, _ in arms], fontsize=9)
     ax.set_ylabel("MFCC-Fréchet distance to real music  (lower = closer)")
-    ax.set_ylim(0, max(vals) * 1.15)
-    ax.set_title(f"Texture metric separates the arms:\nfrozen is {ratio:.1f}x closer to real than "
-                 f"fine-tuned", fontsize=TITLE_FS)
+    ax.set_ylim(0, max(vals) * 1.16)
+    p0 = d["paired"][0]
+    ax.set_title(f"One checkpoint per arm, same {d['n_rows']} stratified windows\n"
+                 f"frozen {ratio:.1f}x closer on Fréchet, but per-window the fine-tuned arm is not worse",
+                 fontsize=TITLE_FS)
+    ax.annotate(f"paired per-window Mahalanobis: {p0['mean_delta']:+.1f} "
+                f"(t={p0['t']:.2f}, CI [{p0['ci95'][0]:+.1f},{p0['ci95'][1]:+.1f}])",
+                xy=(0.5, -0.34), xycoords="axes fraction", ha="center", fontsize=8, color="#444")
     fig.tight_layout(); save(fig, "fig10_mfcc_fad.png")
-    print("fd", dict(zip([k for k, _, _ in ARMS], [round(v, 1) for v in vals])), "ratio", round(ratio, 2))
+    print("fd", {k: round(v["fd_to_real"], 1) for k, v in d["arms"].items()}, "ratio", round(ratio, 2))
 
 
 if __name__ == "__main__":
