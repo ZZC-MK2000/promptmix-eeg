@@ -1,9 +1,11 @@
-"""#2: does a BIGGER library improve GEOMETRIC coverage (the t-SNE gap)? K=48 corpus-relevant
-prompts, 3 clips each. Reports:
-  - coverage radius at K=12 / 24 / 48 (convex mixture vs the 60 held-out real windows)
-  - GREEDY best-12-of-48 subset by coverage (facility-location style): directly attacks the
-    "library occupies one region" problem by choosing prompts that spread over the real cloud.
-  - saves the 48-prompt clip embeddings for a t-SNE recheck.
+"""#2: does a BIGGER library improve coverage? K=36 corpus-relevant prompts, 3 clips each. Reports:
+  - coverage radius at 12 / 24 / 36 prompts (convex mixture vs the 60 held-out real windows)
+  - GREEDY best-12-of-36 subset by coverage (facility-location style): directly attacks the
+    "the library leaves part of the real cloud unreached" problem by choosing prompts that spread.
+  - saves the 36-prompt clip embeddings for later reuse.
+
+Note: this run uses 3 clips per prompt, so it is NOT on the same axis as the 6-clips-per-prompt
+numbers; code/radii/coverage_unified.py keeps them apart.
 
 Run: python code/radii/coverage_k48.py   (from promptmix-eeg/, GPU)
 """

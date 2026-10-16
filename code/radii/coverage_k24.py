@@ -1,5 +1,5 @@
-"""Library-size ablation: does a BIGGER corpus-matched library (K=24 vs K=12) close the geometric
-coverage gap the t-SNE (Fig 5) exposed? Re-measures the coverage radius (convex mixture vs the 60
+"""Library-size ablation: does a BIGGER corpus-matched library (K=24 vs K=12) close the coverage
+gap that the K=12 library leaves open? Re-measures the coverage radius (convex mixture vs the 60
 held-out real windows) with 24 prompts x 6 clips and compares to the K=12 number (0.879).
 
 Reports mixture / best-single-clip / best-prompt-mean / uniform / global-mean, and the top1-top2
