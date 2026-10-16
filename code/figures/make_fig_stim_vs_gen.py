@@ -98,6 +98,31 @@ def main():
     # same margin, the pull is corpus-level, not song-level.
     margin_fma_others = others - gen_fma_mean
     t_fma_others = float(margin_fma_others.mean() / (margin_fma_others.std(ddof=1) / np.sqrt(n)))
+
+    # genre control: the EEG head can only choose among 12 style prompts, so any own-stimulus
+    # advantage must be re-tested against OTHER stimuli that received the SAME prompt. If the
+    # margin disappears there, the information is genre-level, not song-level.
+    prompt = np.array([r["prompt"] for r in rows])
+    same_p = np.full(n, np.nan); diff_p = np.full(n, np.nan)
+    for i in range(n):
+        m = np.arange(n) != i
+        sp = m & (prompt == prompt[i]); dp = m & (prompt != prompt[i])
+        if sp.any():
+            same_p[i] = C[i][sp].mean()
+        if dp.any():
+            diff_p[i] = C[i][dp].mean()
+
+    def paired(a, b, boot=4000):
+        k = ~np.isnan(a) & ~np.isnan(b)
+        d = (a - b)[k]
+        rng = np.random.default_rng(0)
+        bs = np.array([rng.choice(d, len(d), replace=True).mean() for _ in range(boot)])
+        lo, hi = np.percentile(bs, [2.5, 97.5])
+        return {"n": int(k.sum()), "own_mean": float(a[k].mean()), "comp_mean": float(b[k].mean()),
+                "margin": float(d.mean()), "t": float(d.mean() / (d.std(ddof=1) / np.sqrt(k.sum()))),
+                "ci95": [float(lo), float(hi)]}
+
+    ctrl = {"own_vs_different_prompt": paired(own, diff_p), "own_vs_same_prompt": paired(own, same_p)}
     print(f"FMA pool {F.shape[0]} clips, pool-internal mean cos {fma_fma:.4f}")
     print(f"gen -> FMA mean {gen_fma_mean.mean():.4f} (best clip in pool {gen_fma_max.mean():.4f}) | "
           f"real stimulus -> FMA mean {stim_fma_mean.mean():.4f}")
@@ -134,6 +159,7 @@ def main():
                       "stimuli are Bollywood/film music and the FMA pool is mostly Western genres, "
                       "so any clip that merely sounds like the corpus beats the pool baseline.",
         },
+        "genre_control": ctrl,
         "rows": [{"row": int(r["row"]), "prompt": int(r["prompt"]), "prompt_text": r["prompt_text"],
                   "gen_file": Path(r["gen_wav"]).name,
                   "cos_own": float(own[i]), "cos_others": float(others[i]),
@@ -152,6 +178,9 @@ def main():
     json.dump(payload, open(web, "w", encoding="utf-8"), indent=2)
     print(f"own {own.mean():.4f}  others {others.mean():.4f}  margin {margin.mean():+.4f} "
           f"t={payload['margin_t']:.1f}  own>others in {payload['rows_own_above_others']}/{n}")
+    for k, v in ctrl.items():
+        print(f"{k:26} n={v['n']:2} margin {v['margin']:+.4f} t={v['t']:.2f} "
+              f"95% CI [{v['ci95'][0]:+.3f},{v['ci95'][1]:+.3f}]")
 
     order = np.argsort(own)
     pick = [rows[order[k]]["row"] for k in (0, n // 4, n // 2, (3 * n) // 4, n - 1)]

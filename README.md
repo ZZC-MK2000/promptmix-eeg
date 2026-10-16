@@ -31,6 +31,8 @@ promptmix-eeg/
 │   │     make_figures_spectro.py · make_fig_genre_confusion.py · make_fig_compat_map.py
 │   │     make_fig_retrieval_pool.py · make_fig_mfcc_fad.py
 │   ├── shared/                # helpers imported across groups (embed_text/gen_from_enc, CondWidthModel)
+│   │     stratified_sample.py   # THE only sanctioned row sampler — never use `idx[:n]` (see docs/INCIDENT_...)
+│   ├── evaluation/ …          # + audit_sample_coverage.py: coverage/dedup audit, exits non-zero on a bad showcase
 │   │     arms_2x2.py · pilot_multitoken.py
 │   └── legacy/                # earlier fine-tune arms (ep16/mixed2) kept for contrast, not the main route
 ├── results/                   # real artifacts (JSONs, embeddings, classifier weights, wavs)

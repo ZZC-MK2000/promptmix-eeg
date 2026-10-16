@@ -47,6 +47,10 @@ def main():
     ap.add_argument("--tokens", type=int, default=400)
     ap.add_argument("--temperature", type=float, default=0.9)
     ap.add_argument("--seed", type=int, default=1234)
+    ap.add_argument("--sample-seed", type=int, default=0)
+    ap.add_argument("--retrain", action="store_true",
+                    help="retrain and OVERWRITE results/library_b/classifier.pt (off by default: "
+                         "the shipped checkpoint is what fig4 and genre_ci.json are computed from)")
     args = ap.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -55,6 +59,7 @@ def main():
     from musicgen_clap_finetune import MusicGenCLAP, load_clap, clap_embed_audio
     from finetune_prompt_classifier import PromptClassifier
     from arms_2x2 import embed_text, gen_from_enc
+    from stratified_sample import heldout_mask, diverse_rows, load_val_embeddings, coverage_report
     import soundfile as sf
 
     t0 = time.time()
@@ -62,32 +67,44 @@ def main():
     codes = np.load(DATA / "codes.npy").astype(np.int64)
     group = np.load(DATA / "group.npy").astype(np.int64)
     oracle = np.load(LIBB / "oracle_all.npy").astype(np.int64)
+    va = heldout_mask(group)                      # subject-level split, same seed as training
 
-    # train + save the corpus-matched classifier (CPU, fast)
-    uniq = np.unique(group); rng = np.random.default_rng(0)
-    val_g = set(uniq[rng.permutation(len(uniq))[:max(1, int(round(len(uniq) * 0.1)))]].tolist())
-    va = np.array([g in val_g for g in group])
+    # The published classifier is results/library_b/classifier.pt (the one genre_ci.json and fig4
+    # are computed from). Retraining here overwrites it with a different seed realisation, which is
+    # how summary.json came to disagree with the shipped checkpoint -- so training is opt-in.
     model = PromptClassifier(512, 256, K, 0.1).to(device)
-    opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
-    crit = torch.nn.CrossEntropyLoss()
-    ds = torch.utils.data.TensorDataset(torch.from_numpy(cond[~va]), torch.from_numpy(oracle[~va]))
-    dl = torch.utils.data.DataLoader(ds, batch_size=64, shuffle=True, num_workers=0, drop_last=True)
-    model.train(); it = iter(dl)
-    for step in range(1, 3001):
-        try: xb, yb = next(it)
-        except StopIteration: it = iter(dl); xb, yb = next(it)
-        loss = crit(model(xb.to(device)), yb.to(device))
-        opt.zero_grad(); loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0); opt.step()
-    torch.save({"model": model.state_dict(), "args": {"hidden": 256}, "prompts": PROMPTS_B},
-               LIBB / "classifier.pt")
-    print(f"classifier trained+saved [{time.time()-t0:.0f}s]", flush=True)
+    if args.retrain:
+        opt = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=0.01)
+        crit = torch.nn.CrossEntropyLoss()
+        ds = torch.utils.data.TensorDataset(torch.from_numpy(cond[~va]), torch.from_numpy(oracle[~va]))
+        dl = torch.utils.data.DataLoader(ds, batch_size=64, shuffle=True, num_workers=0, drop_last=True)
+        model.train(); it = iter(dl)
+        for step in range(1, 3001):
+            try: xb, yb = next(it)
+            except StopIteration: it = iter(dl); xb, yb = next(it)
+            loss = crit(model(xb.to(device)), yb.to(device))
+            opt.zero_grad(); loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0); opt.step()
+        torch.save({"model": model.state_dict(), "args": {"hidden": 256}, "prompts": PROMPTS_B},
+                   LIBB / "classifier.pt")
+        print(f"classifier RETRAINED and overwritten [{time.time()-t0:.0f}s]", flush=True)
+    else:
+        ck = torch.load(LIBB / "classifier.pt", map_location="cpu", weights_only=True)
+        model.load_state_dict(ck["model"])
+        print("loaded published classifier.pt (no retrain)", flush=True)
 
     base = MusicGenCLAP(device=device, use_lora=False); mg = base.mg; mg.eval()
     clap, proc, csr = load_clap(device)
     prompt_h = {k: embed_text(mg, PROMPTS_B[k], device) for k in range(K)}
 
-    val_rows = np.where(va)[0]
-    rows = val_rows[:args.rows]
+    # showcase rows: spread over groups and stimulus content, never a prefix of the index order
+    emb = load_val_embeddings()
+    rows = diverse_rows(emb, np.where(va)[0], group, args.rows, seed=args.sample_seed)
+    cov = coverage_report(rows, group, emb, "deliver_library_b showcase")
+    assert cov["distinct_groups"] == len(rows), f"overlapping windows in showcase: {cov}"
+    assert cov["mean_pairwise_cos_of_stimuli"] < 0.75, (
+        f"showcase stimuli too similar (mean pairwise cos "
+        f"{cov['mean_pairwise_cos_of_stimuli']:.3f}) — this is the prefix-sampling failure mode")
+    print(f"showcase rows={list(rows)} coverage={cov}", flush=True)
     model.eval()
     with torch.no_grad():
         pred = model(torch.from_numpy(cond[rows]).to(device)).argmax(1).cpu().numpy()
@@ -120,7 +137,11 @@ def main():
           f"{np.mean([x['peak'] for x in rec]):.3f} cos_to_true mean={cs.mean():.4f} ===")
     print(f"prompt usage: {np.bincount(pred, minlength=K).tolist()}")
     json.dump({"zcr_mean": float(zc.mean()), "cos_to_true_mean": float(cs.mean()),
-               "pred_dist": np.bincount(pred, minlength=K).tolist(), "per_row": rec},
+               "pred_dist": np.bincount(pred, minlength=K).tolist(),
+               "row_selection": {"rule": "diverse_rows: held-out subjects, one row per group, "
+                                         "greedy farthest-point over true-audio laion-CLAP",
+                                 "sample_seed": args.sample_seed, "coverage": cov},
+               "per_row": rec},
               open(OUT / "report.json", "w"), indent=2)
     print(f"clips in {OUT}  [{time.time()-t0:.0f}s]")
 

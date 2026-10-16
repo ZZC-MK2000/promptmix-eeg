@@ -1,44 +1,128 @@
 [
   {
-    "row": 2,
-    "prompt": 9,
-    "prompt_text": "classic rock with a driving electric guitar riff and live drums",
+    "row": 795,
+    "prompt": 7,
+    "prompt_text": "latin reggaeton beat with tropical synths and dembow rhythm",
     "weights_top3": [
       [
-        9,
-        0.8976357579231262
-      ],
-      [
-        6,
-        0.07364600151777267
+        7,
+        0.6174635887145996
       ],
       [
         0,
-        0.028608262538909912
+        0.2998476028442383
+      ],
+      [
+        6,
+        0.0820678323507309
       ]
     ],
-    "cos_to_heard": 0.3863244652748108,
-    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row2__classic.wav"
+    "cos_to_heard": 0.5925883054733276,
+    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row795__latin.wav"
   },
   {
-    "row": 5,
+    "row": 1138,
+    "prompt": 2,
+    "prompt_text": "catchy pop song with airy female vocals and glossy production",
+    "weights_top3": [
+      [
+        2,
+        0.5321971774101257
+      ],
+      [
+        0,
+        0.2623611390590668
+      ],
+      [
+        8,
+        0.0807395800948143
+      ]
+    ],
+    "cos_to_heard": 0.48274701833724976,
+    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row1138__catchy.wav"
+  },
+  {
+    "row": 1150,
+    "prompt": 7,
+    "prompt_text": "latin reggaeton beat with tropical synths and dembow rhythm",
+    "weights_top3": [
+      [
+        7,
+        0.7416524291038513
+      ],
+      [
+        0,
+        0.16165126860141754
+      ],
+      [
+        2,
+        0.07206454128026962
+      ]
+    ],
+    "cos_to_heard": 0.7365752458572388,
+    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row1150__latin.wav"
+  },
+  {
+    "row": 23942,
+    "prompt": 6,
+    "prompt_text": "funky groove with slap bass and punchy brass stabs",
+    "weights_top3": [
+      [
+        6,
+        0.9034258723258972
+      ],
+      [
+        0,
+        0.09610976278781891
+      ],
+      [
+        11,
+        0.00045073777437210083
+      ]
+    ],
+    "cos_to_heard": 0.5856044888496399,
+    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row23942__funky.wav"
+  },
+  {
+    "row": 24714,
     "prompt": 0,
     "prompt_text": "upbeat indian bollywood dance song with dhol and bright synths",
     "weights_top3": [
       [
         0,
-        0.964442253112793
-      ],
-      [
-        7,
-        0.013617745600640774
+        0.8399997353553772
       ],
       [
         6,
-        0.010522892698645592
+        0.15829521417617798
+      ],
+      [
+        5,
+        0.001679569948464632
       ]
     ],
-    "cos_to_heard": 0.7112599015235901,
-    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row5__upbeat.wav"
+    "cos_to_heard": 0.6101075410842896,
+    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row24714__upbeat.wav"
+  },
+  {
+    "row": 25724,
+    "prompt": 11,
+    "prompt_text": "cinematic orchestral action cue with pounding war drums",
+    "weights_top3": [
+      [
+        11,
+        0.9423052668571472
+      ],
+      [
+        6,
+        0.03722298890352249
+      ],
+      [
+        0,
+        0.02026159130036831
+      ]
+    ],
+    "cos_to_heard": 0.29347413778305054,
+    "wav": "D:\\Projects\\CLaBraM\\promptmix-eeg\\results\\demo\\eeg_row25724__cinematic.wav"
   }
 ]

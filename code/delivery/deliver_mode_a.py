@@ -62,13 +62,15 @@ def zcr(w):
 
 
 def heldout_rows(group, n, seed=0):
-    """Rows from val groups (the same 10% split as the classifier) so the EEG is out-of-sample."""
-    uniq = np.unique(group)
-    rng = np.random.default_rng(seed)
-    val_g = set(uniq[rng.permutation(len(uniq))[:max(1, int(round(len(uniq) * 0.1)))]].tolist())
-    va = np.array([g in val_g for g in group])
+    """Rows from val groups (the same 10% split as the classifier) so the EEG is out-of-sample.
+    Spread over groups and stimulus content: `idx[:n]` here used to return a prefix of a
+    subject-ordered array, i.e. one person and one song (see code/shared/stratified_sample.py)."""
+    from stratified_sample import heldout_mask, diverse_rows, load_val_embeddings
+    va = heldout_mask(group, seed=seed)
     idx = np.where(va)[0]
-    return idx[:n] if n else idx
+    if not n:
+        return idx
+    return diverse_rows(load_val_embeddings(), idx, group, n, seed=seed)
 
 
 def main():

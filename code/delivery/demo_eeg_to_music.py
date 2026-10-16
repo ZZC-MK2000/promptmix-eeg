@@ -63,7 +63,9 @@ def main():
     true_emb = unit(np.load(ROOT / "results/prompt_classifier/true_emb_all.npy").astype(np.float32))
     uniq = np.unique(group); rng = np.random.default_rng(0)
     vg = set(uniq[rng.permutation(len(uniq))[:max(1, int(round(len(uniq) * 0.1)))]].tolist())
-    rows = np.where(np.array([g in vg for g in group]))[0][:args.n]
+    from stratified_sample import diverse_rows, load_val_embeddings
+    rows = diverse_rows(load_val_embeddings(),
+                        np.where(np.array([g in vg for g in group]))[0], group, args.n, seed=0)
 
     print(f"=== PromptMix-EEG end-to-end demo: {len(rows)} held-out EEG windows ===")
     print(f"pipeline: EEG -> bridge -> projection -> argmax prompt -> FROZEN MusicGen -> 32kHz\n")

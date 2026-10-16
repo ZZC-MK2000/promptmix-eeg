@@ -26,11 +26,15 @@ def first(pat):
     g = sorted(glob.glob(str(ROOT / pat)))
     return g[0] if g else None
 
+# one row for every panel: comparing across rows is exactly the mistake the 2026-10-17 incident
+# documented, and this figure invites a visual comparison between panels
+ROW = 1083
+
 clips = [
-    ("real heard window", first("results/library_b/listen/ref__*.wav")),
-    ("mode A (native, EEG genre)", first("results/library_b/listen/genB__*.wav")),
-    ("B-cat (native sample)", first("results/prompt_classifier_true/listen_B/B-cat__*.wav")),
-    ("B-mix (waveform blend)", first("results/prompt_classifier_true/listen_B/B-mix__*.wav")),
+    ("real heard window", first(f"results/library_b/listen/ref__row{ROW}.wav")),
+    ("mode A (native, EEG genre)", first(f"results/library_b/listen/genB__row{ROW}__p*.wav")),
+    ("B-cat (native sample)", first(f"results/prompt_classifier_true/listen_B/B-cat__row{ROW}.wav")),
+    ("B-mix (waveform blend)", first(f"results/prompt_classifier_true/listen_B/B-mix__row{ROW}.wav")),
     ("interpolation a=.25 (OFF-manifold)", first("results/gen_eegcond/library_radius/sweep_p8_10_a025.wav")),
 ]
 

@@ -73,7 +73,12 @@ def main():
     group = np.load(DATA / "group.npy").astype(np.int64)
     uniq = np.unique(group); rng = np.random.default_rng(0)
     vg = set(uniq[rng.permutation(len(uniq))[:max(1, int(round(len(uniq) * 0.1)))]].tolist())
-    va = np.where(np.array([g in vg for g in group]))[0][:60]
+    # spread over groups and stimulus content: `[:60]` used to take a subject-ordered prefix, which
+    # gave 60 windows from 1 subject and 6 of 14 songs
+    from stratified_sample import diverse_rows, load_val_embeddings, coverage_report
+    va = diverse_rows(load_val_embeddings(), np.where(np.array([g in vg for g in group]))[0],
+                      group, 60, seed=0)
+    print("mfcc sample coverage:", coverage_report(va, group, load_val_embeddings()), flush=True)
 
     # real: decode held-out windows
     real_w = []

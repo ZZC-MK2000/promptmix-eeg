@@ -1,0 +1,180 @@
+{
+  "library_b/listen (demo 'heard vs generated')": {
+    "set": "results/library_b/listen",
+    "n_rows": 14,
+    "n_groups": 14,
+    "n_songs": 9,
+    "n_subjects": 5,
+    "n_runs": 6,
+    "songs": [
+      2,
+      3,
+      4,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "subjects": [
+      "02",
+      "S10",
+      "S12",
+      "S13",
+      "S17"
+    ],
+    "runs": [
+      "02_1",
+      "02_2",
+      "S10_1",
+      "S12_1",
+      "S13_1",
+      "S17_1"
+    ],
+    "distinct_stimulus_audio": 14,
+    "rows": [
+      56,
+      78,
+      322,
+      519,
+      749,
+      795,
+      1083,
+      1138,
+      1150,
+      23942,
+      24496,
+      24714,
+      25724,
+      25757
+    ]
+  },
+  "prompt_classifier_true/listen_B": {
+    "set": "results/prompt_classifier_true/listen_B",
+    "n_rows": 14,
+    "n_groups": 14,
+    "n_songs": 9,
+    "n_subjects": 5,
+    "n_runs": 6,
+    "songs": [
+      2,
+      3,
+      4,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "subjects": [
+      "02",
+      "S10",
+      "S12",
+      "S13",
+      "S17"
+    ],
+    "runs": [
+      "02_1",
+      "02_2",
+      "S10_1",
+      "S12_1",
+      "S13_1",
+      "S17_1"
+    ],
+    "distinct_stimulus_audio": null,
+    "rows": [
+      56,
+      78,
+      322,
+      519,
+      749,
+      795,
+      1083,
+      1138,
+      1150,
+      23942,
+      24496,
+      24714,
+      25724,
+      25757
+    ]
+  },
+  "gen_eegcond_mixed/eval (head-to-head fine-tuned arm)": {
+    "set": "results/gen_eegcond_mixed/eval",
+    "n_rows": 13,
+    "n_groups": 13,
+    "n_songs": 6,
+    "n_subjects": 2,
+    "n_runs": 2,
+    "songs": [
+      2,
+      5,
+      6,
+      8,
+      9,
+      13
+    ],
+    "subjects": [
+      "02",
+      "S17"
+    ],
+    "runs": [
+      "02_1",
+      "S17_1"
+    ],
+    "distinct_stimulus_audio": null,
+    "rows": [
+      2,
+      5,
+      36,
+      78,
+      202,
+      250,
+      314,
+      319,
+      347,
+      432,
+      457,
+      533,
+      25769
+    ]
+  },
+  "demo (end-to-end CLI)": {
+    "set": "results/demo",
+    "n_rows": 6,
+    "n_groups": 6,
+    "n_songs": 5,
+    "n_subjects": 4,
+    "n_runs": 4,
+    "songs": [
+      3,
+      4,
+      10,
+      11,
+      13
+    ],
+    "subjects": [
+      "02",
+      "S10",
+      "S13",
+      "S17"
+    ],
+    "runs": [
+      "02_2",
+      "S10_1",
+      "S13_1",
+      "S17_1"
+    ],
+    "distinct_stimulus_audio": null,
+    "rows": [
+      795,
+      1138,
+      1150,
+      23942,
+      24714,
+      25724
+    ]
+  }
+}

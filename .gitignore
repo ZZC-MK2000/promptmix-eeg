@@ -19,3 +19,5 @@ __pycache__/
 # --- os/editor ---
 .DS_Store
 Thumbs.db
+# voided artifacts kept locally for traceability, not published (contain absolute local paths)
+results/_voided_*/
