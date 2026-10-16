@@ -2,11 +2,13 @@
 missing-CJK-font tofu). Writes PNGs to paper/figures/.
 
 Sources:
-  results/gen_eegcond/library_radius/radius.json   (coverage + tolerance)
+  results/coverage_unified/table.json              (coverage radius, one convention — run
+                                                    code/radii/coverage_unified.py first)
+  results/gen_eegcond/library_radius/radius.json   (tolerance sweep, zcr of real music)
   results/prompt_classifier/true_oracle_meta.json  (oracle label distribution / collapse)
   results/prompt_classifier_true/eval_true_oracle.json  (classifier pred-vs-true genre dist)
 
-Run: python src/train/make_figures.py
+Run: python code/figures/make_figures.py
 """
 import json
 import sys
@@ -23,24 +25,42 @@ from figstyle import TITLE_FS, save
 ROOT = Path("D:/Projects/CLaBraM/promptmix-eeg")
 R = json.load(open(ROOT / "results" / "gen_eegcond" / "library_radius" / "radius.json"))
 
-# ---- Fig 1: coverage radius (per-target mean +- SE) ----
+# ---- Fig 1: coverage radius, from the single unified table (convention: 6 clips per prompt) ----
+COV = json.load(open(ROOT / "results" / "coverage_unified" / "table.json", encoding="utf-8"))
+LIB = {m["label"]: m for m in COV["libraries"]}
+MAIN = LIB["corpus-matched 12-prompt library"]
+ON = [m for m in COV["libraries"] if m["on_convention"]]
+fig, (ax, ax2) = plt.subplots(2, 1, figsize=(7.8, 6.8))
 labels = ["Convex\nmixture", "Best single\nclip", "Best prompt\nmean", "Uniform over\nprompts",
           "Global mean\n(trivial)"]
-keys = ["mixture_over_library", "best_single_clip", "best_single_prompt_mean",
-        "uniform_over_prompts", "global_mean"]
-means = [np.mean(R[k]["per_target"]) for k in keys]
-ses = [np.std(R[k]["per_target"], ddof=1) / np.sqrt(len(R[k]["per_target"])) for k in keys]
-fig, ax = plt.subplots(figsize=(6.2, 3.4))
-cols = ["#2b7a2b", "#5aa9e6", "#5aa9e6", "#c0c0c0", "#c0c0c0"]
-ax.bar(range(len(means)), means, yerr=ses, capsize=4, color=cols)
+keys = ["mixture", "best_single_clip", "best_prompt_mean", "uniform_over_prompts", "global_mean"]
+means = [MAIN[k] for k in keys]
+ses = [MAIN["se"][k] for k in keys]
+ax.bar(range(5), means, yerr=ses, capsize=4,
+       color=["#2b7a2b", "#5aa9e6", "#5aa9e6", "#c0c0c0", "#c0c0c0"])
 ax.axhline(means[4], ls="--", c="grey", lw=1, label=f"trivial {means[4]:.3f}")
 for i, m in enumerate(means):
-    ax.text(i, m + 0.015, f"{m:.3f}", ha="center", fontsize=9)
-ax.set_xticks(range(len(labels))); ax.set_xticklabels(labels, fontsize=8)
-ax.set_ylabel("CLAP cosine to held-out real window"); ax.set_ylim(0.5, 0.95)
-ax.set_title("Coverage radius: library convex hull spans real 8-s windows", fontsize=TITLE_FS)
-ax.legend(fontsize=8)
-fig.tight_layout(); save(fig, "fig1_coverage_radius.png")
+    ax.text(i, m + 0.012, f"{m:.3f}", ha="center", fontsize=10)
+ax.set_xticks(range(5)); ax.set_xticklabels(labels, fontsize=9)
+ax.set_ylabel("CLAP cosine to held-out real window"); ax.set_ylim(0.5, 0.99)
+ax.set_title(f"main library = {MAIN['prompts']} prompts x {MAIN['clips_per_prompt']} clips "
+             f"= {MAIN['atoms']} clips", fontsize=10.5)
+ax.legend(fontsize=9)
+for m, c, mk in zip(ON, ["#8e2b1f", "#2b7a2b", "#1f77b4"], ["s", "o", "^"]):
+    ax2.plot(m["prompts"], m["mixture"], mk, color=c, ms=9, label=m["label"].replace(" library", ""))
+    below = m["label"].startswith("original")          # the two 12-prompt points sit ~0.016 apart
+    ax2.annotate(f"{m['mixture']:.3f}", (m["prompts"], m["mixture"]), textcoords="offset points",
+                 xytext=(0, -16 if below else 10), ha="center", fontsize=9, color=c)
+ax2.plot([12, 24], [MAIN["mixture"], LIB["corpus-matched 24-prompt library"]["mixture"]],
+         "-", c="#2b7a2b", lw=1.2, alpha=0.55)
+ax2.set_xlabel(f"prompts in the library (each {COV['libraries'][0]['clips_per_prompt']} clips)")
+ax2.set_ylabel("convex-mixture cosine"); ax2.set_ylim(0.80, 0.94)
+ax2.set_xticks(sorted({m["prompts"] for m in ON}))
+ax2.set_title("growing the library, clips per prompt fixed", fontsize=10.5)
+ax2.legend(fontsize=9, loc="lower right")
+fig.suptitle(f"Coverage radius under one convention — {COV['targets']} held-out real 8-s windows, "
+             f"6 clips per prompt", fontsize=TITLE_FS)
+fig.tight_layout(rect=[0, 0, 1, 0.955]); save(fig, "fig1_coverage_radius.png")
 
 # ---- Fig 2: tolerance radius (zcr vs alpha per pair) ----
 pairs = sorted(set(tuple(s["pair"]) for s in R["sweep"]))

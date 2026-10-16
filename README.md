@@ -15,7 +15,9 @@ Renamed from `CLaBraM` (the upstream EEG-encoder's name, no longer apt). This fo
 promptmix-eeg/
 ├── code/                      # all experiment code, grouped by function
 │   ├── radii/                 # the three-radius pre-gate (coverage / tolerance / label-validity)
-│   │     library_radius.py · validate_mode_a_labels.py · compat_matrix_b.py · coverage_k24.py · library_b_experiment.py
+│   │     library_radius.py · validate_mode_a_labels.py · compat_matrix_b.py · library_b_experiment.py
+│   │     coverage_k24.py · coverage_k48.py · coverage_unified.py  (one-convention coverage table:
+│   │     every library at 6 clips/prompt; run this before the figures)
 │   ├── classifier/            # the trainable projection layer (EEG -> prompt weights)
 │   │     finetune_prompt_classifier.py · compute_true_oracle(_fast).py · eval_true_oracle.py · bootstrap_genre_ci.py
 │   ├── delivery/              # turn EEG -> listenable frozen-native audio

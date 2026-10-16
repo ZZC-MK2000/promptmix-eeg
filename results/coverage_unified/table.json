@@ -1,0 +1,155 @@
+{
+  "targets": 60,
+  "convention": "6 clips per prompt; atoms = 6 x prompts",
+  "note": "the 36-prompt pool used 3 clips per prompt and is therefore not on the same axis as the others; it is reported but excluded from the sweep.",
+  "libraries": [
+    {
+      "atoms": 72,
+      "prompts": 12,
+      "clips_per_prompt": 6,
+      "mixture": 0.8632591628870584,
+      "best_single_clip": 0.754172561566035,
+      "best_prompt_mean": 0.7469706515471141,
+      "uniform_over_prompts": 0.704845666885376,
+      "global_mean": 0.7040117979049683,
+      "se": {
+        "mixture": 0.007739978932203166,
+        "best_single_clip": 0.009770013012458407,
+        "best_prompt_mean": 0.009878624175998602,
+        "uniform_over_prompts": 0.011630515013060266,
+        "global_mean": 0.011708332843418765
+      },
+      "mixture_vs_best_single": {
+        "delta": 0.10908660132102348,
+        "t": 24.117582577971348,
+        "wins": 60,
+        "n": 60
+      },
+      "mixture_vs_uniform": {
+        "delta": 0.15841348308734277,
+        "t": 24.467982551415204,
+        "wins": 60,
+        "n": 60
+      },
+      "mixture_vs_global_mean": {
+        "delta": 0.15924734859081285,
+        "t": 24.398421820794503,
+        "wins": 60,
+        "n": 60
+      },
+      "label": "original 12-prompt library",
+      "on_convention": true
+    },
+    {
+      "atoms": 72,
+      "prompts": 12,
+      "clips_per_prompt": 6,
+      "mixture": 0.8789925465291635,
+      "best_single_clip": 0.7968701561292012,
+      "best_prompt_mean": 0.775501670440038,
+      "uniform_over_prompts": 0.7296755909919739,
+      "global_mean": 0.7300375699996948,
+      "se": {
+        "mixture": 0.007238950032055079,
+        "best_single_clip": 0.00743034908624999,
+        "best_prompt_mean": 0.01138725740506912,
+        "uniform_over_prompts": 0.012487381635570005,
+        "global_mean": 0.012381678353251463
+      },
+      "mixture_vs_best_single": {
+        "delta": 0.08212239039996225,
+        "t": 26.872169489412506,
+        "wins": 60,
+        "n": 60
+      },
+      "mixture_vs_uniform": {
+        "delta": 0.14931689891277714,
+        "t": 20.527891703053196,
+        "wins": 60,
+        "n": 60
+      },
+      "mixture_vs_global_mean": {
+        "delta": 0.14895493828315498,
+        "t": 20.794576083406024,
+        "wins": 60,
+        "n": 60
+      },
+      "label": "corpus-matched 12-prompt library",
+      "on_convention": true
+    },
+    {
+      "atoms": 144,
+      "prompts": 24,
+      "clips_per_prompt": 6,
+      "mixture": 0.8991289037840358,
+      "best_single_clip": 0.8094975511233012,
+      "best_prompt_mean": 0.7903229703505834,
+      "uniform_over_prompts": 0.7364823818206787,
+      "global_mean": 0.7360641956329346,
+      "se": {
+        "mixture": 0.005266155638468068,
+        "best_single_clip": 0.006186269006673711,
+        "best_prompt_mean": 0.008491885984102693,
+        "uniform_over_prompts": 0.011448740648710617,
+        "global_mean": 0.011461571938736727
+      },
+      "mixture_vs_best_single": {
+        "delta": 0.08963135266073446,
+        "t": 31.634444300893318,
+        "wins": 60,
+        "n": 60
+      },
+      "mixture_vs_uniform": {
+        "delta": 0.16264653090405365,
+        "t": 21.3879015612429,
+        "wins": 60,
+        "n": 60
+      },
+      "mixture_vs_global_mean": {
+        "delta": 0.16306471411156556,
+        "t": 21.45697310257785,
+        "wins": 60,
+        "n": 60
+      },
+      "label": "corpus-matched 24-prompt library",
+      "on_convention": true
+    },
+    {
+      "atoms": 108,
+      "prompts": 36,
+      "clips_per_prompt": 3,
+      "mixture": 0.8901902573965024,
+      "best_single_clip": 0.7998383323351542,
+      "best_prompt_mean": 0.7961118469635645,
+      "uniform_over_prompts": 0.7303476929664612,
+      "global_mean": 0.7308213114738464,
+      "se": {
+        "mixture": 0.005960057649252451,
+        "best_single_clip": 0.007617377436749681,
+        "best_prompt_mean": 0.007717454601310663,
+        "uniform_over_prompts": 0.011121549486105541,
+        "global_mean": 0.011131564433013478
+      },
+      "mixture_vs_best_single": {
+        "delta": 0.09035192506134813,
+        "t": 25.5072065705675,
+        "wins": 60,
+        "n": 60
+      },
+      "mixture_vs_uniform": {
+        "delta": 0.15984259423236355,
+        "t": 23.46279167376913,
+        "wins": 60,
+        "n": 60
+      },
+      "mixture_vs_global_mean": {
+        "delta": 0.1593689643007547,
+        "t": 23.416103137138844,
+        "wins": 60,
+        "n": 60
+      },
+      "label": "36-prompt pool (3 clips/prompt)",
+      "on_convention": false
+    }
+  ]
+}

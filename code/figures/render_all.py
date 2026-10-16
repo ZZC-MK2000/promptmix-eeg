@@ -11,9 +11,15 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).parent
+ROOT = HERE.parent.parent
+PRE = [(ROOT / "code" / "radii" / "coverage_unified.py", "coverage table under one convention")]
 SCRIPTS = ["make_fig_architecture.py", "make_figures.py", "make_figures_tsne.py",
            "make_figures_spectro.py", "make_fig_genre_confusion.py", "make_fig_compat_map.py",
            "make_fig_retrieval_pool.py", "make_fig_mfcc_fad.py"]
+
+for p, why in PRE:
+    print(f"\n===== {p.name} ({why}) =====", flush=True)
+    subprocess.run([sys.executable, str(p)], check=True)
 
 for s in SCRIPTS:
     print(f"\n===== {s} =====", flush=True)
