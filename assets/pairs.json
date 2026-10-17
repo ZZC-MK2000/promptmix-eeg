@@ -44,6 +44,32 @@
       ]
     }
   },
+  "centroid_floor": {
+    "window_to_own_centroid_full_corpus": 0.8968233466148376,
+    "window_to_other_centroids_full_corpus": 0.6959257125854492,
+    "centroid_pairwise_mean": 0.7766043543815613,
+    "centroid_pairwise_max": 0.9533122181892395,
+    "centroid_pairwise_min": 0.45041367411613464,
+    "showcase_own_centroid": 0.7691088914871216,
+    "showcase_other_centroids": 0.5662728548049927,
+    "showcase_own_above_others": 12,
+    "showcase_row_songs": [
+      9,
+      9,
+      8,
+      2,
+      4,
+      4,
+      3,
+      3,
+      3,
+      10,
+      12,
+      11,
+      13,
+      13
+    ]
+  },
   "rows": [
     {
       "row": 56,

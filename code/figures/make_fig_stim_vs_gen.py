@@ -130,6 +130,45 @@ def main():
           f"own>FMA in {(margin_fma > 0).sum()}/{n}")
     print(f"other-13 vs FMA (control): margin {margin_fma_others.mean():+.4f} t={t_fma_others:.1f}")
 
+    # cross-song floor: what "a different song" actually looks like in this space. The withdrawn
+    # 0.869 figure was same-song windows; the honest references are window->other-song-centroid and
+    # centroid->centroid. Computed from the gate cache plus the row->song byte map (verified unique).
+    un = lambda x: x / (np.linalg.norm(x, axis=-1, keepdims=True) + 1e-8)
+    zg = np.load(M2 / "data" / "gate_nmedh14_ov2_lfix.npz", allow_pickle=True)
+    Tg = un(zg["target"].astype(np.float32)); sg = zg["song"].astype(int)
+    cent = np.stack([un(Tg[sg == s].mean(0)) for s in range(14)])
+    Wc = Tg @ cent.T
+    own_all = Wc[np.arange(len(sg)), sg]
+    oth_all = (Wc.sum(1) - own_all) / 13
+    D = cent @ cent.T
+    off = D[~np.eye(14, dtype=bool)]
+    ea = np.load(M2 / "data" / "eeg_emb_aldm_s0.npy").astype(np.float32)
+    Wp = torch.load(M2 / "results" / "eeg_to_clap_proj.pt", map_location="cpu", weights_only=True)
+    ca = un(ea @ Wp["weight"].numpy().astype(np.float32).T + Wp["bias"].numpy().astype(np.float32))
+    cond = np.load(ROOT / "data" / "eegcond" / "cond.npy").astype(np.float32)
+    key = {ca[i].tobytes(): i for i in range(len(ca))}
+    assert len(key) == len(ca), "bridge embeddings not unique; row->song map untrustworthy"
+    row_song = np.array([sg[key[cond[r["row"]].tobytes()]] for r in rows])
+    Cs = R @ cent.T
+    own_s = Cs[np.arange(n), row_song]
+    msk = np.ones((n, 14), bool); msk[np.arange(n), row_song] = False
+    oth_s = Cs[msk].reshape(n, 13).mean(1)
+    floor = {
+        "window_to_own_centroid_full_corpus": float(own_all.mean()),
+        "window_to_other_centroids_full_corpus": float(oth_all.mean()),
+        "centroid_pairwise_mean": float(off.mean()),
+        "centroid_pairwise_max": float(off.max()),
+        "centroid_pairwise_min": float(off.min()),
+        "showcase_own_centroid": float(own_s.mean()),
+        "showcase_other_centroids": float(oth_s.mean()),
+        "showcase_own_above_others": int((own_s > oth_s).sum()),
+        "showcase_row_songs": [int(x) for x in row_song],
+    }
+    print(f"cross-song floor: window->own centroid {own_all.mean():.4f} vs ->other centroids "
+          f"{oth_all.mean():.4f} | centroids pairwise mean {off.mean():.4f} max {off.max():.4f} | "
+          f"showcase own {own_s.mean():.4f} vs others {oth_s.mean():.4f} "
+          f"({floor['showcase_own_above_others']}/{n})")
+
     TILES.mkdir(parents=True, exist_ok=True)
     for r, wref, sr, wgen, gsr in clips:
         fig, ax = plt.subplots(figsize=(3.7, 1.25))
@@ -160,6 +199,7 @@ def main():
                       "so any clip that merely sounds like the corpus beats the pool baseline.",
         },
         "genre_control": ctrl,
+        "centroid_floor": floor,
         "rows": [{"row": int(r["row"]), "prompt": int(r["prompt"]), "prompt_text": r["prompt_text"],
                   "gen_file": Path(r["gen_wav"]).name,
                   "cos_own": float(own[i]), "cos_others": float(others[i]),
