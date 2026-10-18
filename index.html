@@ -3,126 +3,292 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PromptMix-EEG — brain → frozen-MusicGen, music by construction</title>
+<title>PromptMix-EEG — brain → frozen MusicGen, music by construction</title>
 <style>
-  :root{--bg:#0f1420;--card:#171e2e;--ink:#e8ecf4;--mut:#9aa7bd;--acc:#5aa9e6;--ok:#2b7a2b;--warn:#c0392b}
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#1c2333; --mut:#5a6478; --line:#e4e8ee;
+    --acc:#2e7d32; --acc-soft:#e8f5e9; --blue:#1565c0; --blue-soft:#e3f2fd;
+    --serif:Georgia,"Times New Roman","Songti SC",serif;
+    --sans:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+  }
   *{box-sizing:border-box}
-  body{margin:0;font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-  .wrap{max-width:1000px;margin:0 auto;padding:32px 20px 80px}
-  h1{font-size:32px;margin:0 0 6px}
-  .sub{color:var(--mut);margin:0 0 18px}
-  h2{font-size:21px;margin:44px 0 6px;border-bottom:1px solid #26304a;padding-bottom:6px}
-  h2+p.lead{color:var(--mut);margin:6px 0 16px}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .card{background:var(--card);border:1px solid #222c42;border-radius:12px;padding:18px}
-  .k{font-size:26px;font-weight:700;color:var(--acc)}
-  .mut{color:var(--mut);font-size:14px}
-  img{max-width:100%;border-radius:10px;border:1px solid #222c42;display:block}
-  figure{margin:0}
-  .stack{display:grid;gap:26px}
-  .stack img{max-width:820px;margin:0 auto}
-  figcaption{color:var(--mut);font-size:13px;margin-top:6px}
-  audio{width:100%;margin-top:6px}
-  .row{display:flex;justify-content:space-between;align-items:baseline}
-  ul{margin:8px 0 0 18px;color:var(--mut)}
-  li{margin:4px 0}
-  code{background:#0b101c;padding:1px 6px;border-radius:5px;color:#cfe3ff;font-size:14px}
-  a{color:var(--acc)}
-  .pill{display:inline-block;background:#22304d;color:#cfe3ff;border-radius:999px;padding:2px 10px;font-size:13px;margin:2px 6px 2px 0}
-  footer{margin-top:48px;color:var(--mut);font-size:13px;border-top:1px solid #26304a;padding-top:16px}
-  .note{background:#1b2436;border-left:3px solid var(--acc);border-radius:0 10px 10px 0;
-        padding:12px 16px;font-size:14px;color:#cfd8e8;margin:14px 0}
-  table{width:100%;border-collapse:separate;border-spacing:0 10px;font-size:14px;table-layout:fixed}
-  th{text-align:left;color:var(--mut);font-weight:600;font-size:13px;padding:0 8px 2px}
-  td{background:var(--card);border:1px solid #222c42;padding:10px;vertical-align:middle;overflow:hidden}
-  td:first-child{border-radius:12px 0 0 12px;color:var(--mut)}
-  td:last-child{border-radius:0 12px 12px 0}
-  td img{width:100%;height:auto;border-radius:6px;border-color:#0b101c}
+  html{scroll-behavior:smooth}
+  body{margin:0;font:16px/1.65 var(--sans);background:var(--bg);color:var(--ink)}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+         border-bottom:1px solid var(--line)}
+  .nav{max-width:1060px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .nav .brand{font:700 18px var(--serif);color:var(--ink)}
+  .nav .brand span{color:var(--acc)}
+  .nav .links{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+  .nav a{color:var(--mut);font-size:14px;padding:6px 10px;border-radius:8px}
+  .nav a:hover{background:var(--acc-soft);color:var(--acc);text-decoration:none}
+
+  .wrap{max-width:1060px;margin:0 auto;padding:40px 20px 90px}
+
+  .hero{padding:34px 0 10px}
+  h1{font:700 40px/1.15 var(--serif);margin:0 0 12px;letter-spacing:.2px}
+  .sub{color:var(--mut);font-size:17px;max-width:760px;margin:0 0 18px}
+  .sub b{color:var(--ink)}
+  .pills{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);color:var(--mut);
+        border-radius:999px;padding:4px 13px;font-size:13.5px}
+  .pill.hl{background:var(--acc-soft);border-color:#cde7cf;color:var(--acc);font-weight:600}
+
+  section{margin-top:52px}
+  h2{font:700 27px/1.2 var(--serif);margin:0 0 4px;color:var(--ink)}
+  h2::before{content:"";display:inline-block;width:6px;height:22px;background:var(--acc);
+             border-radius:3px;margin-right:12px;vertical-align:-2px}
+  .lead{color:var(--mut);margin:4px 0 20px;max-width:820px}
+
+  figure{margin:0 0 10px}
+  .figcard{background:var(--card);border:1px solid var(--line);border-radius:14px;
+           padding:20px 20px 14px;margin:0 0 22px;box-shadow:0 1px 2px rgba(20,30,50,.04)}
+  .figcard img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:8px}
+  .figcard figcaption{color:var(--mut);font-size:13.5px;margin-top:12px;line-height:1.55}
+  .figcard figcaption b{color:var(--ink)}
+  .figno{display:inline-block;font-size:12px;font-weight:600;color:var(--acc);background:var(--acc-soft);
+         border-radius:6px;padding:2px 8px;margin-bottom:10px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media (max-width:860px){.grid2{grid-template-columns:1fr}}
+
+  .note{background:var(--blue-soft);border-left:4px solid var(--blue);border-radius:0 12px 12px 0;
+        padding:14px 18px;font-size:14.5px;color:#2a3a55;margin:0 0 20px;line-height:1.6}
+  .note b{color:#123b6b}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);
+        border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  thead th{text-align:left;color:var(--mut);font-weight:600;font-size:12.5px;padding:12px 12px;
+           background:#fafbfd;border-bottom:1px solid var(--line)}
+  tbody td{padding:12px;vertical-align:middle;border-bottom:1px solid var(--line)}
+  tbody tr:last-child td{border-bottom:none}
+  td img{width:170px;height:auto;border-radius:6px;border:1px solid var(--line);display:block}
+  td audio{width:170px;margin-top:6px}
   .cos{font-variant-numeric:tabular-nums;white-space:nowrap}
   .cos b{color:var(--ink)}
-  details{background:var(--card);border:1px solid #222c42;border-radius:12px;padding:12px 16px;margin:10px 0}
+  .mut{color:var(--mut)}
+  .tfoot td{color:var(--mut);font-size:13px;background:#fafbfd}
+
+  .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:860px){.gal{grid-template-columns:1fr 1fr}}
+  @media (max-width:560px){.gal{grid-template-columns:1fr}}
+  .gcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .gcard b{font-size:14px}
+  .gcard audio{width:100%;margin-top:8px}
+
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 18px;margin:10px 0}
   summary{cursor:pointer;font-weight:600}
-  details p{color:var(--mut);margin:10px 0 0}
+  details p{color:var(--mut);margin:10px 0 0;font-size:14.5px}
+
+  ul.lim{color:var(--mut);font-size:14.5px;padding-left:20px}
+  ul.lim li{margin:7px 0}
+
+  footer{margin-top:60px;color:var(--mut);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
+  code{background:#eef1f5;padding:1px 6px;border-radius:5px;color:#34415c;font-size:13.5px}
 </style>
 </head>
 <body>
+<header>
+  <div class="nav">
+    <div class="brand">PromptMix<span>-EEG</span></div>
+    <div class="links">
+      <a href="#method">How it works</a>
+      <a href="#part1">Part 1 · retrieve</a>
+      <a href="#part2">Part 2 · generate</a>
+      <a href="#heard">Heard vs generated</a>
+      <a href="#listen">Listen</a>
+      <a href="#limits">Limitations</a>
+    </div>
+  </div>
+</header>
+
 <div class="wrap">
-  <h1>PromptMix-EEG</h1>
-  <p class="sub">Brain (EEG) → <b>frozen</b> MusicGen via mixture weights over 12 fixed genre prompts.
-     Every clip is a native sample of the untouched generator; the EEG only picks the style and the blend.</p>
-  <div>
-    <span class="pill">two decoupled parts</span><span class="pill">no generator weights touched</span>
-    <span class="pill">32 kHz native audio</span><span class="pill">68 subjects · 14 songs</span>
-    <a class="pill" href="https://github.com/ZZC-MK2000/promptmix-eeg">code + paper outline</a>
+
+  <div class="hero">
+    <h1>Brain signals → frozen MusicGen,<br>music by construction.</h1>
+    <p class="sub">An EEG window picks a <b>mixture of 12 fixed genre prompts</b>; the <b>frozen</b> MusicGen
+      samples it natively. <b>Alignment</b> (retrieve the song the subject heard) and
+      <b>Generation</b> (pleasant music) are two decoupled heads on one bridge — the generator's
+      weights are never touched, so every output is, by construction, a native clip of the original model.</p>
+    <div class="pills">
+      <span class="pill hl">generator weights never touched</span>
+      <span class="pill">32 kHz native audio</span>
+      <span class="pill">no embedding interpolation</span>
+      <a class="pill" href="https://github.com/ZZC-MK2000/promptmix-eeg">code + paper outline →</a>
+    </div>
   </div>
 
-  <h2>Method</h2>
-  <p class="lead">One alignment path, two independent heads.</p>
-  <figure><img src="assets/fig/fig0_architecture.png"><figcaption>8-s EEG window → frozen LaBraM encoder → ridge bridge into laion-CLAP space. <b>Part 1</b> reads that vector as a retrieval query (which song was heard); <b>Part 2</b> as weights over 12 genre prompts for the frozen generator.</figcaption></figure>
+  <section id="method">
+    <h2>How it works</h2>
+    <p class="lead">One frozen EEG encoder feeds two heads. This page shows the current version only — every
+      number comes straight from the result files and every figure regenerates on CPU
+      (<code>python code/figures/render_all.py</code>).</p>
 
-  <h2>Heard vs generated</h2>
-  <p class="lead">The stimulus a subject heard, next to what the frozen generator produced from that same window's EEG. Stimulus audio is withheld for copyright, so it appears as a spectrogram; everything playable here is generated.</p>
-  <div class="note">14 rows = 14 distinct source groups, 9 songs, 5 subjects (stratified, not random). A generated clip sits at CLAP cosine <b>0.609</b> to its own stimulus vs <b>0.506</b> to the others (+0.103, t = 3.4, 12/14), but the advantage vanishes against stimuli that received the <b>same</b> genre prompt (−0.005, t = −0.17): the match is <b>genre-level, not song-level</b>. For scale, a real window sits 0.897 to its own song's centroid vs 0.696 to the other 13.</div>
-  <figure><img src="assets/fig/fig12_stim_vs_gen.png"><figcaption>Five of the 14 pairs by rank (min / 25th / 50th / 75th / max cosine). Heard stimulus left, generated right; one common colour scale, time and frequency axis.</figcaption></figure>
-  <table>
-    <colgroup><col style="width:6%"><col style="width:32%"><col style="width:31%"><col style="width:16%"><col style="width:15%"></colgroup>
-    <thead><tr><th>window</th><th>heard stimulus — spectrogram only</th><th>generated from this window's EEG — playable</th><th>prompt the EEG selected</th><th>CLAP cos: own stimulus vs FMA pool</th></tr></thead>
-    <tbody id="pairs"><tr><td colspan="5" class="mut">loading <code>assets/pairs.json</code>…</td></tr></tbody>
-  </table>
-  <p class="mut">Numbers come straight from <code>results/stim_vs_gen/cos_matrix.json</code> (<code>code/figures/make_fig_stim_vs_gen.py</code>).</p>
+    <div class="figcard">
+      <span class="figno">Fig 0 · system</span>
+      <figure><img src="assets/fig/fig0_architecture.png" alt="two-part architecture"></figure>
+      <figcaption>8-s EEG window → frozen LaBraM encoder → ridge bridge into laion-CLAP space.
+        <b>Part 1</b> reads that vector as a retrieval query (which song was heard); <b>Part 2</b> as weights
+        over 12 genre prompts for the frozen generator.</figcaption>
+    </div>
 
-  <h2>Part 1 — retrieving the song the subject heard</h2>
-  <p class="lead">Nearest-centroid readout of the same embedding, against 14 song centroids built from the heard audio.</p>
-  <div class="stack">
-    <figure><img src="assets/fig/fig11_song_confusion.png"><figcaption>14-way song confusion, held-out subjects: <b>top-1 88.2%</b> vs 7.1% chance. T0–T9 = NMED-T songs, H0–H3 = NMED-H; T3/T4 bleed into each other because they are genuinely close in this space.</figcaption></figure>
-    <figure><img src="assets/fig/fig9_retrieval_pool.png"><figcaption>Same readout against a growing distractor pool of real FMA songs: 0.88 at 14 candidates → <b>0.266 at 4,146</b> (1103× the 1/pool chance line).</figcaption></figure>
-  </div>
+    <div class="figcard">
+      <span class="figno">Fig 13 · alignment training</span>
+      <figure><img src="assets/fig/fig13_align_structure.png" alt="stage-1 alignment structure"></figure>
+      <figcaption>How the alignment is trained: the window vector is pulled to its own audio's CLAP embedding
+        (×1.0, other windows of the <b>same song</b> as extra negatives), its eight per-second states to MERT's
+        per-second embeddings (×0.5), and a song-label classifier anchors it (×1.0). Only the head, the two
+        64-d projections and the classifier train; every encoder stays frozen.</figcaption>
+    </div>
+  </section>
 
-  <h2>Part 2 — why the generator stays frozen</h2>
-  <p class="lead">Three measurements taken before training anything.</p>
-  <div class="stack">
-    <figure><img src="assets/fig/fig1_coverage_radius.png"><figcaption><b>Coverage</b>: a convex mixture over the 72-clip library (12 prompts × 6 clips) reaches real 8-s windows at <b>0.879</b> vs 0.730 for a trivial global-mean predictor (+0.149, t = 20.8, 60/60). Right: 0.863 → 0.879 is corpus-matched wording at the same 12 prompts, → 0.899 is 24 prompts, all at 6 clips each. Only the gap over trivial counts — absolute cosines are inflated in this space.</figcaption></figure>
-    <figure><img src="assets/fig/fig8_tolerance_map.png"><figcaption><b>Tolerance</b>: interpolating two prompt embeddings goes off-manifold for 39% of the 66 pairs (zcr &gt; 0.15) → never interpolate; pick native prompts or blend waveforms.</figcaption></figure>
-    <figure><img src="assets/fig/fig2_tolerance_radius.png"><figcaption>Same effect over the interpolation weight: jazz↔choir peaks at zcr 0.46 against 0.056 for real music.</figcaption></figure>
-    <figure><img src="assets/fig/fig10_mfcc_fad.png"><figcaption><b>Texture</b>: MFCC-Fréchet distance to the real windows, one checkpoint per arm, same 60 rows — frozen <b>1,389</b> vs fine-tuned 7,404 / 5,200 (5.3× / 3.8×). Per window the order flips: median Mahalanobis 8.4 frozen vs 6.9 / 7.6 fine-tuned (real 4.5). So what frozen wins is distributional texture, not clip-by-clip realism.</figcaption></figure>
-    <figure><img src="assets/fig/fig7_spectrograms.png"><figcaption>One window (row 1083), five panels: the heard stimulus and the three delivered native clips sit at zcr 0.031–0.082 with harmonic ridges and note structure; the interpolated clip is broadband (0.490).</figcaption></figure>
-  </div>
+  <section id="part1">
+    <h2>Part 1 — retrieve the song the subject heard</h2>
+    <p class="lead">Nearest-centroid readout of the bridged embedding against the 14 song centroids built from
+      the heard audio.</p>
 
-  <h2>Which prompt the EEG picks</h2>
-  <p class="lead">The selection head, scored against "which library prompt is closest to the audio actually heard".</p>
-  <div class="stack">
-    <figure><img src="assets/fig/fig4_genre_confusion.png"><figcaption>Held-out subjects: overall 0.738, Cohen's κ <b>0.563 [0.54, 0.59]</b> (chance 0). The error is one-directional — most mass leaks into bolly-dance.</figcaption></figure>
-    <figure><img src="assets/fig/fig3_oracle_collapse.png"><figcaption>Why the library was rebuilt: in the original 12 prompts the square-wave chiptune prompt was spectrally central and swallowed 19,688 of 36,036 oracle labels, so raw accuracy on that label set is inflated and κ is reported instead. The rebuilt library has no such prompt.</figcaption></figure>
-  </div>
+    <div class="figcard">
+      <span class="figno">Fig 11 · 14-way song confusion</span>
+      <figure><img src="assets/fig/fig11_song_confusion.png" alt="14-way song confusion matrix"></figure>
+      <figcaption>Held-out subjects, 14-way: top-1 <b>88.2%</b> vs 7.1% chance. The same readout over all
+        36,036 windows scores <b>0.849</b> (chance 0.071). T0–T9 are NMED-T songs, H0–H3 NMED-H.</figcaption>
+    </div>
 
-  <h2>Listen — the prompt library</h2>
-  <p class="mut">One native MusicGen sample per genre prompt: the styles the EEG head can select.</p>
-  <div class="grid" id="gallery"></div>
+    <div class="figcard">
+      <span class="figno">Fig 9 · pool robustness</span>
+      <figure><img src="assets/fig/fig9_retrieval_pool.png" alt="retrieval vs pool size"></figure>
+      <figcaption>Same readout against a growing FMA distractor pool: <b>0.882 at 14 candidates →
+        0.266 at 4,146</b> (1103× the 1/pool chance).</figcaption>
+    </div>
+  </section>
 
-  <h2>FAQ</h2>
-  <details><summary>Why is there no stimulus audio?</summary>
-  <p>The stimuli are excerpts of commercially released songs, so only spectrograms are shown; every playable file is generated. Raw EEG is not published either.</p></details>
-  <details><summary>Is the generated clip a reconstruction of what was heard?</summary>
-  <p>No. It matches the heard material at genre level (+0.103) and that advantage disappears within the same genre (−0.005) — the adapter only chooses among 12 style prompts. Song identity is Part 1's job (88.2%).</p></details>
-  <details><summary>Why keep the generator frozen?</summary>
-  <p>Fine-tuning scored 7,404 vs 1,389 on the texture metric, and freezing keeps every output inside the generator's own distribution by construction.</p></details>
-  <details><summary>Why not interpolate between two prompts?</summary>
-  <p>39% of the 66 pairs go off-manifold: crackle instead of a blend.</p></details>
-  <details><summary>What is still missing?</summary>
-  <p>A human listening test (MOS), and coverage is relative to the trivial baseline rather than absolute — the library does not saturate the real-window distribution.</p></details>
+  <section id="part2">
+    <h2>Part 2 — generate from a frozen prompt library</h2>
+    <p class="lead">Three measurements decide the design: <b>coverage</b> (can a convex mixture of the library
+      reach real windows), <b>tolerance</b> (is interpolation safe), and <b>which prompt</b> the EEG actually
+      selects. The generator stays frozen because that keeps every output inside the model's own distribution.</p>
 
-  <h2>Limitations</h2>
-  <ul>
-    <li>Small corpus (14 songs, 68 subjects); genre labels skew toward the dominant style, so κ — not accuracy — is the honest number.</li>
-    <li>The margin over the FMA pool measures pull toward this corpus, not song identity: the stimuli are Bollywood/film music, the pool is mostly Western genres.</li>
-    <li>Interpolation being off-manifold makes the "mixture" effectively near-single-prompt, or waveform blending.</li>
-    <li>No metric replaces listening; MOS has not been run.</li>
-    <li>Conditioning is genre-level by design (12 style prompts), so song-level identity is out of reach for the generation arm.</li>
-  </ul>
+    <div class="figcard">
+      <span class="figno">Fig 1 · coverage radius</span>
+      <figure><img src="assets/fig/fig1_coverage_radius.png" alt="coverage radius"></figure>
+      <figcaption><b>Coverage</b>: a convex mixture over the 72-clip corpus-matched library (12 prompts × 6 clips)
+        reaches held-out real windows at <b>0.879</b> vs 0.730 for the trivial global-mean predictor
+        (+0.149, t = 20.8, 60/60). Only the gap over trivial counts — absolute cosines are inflated in this space.</figcaption>
+    </div>
+
+    <div class="figcard">
+      <span class="figno">Fig 3 · why a corpus-matched library</span>
+      <figure><img src="assets/fig/fig3_oracle_collapse.png" alt="oracle genre collapse"></figure>
+      <figcaption>The true-audio genre labels collapse onto <b>chiptune (54.6%)</b> under the original 12 prompts —
+        an attractor artifact of the library, not of the EEG. Re-labelling to corpus-matched genres removes it
+        (Bollywood becomes the honest plurality), which is the library used in Figs 1 and 4.</figcaption>
+    </div>
+
+    <div class="grid2">
+      <div class="figcard">
+        <span class="figno">Fig 8 · tolerance map</span>
+        <figure><img src="assets/fig/fig8_tolerance_map.png" alt="tolerance map"></figure>
+        <figcaption><b>Tolerance</b>: interpolating two prompt embeddings goes off-manifold for
+          <b>39% of the 66 pairs</b> (zcr &gt; 0.15) — so prompts are picked natively, never interpolated.</figcaption>
+      </div>
+      <div class="figcard">
+        <span class="figno">Fig 2 · tolerance radius</span>
+        <figure><img src="assets/fig/fig2_tolerance_radius.png" alt="tolerance radius"></figure>
+        <figcaption>The same effect over the blend weight: jazz↔choir peaks at zcr <b>0.46</b> vs 0.056 for real music.</figcaption>
+      </div>
+    </div>
+
+    <div class="figcard">
+      <span class="figno">Fig 4 · which prompt the EEG picks</span>
+      <figure><img src="assets/fig/fig4_genre_confusion.png" alt="genre confusion matrix"></figure>
+      <figcaption>EEG → genre prompt (corpus-matched library), held-out subjects: overall 0.738,
+        Cohen's κ <b>0.563 [0.54, 0.59]</b> — the EEG genuinely carries genre information.</figcaption>
+    </div>
+
+    <div class="figcard">
+      <span class="figno">Fig 10 · texture: why stay frozen</span>
+      <figure><img src="assets/fig/fig10_mfcc_fad.png" alt="MFCC-Fréchet distance"></figure>
+      <figcaption><b>Texture</b> (MFCC-Fréchet to the real windows, one checkpoint per arm, same 60 rows):
+        frozen <b>1,389</b> vs fine-tuned 7,404 / 5,200 (<b>5.3×</b> closer). Per window the order flips
+        (median Mahalanobis 8.4 frozen vs 6.9 / 7.6, real 4.5): frozen wins distributional texture,
+        not clip-by-clip realism.</figcaption>
+    </div>
+
+    <div class="figcard">
+      <span class="figno">Fig 7 · structure, not noise</span>
+      <figure><img src="assets/fig/fig7_spectrograms.png" alt="spectrogram panels"></figure>
+      <figcaption>One window (row 1083): the heard stimulus and three delivered native clips show harmonic
+        structure (zcr 0.031–0.082); the interpolated clip is broadband noise (0.490).</figcaption>
+    </div>
+  </section>
+
+  <section id="heard">
+    <h2>Heard vs generated</h2>
+    <p class="lead">The heard stimulus (spectrogram only — audio withheld for copyright) next to what the frozen
+      generator produced from that same window's EEG. 14 rows = 14 distinct source groups, 9 songs, 5 subjects.</p>
+    <div class="note">Generated clip vs its own stimulus: CLAP cos <b>0.609</b> vs <b>0.506</b> to the other 13
+      stimuli (+0.103, t = 3.4, 12/14). Against stimuli sharing the <b>same</b> genre prompt the margin is
+      <b>−0.005</b> (t = −0.17) — the match is <b>genre-level, not song-level</b>. Scale: a real window sits
+      0.897 to its own song's centroid and 0.696 to the others' across the full corpus.</div>
+
+    <div class="figcard">
+      <span class="figno">Fig 12 · five of the 14 pairs</span>
+      <figure><img src="assets/fig/fig12_stim_vs_gen.png" alt="heard vs generated spectrograms"></figure>
+      <figcaption>Five of the 14 pairs by cosine rank (min / 25th / 50th / 75th / max). Heard left, generated
+        right, common colour scale.</figcaption>
+    </div>
+
+    <table>
+      <thead><tr>
+        <th style="width:7%">window</th>
+        <th style="width:26%">heard stimulus — spectrogram only</th>
+        <th style="width:26%">generated from this window's EEG — playable</th>
+        <th style="width:25%">prompt the EEG selected</th>
+        <th style="width:16%">CLAP cos: own vs FMA pool</th>
+      </tr></thead>
+      <tbody id="pairs"><tr><td colspan="5" class="mut">loading <code>assets/pairs.json</code>…</td></tr></tbody>
+      <tfoot id="pairsfoot"></tfoot>
+    </table>
+    <p class="mut" style="font-size:13px;margin-top:10px">Numbers from
+      <code>results/stim_vs_gen/cos_matrix.json</code> (<code>code/figures/make_fig_stim_vs_gen.py</code>).</p>
+  </section>
+
+  <section id="listen">
+    <h2>Listen — the prompt library</h2>
+    <p class="lead">One native MusicGen sample per genre prompt: the 12 styles the EEG head can select.</p>
+    <div class="gal" id="gallery"></div>
+  </section>
+
+  <section id="limits">
+    <h2>Limitations & FAQ</h2>
+    <details><summary>Why is there no stimulus audio?</summary>
+      <p>The stimuli are excerpts of commercially released songs, so only spectrograms are shown and raw EEG is
+        not published. Every playable file is generated.</p></details>
+    <details><summary>Is the generated clip a reconstruction of what was heard?</summary>
+      <p>No — genre-level only (+0.103, and −0.005 within the same genre). Song identity is Part 1's job (88.2%).</p></details>
+    <details><summary>Why keep the generator frozen?</summary>
+      <p>Fine-tuning scored 7,404 vs 1,389 on distributional texture, and freezing keeps every output inside the
+        generator's own distribution by construction.</p></details>
+    <details><summary>Why not interpolate between two prompts?</summary>
+      <p>39% of the 66 pairs go off-manifold: crackle instead of a blend.</p></details>
+    <details><summary>What is still missing?</summary>
+      <p>A human listening test (MOS); coverage is relative to the trivial baseline, not absolute.</p></details>
+
+    <ul class="lim">
+      <li>Small corpus (14 songs, 68 subjects); genre labels skew, so κ — not accuracy — is the honest statistic.</li>
+      <li>The FMA-pool margin measures pull toward this corpus, not song identity (Bollywood stimuli vs a mostly-Western pool).</li>
+      <li>Off-manifold interpolation makes the mixture effectively near-single-prompt, or waveform blending.</li>
+      <li>No metric replaces listening; MOS has not been run.</li>
+      <li>Conditioning is genre-level by design, so song identity is out of reach for the generation arm.</li>
+    </ul>
+  </section>
 
   <footer>
     Code, figure scripts and paper outline: <a href="https://github.com/ZZC-MK2000/promptmix-eeg">github.com/ZZC-MK2000/promptmix-eeg</a> ·
-    every figure regenerates on CPU with <code>python code/figures/render_all.py</code> ·
+    figures regenerate on CPU with <code>python code/figures/render_all.py</code> ·
     static GitHub Pages demo, no backend.
   </footer>
 </div>
@@ -137,7 +303,7 @@ const clips = [
  ["10_hiphop.wav","hip-hop trap"],["11_cinematicorch.wav","cinematic orchestral"]
 ];
 document.getElementById('gallery').innerHTML = clips.map(([f,name])=>
- `<div class="card"><div class="row"><b>${name}</b></div><audio controls preload="none" src="assets/audio/${f}"></audio></div>`).join('');
+ `<div class="gcard"><b>${name}</b><audio controls preload="none" src="assets/audio/${f}"></audio></div>`).join('');
 
 fetch('assets/pairs.json').then(r=>r.json()).then(d=>{
   const rows = d.rows.slice().sort((a,b)=>a.row-b.row);
@@ -148,9 +314,10 @@ fetch('assets/pairs.json').then(r=>r.json()).then(d=>{
     <td><a href="assets/fig/spectro/row${r.row}_gen.png" target="_blank" rel="noopener"><img loading="lazy" src="assets/fig/spectro/row${r.row}_gen.png" alt="spectrogram of the generated clip, window ${r.row}"></a>
         <audio controls preload="none" src="assets/audio/pairs/${r.gen_file}"></audio></td>
     <td>${r.prompt_text} <span class="mut">(zcr ${r.zcr.toFixed(3)})</span></td>
-    <td class="cos"><b>${r.cos_own.toFixed(2)}</b> own<br>pool ${r.cos_fma_mean.toFixed(2)} <span class="mut">(${r.margin_fma>=0?'+':''}${r.margin_fma.toFixed(2)})</span><br><span class="mut">others ${r.cos_others.toFixed(2)}</span></td>
-   </tr>`).join('')
-   + `<tr><td colspan="5" class="mut">mean over ${d.n_pairs} rows — own ${d.mean_cos_own.toFixed(3)} vs others ${d.mean_cos_others.toFixed(3)} (<b>${d.mean_margin>=0?'+':''}${d.mean_margin.toFixed(3)}, t = ${d.margin_t.toFixed(1)}</b>, ${d.rows_own_above_others}/${d.n_pairs}); genre control ${d.genre_control.own_vs_same_prompt.margin.toFixed(3)} (t = ${d.genre_control.own_vs_same_prompt.t.toFixed(2)}); vs FMA pool ${d.fma.own_minus_pool_mean>=0?'+':''}${d.fma.own_minus_pool_mean.toFixed(3)} (t = ${d.fma.t.toFixed(1)}); cross-song reference ${d.centroid_floor.window_to_own_centroid_full_corpus.toFixed(3)} vs ${d.centroid_floor.window_to_other_centroids_full_corpus.toFixed(3)}.</td></tr>`;
+    <td class="cos"><b>${r.cos_own.toFixed(2)}</b> own<br><span class="mut">pool ${r.cos_fma_mean.toFixed(2)} (${r.margin_fma>=0?'+':''}${r.margin_fma.toFixed(2)})</span><br><span class="mut">others ${r.cos_others.toFixed(2)}</span></td>
+   </tr>`).join('');
+  document.getElementById('pairsfoot').innerHTML =
+   `<tr><td colspan="5">mean over ${d.n_pairs} rows — own ${d.mean_cos_own.toFixed(3)} vs others ${d.mean_cos_others.toFixed(3)} (<b>${d.mean_margin>=0?'+':''}${d.mean_margin.toFixed(3)}, t = ${d.margin_t.toFixed(1)}</b>, ${d.rows_own_above_others}/${d.n_pairs}); same-genre control ${d.genre_control.own_vs_same_prompt.margin.toFixed(3)} (t = ${d.genre_control.own_vs_same_prompt.t.toFixed(2)}); vs FMA pool ${d.fma.own_minus_pool_mean>=0?'+':''}${d.fma.own_minus_pool_mean.toFixed(3)} (t = ${d.fma.t.toFixed(1)}).</td></tr>`;
 }).catch(e=>{
   document.getElementById('pairs').innerHTML =
    `<tr><td colspan="5" class="mut">could not load assets/pairs.json (${e}) — open this page over http, not file://</td></tr>`;

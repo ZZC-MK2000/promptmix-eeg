@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).parent))
-from figstyle import TITLE_FS, save
+from figstyle import TITLE_FS, PALETTE, save
 
 ROOT = Path("D:/Projects/CLaBraM/promptmix-eeg")
 R = json.load(open(ROOT / "results" / "gen_eegcond" / "library_radius" / "radius.json"))
@@ -29,7 +29,8 @@ R = json.load(open(ROOT / "results" / "gen_eegcond" / "library_radius" / "radius
 COV = json.load(open(ROOT / "results" / "coverage_unified" / "table.json", encoding="utf-8"))
 LIB = {m["label"]: m for m in COV["libraries"]}
 MAIN = LIB["corpus-matched 12-prompt library"]
-ON = [m for m in COV["libraries"] if m["on_convention"]]
+ON = [m for m in COV["libraries"]
+      if m["on_convention"] and not m["label"].startswith("original")]
 fig, (ax, ax2) = plt.subplots(2, 1, figsize=(7.8, 6.8))
 labels = ["Convex\nmixture", "Best single\nclip", "Best prompt\nmean", "Uniform over\nprompts",
           "Global mean\n(trivial)"]
@@ -37,8 +38,9 @@ keys = ["mixture", "best_single_clip", "best_prompt_mean", "uniform_over_prompts
 means = [MAIN[k] for k in keys]
 ses = [MAIN["se"][k] for k in keys]
 ax.bar(range(5), means, yerr=ses, capsize=4,
-       color=["#2b7a2b", "#5aa9e6", "#5aa9e6", "#c0c0c0", "#c0c0c0"])
-ax.axhline(means[4], ls="--", c="grey", lw=1, label=f"trivial {means[4]:.3f}")
+       color=[PALETTE["green"], PALETTE["blue"], PALETTE["blue"],
+              PALETTE["grey_light"], PALETTE["grey_light"]])
+ax.axhline(means[4], ls="--", c=PALETTE["grey"], lw=1, label=f"trivial {means[4]:.3f}")
 for i, m in enumerate(means):
     ax.text(i, m + 0.012, f"{m:.3f}", ha="center", fontsize=10)
 ax.set_xticks(range(5)); ax.set_xticklabels(labels, fontsize=9)
@@ -46,13 +48,12 @@ ax.set_ylabel("CLAP cosine to held-out real window"); ax.set_ylim(0.5, 0.99)
 ax.set_title(f"main library = {MAIN['prompts']} prompts x {MAIN['clips_per_prompt']} clips "
              f"= {MAIN['atoms']} clips", fontsize=10.5)
 ax.legend(fontsize=9)
-for m, c, mk in zip(ON, ["#8e2b1f", "#2b7a2b", "#1f77b4"], ["s", "o", "^"]):
+for m, c, mk in zip(ON, [PALETTE["green"], PALETTE["blue"]], ["o", "^"]):
     ax2.plot(m["prompts"], m["mixture"], mk, color=c, ms=9, label=m["label"].replace(" library", ""))
-    below = m["label"].startswith("original")          # the two 12-prompt points sit ~0.016 apart
     ax2.annotate(f"{m['mixture']:.3f}", (m["prompts"], m["mixture"]), textcoords="offset points",
-                 xytext=(0, -16 if below else 10), ha="center", fontsize=9, color=c)
+                 xytext=(0, 10), ha="center", fontsize=9, color=c)
 ax2.plot([12, 24], [MAIN["mixture"], LIB["corpus-matched 24-prompt library"]["mixture"]],
-         "-", c="#2b7a2b", lw=1.2, alpha=0.55)
+         "-", c=PALETTE["green"], lw=1.2, alpha=0.55)
 ax2.set_xlabel(f"prompts in the library (each {COV['libraries'][0]['clips_per_prompt']} clips)")
 ax2.set_ylabel("convex-mixture cosine"); ax2.set_ylim(0.80, 0.94)
 ax2.set_xticks(sorted({m["prompts"] for m in ON}))
@@ -67,13 +68,13 @@ pairs = sorted(set(tuple(s["pair"]) for s in R["sweep"]))
 names = {0: "piano", 1: "indian", 2: "ambient", 3: "folk", 4: "dance", 5: "lofi",
          6: "orchestral", 7: "percussion", 8: "jazz", 9: "rock", 10: "choir", 11: "chiptune"}
 fig, ax = plt.subplots(figsize=(5.6, 3.4))
-for pa, c in zip(pairs, ["#d62728", "#1f77b4", "#2ca02c"]):
+for pa, c in zip(pairs, [PALETTE["blue"], PALETTE["orange"], PALETTE["purple"]]):
     xs = [s["alpha"] for s in R["sweep"] if tuple(s["pair"]) == pa]
     ys = [s["zcr"] for s in R["sweep"] if tuple(s["pair"]) == pa]
     ax.plot(xs, ys, "-o", color=c, lw=2, ms=5,
             label=f"{names[pa[0]]} <-> {names[pa[1]]}")
-ax.axhspan(0.02, 0.05, color="green", alpha=0.12, label="frozen native band")
-ax.axhline(R["zcr_truth"], ls="--", c="k", lw=1, label=f"real music {R['zcr_truth']:.3f}")
+ax.axhspan(0.02, 0.05, color=PALETTE["green"], alpha=0.12, label="frozen native band")
+ax.axhline(R["zcr_truth"], ls="--", c=PALETTE["ink"], lw=1, label=f"real music {R['zcr_truth']:.3f}")
 ax.set_xlabel("interpolation weight alpha"); ax.set_ylabel("zero-crossing rate")
 ax.set_title("Tolerance radius: T5-embedding interpolation goes off-manifold", fontsize=TITLE_FS)
 ax.legend(fontsize=7)
@@ -95,10 +96,10 @@ if dist is not None or true_dist is not None:
     d = dist if dist is not None else true_dist
     fig, ax = plt.subplots(figsize=(6.2, 3.2))
     x = np.arange(len(d))
-    ax.bar(x, d, color=["#d62728" if v > 0.3 * d.sum() else "#999" for v in d])
+    ax.bar(x, d, color=[PALETTE["red"] if v > 0.3 * d.sum() else PALETTE["grey_light"] for v in d])
     if pred_dist is not None:
-        ax.plot(x, pred_dist, "-o", color="#1f77b4", lw=1.5, ms=4, label="classifier predicted")
-        ax.plot(x, d, "-s", color="#2ca02c", lw=1.5, ms=4, label="true-audio oracle")
+        ax.plot(x, pred_dist, "-o", color=PALETTE["blue"], lw=1.5, ms=4, label="classifier predicted")
+        ax.plot(x, d, "-s", color=PALETTE["green"], lw=1.5, ms=4, label="true-audio oracle")
         ax.legend(fontsize=8)
     ax.set_xticks(x); ax.set_xticklabels(list(names.values()), rotation=60, ha="right", fontsize=7)
     ax.set_ylabel("# held-out windows")

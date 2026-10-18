@@ -14,6 +14,33 @@ ROOT = Path("D:/Projects/CLaBraM/promptmix-eeg")
 DESTS = (ROOT / "assets" / "fig", ROOT.parent / "paper" / "figures")
 TITLE_FS = 10.5
 
+# Serif body for every figure: English + numerals in Times New Roman, math in the
+# Times-compatible STIX face. The DejaVu Serif tail is a glyph fallback only.
+plt.rcParams.update({
+    "font.family": "serif",
+    "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
+    "mathtext.fontset": "stix",
+    "axes.unicode_minus": False,
+})
+
+# One coherent, colour-blind-safe palette across all figures. Semantics:
+#   green = frozen / ours / safe      blue = trainable / main series
+#   orange/amber = fine-tuned arms    red = off-manifold / danger
+#   grey = trivial baseline           ink = near-black text
+PALETTE = {
+    "green": "#2e7d32",
+    "green_dark": "#1b5e20",
+    "blue": "#1565c0",
+    "blue_dark": "#0d47a1",
+    "orange": "#ef6c00",
+    "amber": "#e6a817",
+    "red": "#c62828",
+    "purple": "#6a1b9a",
+    "grey": "#9e9e9e",
+    "grey_light": "#cfd8dc",
+    "ink": "#263238",
+}
+
 
 def save(fig, name, dpi=150):
     for d in DESTS:

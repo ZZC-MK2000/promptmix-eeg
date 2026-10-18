@@ -18,11 +18,11 @@ import matplotlib.pyplot as plt
 
 ROOT = Path("D:/Projects/CLaBraM/promptmix-eeg")
 sys.path.insert(0, str(Path(__file__).parent))
-from figstyle import TITLE_FS, save
+from figstyle import TITLE_FS, PALETTE, save
 
-ARMS = [("frozen_native", "frozen native\n(ours)", "#2b7a2b"),
-        ("finetuned_s12000", "fine-tuned\nmixed s12000", "#e0a526"),
-        ("finetuned_ep16", "fine-tuned\nk8 ep16", "#c87f0f")]
+ARMS = [("frozen_native", "frozen native\n(ours)", PALETTE["green"]),
+        ("finetuned_s12000", "fine-tuned\nmixed s12000", PALETTE["orange"]),
+        ("finetuned_ep16", "fine-tuned\nk8 ep16", PALETTE["amber"])]
 
 
 def main():
@@ -46,7 +46,7 @@ def main():
                  fontsize=TITLE_FS)
     ax.annotate(f"paired per-window Mahalanobis: {p0['mean_delta']:+.1f} "
                 f"(t={p0['t']:.2f}, CI [{p0['ci95'][0]:+.1f},{p0['ci95'][1]:+.1f}])",
-                xy=(0.5, -0.34), xycoords="axes fraction", ha="center", fontsize=8, color="#444")
+                xy=(0.5, -0.34), xycoords="axes fraction", ha="center", fontsize=8, color=PALETTE["ink"])
     fig.tight_layout(); save(fig, "fig10_mfcc_fad.png")
     print("fd", {k: round(v["fd_to_real"], 1) for k, v in d["arms"].items()}, "ratio", round(ratio, 2))
 

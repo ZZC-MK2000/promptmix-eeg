@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 ROOT = Path("D:/Projects/CLaBraM/promptmix-eeg")
 sys.path.insert(0, str(Path(__file__).parent))
-from figstyle import TITLE_FS, save
+from figstyle import TITLE_FS, PALETTE, save
 
 
 def main():
@@ -25,8 +25,8 @@ def main():
     best_ratio = max(t / d for t, d in zip(top1, rand))
 
     fig, ax = plt.subplots(figsize=(6.6, 3.8))
-    ax.plot(pools, top1, "-o", color="#1f77b4", lw=2, ms=6, label="EEG top-1 song retrieval")
-    ax.plot(pools, rand, "--", color="grey", lw=1.4, label="random chance 1/pool")
+    ax.plot(pools, top1, "-o", color=PALETTE["blue"], lw=2, ms=6, label="EEG top-1 song retrieval")
+    ax.plot(pools, rand, "--", color=PALETTE["grey"], lw=1.4, label="random chance 1/pool")
     for p, t in zip(pools, top1):
         ax.annotate(f"{t:.2f}", (p, t), textcoords="offset points", xytext=(0, 8),
                     ha="center", fontsize=8)

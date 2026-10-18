@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 
 sys.path.insert(0, str(Path(__file__).parent))
-from figstyle import fit_text, save
+from figstyle import fit_text, PALETTE, save
 
 
 def box(ax, fig, x, y, w, h, text, fc, fs=12, tc="black"):
@@ -47,38 +47,38 @@ def main():
     fig, ax = plt.subplots(figsize=(12, 6))
     ax.set_xlim(0, 12); ax.set_ylim(0, 6); ax.axis("off")
 
-    # shared input chain
-    box(ax, fig, 0.2, 2.7, 1.4, 1.0, "8-s EEG\nwindow", "#e8f0fe")
-    box(ax, fig, 2.0, 2.7, 1.7, 1.0, "frozen\nLaBraM encoder", "#d2e3fc")
-    box(ax, fig, 4.1, 2.7, 1.9, 1.0, "ridge bridge\n→ laion-CLAP cond", "#d2e3fc")
+    # shared input chain (neutral grey-blue)
+    box(ax, fig, 0.2, 2.7, 1.4, 1.0, "8-s EEG\nwindow", "#eceff1")
+    box(ax, fig, 2.0, 2.7, 1.7, 1.0, "frozen\nLaBraM encoder", "#e3e8ee")
+    box(ax, fig, 4.1, 2.7, 1.9, 1.0, "ridge bridge\n→ laion-CLAP cond", "#e3e8ee")
     arrow(ax, 1.6, 3.2, 2.0, 3.2); arrow(ax, 3.7, 3.2, 4.1, 3.2)
 
     # Part 1: alignment / retrieval
     p1 = FancyBboxPatch((6.5, 3.9), 5.3, 1.9, boxstyle="round,pad=0.02",
-                        fc="#e6f4ea", ec="#2b7a2b", lw=1.6)
+                        fc="#e8f5e9", ec=PALETTE["green"], lw=1.6)
     ax.add_patch(p1)
-    header(ax, fig, p1, 9.15, 5.45, "PART 1 — ALIGNMENT   (retrieve the heard song)", "#1b5e20")
+    header(ax, fig, p1, 9.15, 5.45, "PART 1 — ALIGNMENT   (retrieve the heard song)", PALETTE["green_dark"])
     box(ax, fig, 6.7, 4.05, 1.7, 0.95, "kNN / rank in\nlaion space", "#c8e6c9")
     box(ax, fig, 8.6, 4.05, 1.5, 0.95, "match real\nsong", "#c8e6c9")
-    box(ax, fig, 10.3, 4.05, 1.3, 0.95, "song-ID\n84%", "#a5d6a7", tc="#1b5e20")
+    box(ax, fig, 10.3, 4.05, 1.3, 0.95, "song-ID\n84%", "#a5d6a7", tc=PALETTE["green_dark"])
     arrow(ax, 8.4, 4.53, 8.6, 4.53); arrow(ax, 10.1, 4.53, 10.3, 4.53)
-    arrow(ax, 6.0, 3.45, 6.7, 4.53, color="#2b7a2b")
+    arrow(ax, 6.0, 3.45, 6.7, 4.53, color=PALETTE["green"])
 
     # Part 2: generation
     p2 = FancyBboxPatch((6.5, 0.35), 5.3, 3.05, boxstyle="round,pad=0.02",
-                        fc="#fce8e6", ec="#b03a2e", lw=1.6)
+                        fc="#e3f2fd", ec=PALETTE["blue"], lw=1.6)
     ax.add_patch(p2)
     header(ax, fig, p2, 9.15, 3.1, "PART 2 — GENERATION   (pleasant music, by construction)",
-           "#8e2b1f")
-    box(ax, fig, 6.7, 1.85, 1.6, 0.9, "tiny projection\n(134K) → weights", "#f5b7b1", fs=11)
-    box(ax, fig, 8.5, 1.85, 1.5, 0.9, "frozen 12-prompt\nlibrary", "#f5b7b1", fs=11)
-    box(ax, fig, 10.2, 1.85, 1.4, 0.9, "FROZEN\nMusicGen", "#e6b0aa", fs=11)
+           PALETTE["blue_dark"])
+    box(ax, fig, 6.7, 1.85, 1.6, 0.9, "tiny projection\n(134K) → weights", "#bbdefb", fs=11)
+    box(ax, fig, 8.5, 1.85, 1.5, 0.9, "frozen 12-prompt\nlibrary", "#bbdefb", fs=11)
+    box(ax, fig, 10.2, 1.85, 1.4, 0.9, "FROZEN\nMusicGen", "#90caf9", fs=11)
     box(ax, fig, 10.2, 0.6, 1.4, 0.85, "32 kHz\nnative audio", "#f9e79f")
     arrow(ax, 8.3, 2.3, 8.5, 2.3); arrow(ax, 10.0, 2.3, 10.2, 2.3)
     arrow(ax, 10.9, 1.85, 10.9, 1.45)
-    arrow(ax, 6.0, 2.95, 6.7, 2.3, color="#b03a2e")
+    arrow(ax, 6.0, 2.95, 6.7, 2.3, color=PALETTE["blue"])
     note = ax.text(6.7, 1.35, "argmax / B-cat / top-k mix\n(no condition interpolation)",
-                   fontsize=10, color="#8e2b1f", ha="left", va="center")
+                   fontsize=10, color=PALETTE["blue_dark"], ha="left", va="center")
     fig.canvas.draw()
     fit_text(fig, p2, note, margin=0.62)
 
