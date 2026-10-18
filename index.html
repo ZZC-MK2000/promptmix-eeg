@@ -111,8 +111,8 @@
     <h1>Brain signals → frozen MusicGen,<br>music by construction.</h1>
     <p class="sub">An EEG window picks a <b>mixture of 12 fixed genre prompts</b>; the <b>frozen</b> MusicGen
       samples it natively. <b>Alignment</b> (retrieve the song the subject heard) and
-      <b>Generation</b> (pleasant music) are two decoupled heads on one bridge — the generator's
-      weights are never touched, so every output is, by construction, a native clip of the original model.</p>
+      <b>Generation</b> (pleasant music) are two decoupled heads on one aligned EEG embedding — the
+      generator's weights are never touched, so every output is, by construction, a native clip of the original model.</p>
     <div class="pills">
       <span class="pill hl">generator weights never touched</span>
       <span class="pill">32 kHz native audio</span>
@@ -123,16 +123,21 @@
 
   <section id="method">
     <h2>How it works</h2>
-    <p class="lead">One frozen EEG encoder feeds two heads. This page shows the current version only — every
-      number comes straight from the result files and every figure regenerates on CPU
-      (<code>python code/figures/render_all.py</code>).</p>
+    <p class="lead">A CLAP-style two-tower alignment produces the EEG embedding <code>z_win</code>; two heads
+      then retrieve or generate. This page shows the current version only — every number comes straight from the
+      result files. All result figures regenerate on CPU (<code>python code/figures/render_all.py</code>); the
+      system diagram (Fig 0) is hand-supplied.</p>
 
     <div class="figcard">
       <span class="figno">Fig 0 · system</span>
-      <figure><img src="assets/fig/fig0_architecture.png" alt="two-part architecture"></figure>
-      <figcaption>8-s EEG window → frozen LaBraM encoder → ridge bridge into laion-CLAP space.
-        <b>Part 1</b> reads that vector as a retrieval query (which song was heard); <b>Part 2</b> as weights
-        over 12 genre prompts for the frozen generator.</figcaption>
+      <figure><img src="assets/fig/fig0_architecture.png" alt="two-tower TRIAD alignment and downstream tasks"></figure>
+      <figcaption><b>Alignment (training).</b> 8-s EEG → LaBraM backbone → trainable projection head →
+        <code>z_win</code>; heard audio → frozen CLAP → <code>a_win</code> (training-time only). Both feed
+        <b>TRIAD</b> (window / second / song). <b>Part 1</b> retrieves the heard song from <code>z_win</code>
+        through the A→L bridge: <b>84.9%</b> song-level over 36,036 queries and a 1,103-window corpus.
+        <b>Part 2</b> maps <code>z_win</code> to weights over 12 native prompts and samples a frozen MusicGen
+        at 32 kHz. <span class="mut">The diagram shows the frozen-backbone / head variant; the 84.9% number
+        comes from the main-line arm, which also fine-tunes the LaBraM backbone (7.72M trainable).</span></figcaption>
     </div>
 
     <div class="figcard">
@@ -140,21 +145,25 @@
       <figure><img src="assets/fig/fig13_align_structure.png" alt="stage-1 alignment structure"></figure>
       <figcaption>How the alignment is trained: the window vector is pulled to its own audio's CLAP embedding
         (×1.0, other windows of the <b>same song</b> as extra negatives), its eight per-second states to MERT's
-        per-second embeddings (×0.5), and a song-label classifier anchors it (×1.0). Only the head, the two
-        64-d projections and the classifier train; every encoder stays frozen.</figcaption>
+        per-second embeddings (×0.5), and a song-label classifier anchors it (×1.0) — the three terms of
+        <b>TRIAD</b>. In the frozen-backbone variant shown in Fig 0, only the head, the two 64-d projections and
+        the classifier train. The 84.9% retrieval result uses the main-line arm, where the LaBraM backbone is
+        also fine-tuned (7.72M trainable).</figcaption>
     </div>
   </section>
 
   <section id="part1">
     <h2>Part 1 — retrieve the song the subject heard</h2>
-    <p class="lead">Nearest-centroid readout of the bridged embedding against the 14 song centroids built from
-      the heard audio.</p>
+    <p class="lead">Song-level nearest-centroid retrieval after the A→L bridge: 36,036 EEG queries over 14 songs
+      against a 1,103-window audio corpus (chance 7.1%).</p>
 
     <div class="figcard">
       <span class="figno">Fig 11 · 14-way song confusion</span>
       <figure><img src="assets/fig/fig11_song_confusion.png" alt="14-way song confusion matrix"></figure>
-      <figcaption>Held-out subjects, 14-way: top-1 <b>88.2%</b> vs 7.1% chance. The same readout over all
-        36,036 windows scores <b>0.849</b> (chance 0.071). T0–T9 are NMED-T songs, H0–H3 NMED-H.</figcaption>
+      <figcaption>Held-out-subject 14-way confusion diagnostic: top-1 <b>88.2%</b> vs 7.1% chance. This is a
+        different protocol from the headline retrieval line, which scores <b>84.9%</b> song-level over 36,036
+        queries and a 1,103-window corpus (chance 7.1%; smoothed 88.4%) after the A→L bridge. The main-line
+        model's own raw 14-way readout is <b>70.7%</b> (control 6.1%). T0–T9 are NMED-T songs, H0–H3 NMED-H.</figcaption>
     </div>
 
     <div class="figcard">
@@ -268,7 +277,8 @@
       <p>The stimuli are excerpts of commercially released songs, so only spectrograms are shown and raw EEG is
         not published. Every playable file is generated.</p></details>
     <details><summary>Is the generated clip a reconstruction of what was heard?</summary>
-      <p>No — genre-level only (+0.103, and −0.005 within the same genre). Song identity is Part 1's job (88.2%).</p></details>
+      <p>No — genre-level only (+0.103, and −0.005 within the same genre). Song identity is Part 1's job
+        (84.9% song-level retrieval).</p></details>
     <details><summary>Why keep the generator frozen?</summary>
       <p>Fine-tuning scored 7,404 vs 1,389 on distributional texture, and freezing keeps every output inside the
         generator's own distribution by construction.</p></details>
