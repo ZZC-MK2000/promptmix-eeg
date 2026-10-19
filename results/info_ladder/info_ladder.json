@@ -1,0 +1,1030 @@
+{
+  "coverage": {
+    "rows": 36036,
+    "subjects": 68,
+    "songs": 14,
+    "segments": 1103,
+    "nmedt": {
+      "rows": 23940,
+      "subjects": 20,
+      "songs": 10
+    },
+    "nmedh": {
+      "rows": 12096,
+      "subjects": 48,
+      "songs": 4
+    }
+  },
+  "label_validity": {
+    "oracle_genre_distribution_all": [
+      22848,
+      164,
+      400,
+      220,
+      120,
+      628,
+      7048,
+      1520,
+      60,
+      2084,
+      440,
+      504
+    ],
+    "oracle_genre_distribution_nmedt": [
+      16680,
+      140,
+      400,
+      220,
+      120,
+      460,
+      1840,
+      1520,
+      60,
+      2060,
+      440,
+      0
+    ],
+    "oracle_genre_majority_all": 0.634032634032634,
+    "oracle_genre_majority_nmedt": 0.6967418546365914,
+    "note": "the 12-class oracle collapses (one class holds ~70% of NMED-T); it is a label-validity control, not a genre rung. Raw NMED-T audio is not available here, so tempo/energy rungs are not computed."
+  },
+  "nmedt": {
+    "split_random": {
+      "bandpower": {
+        "song": {
+          "acc": 0.8960735171261487,
+          "bal_acc": 0.8955046568319203,
+          "kappa": 0.8844022742910947,
+          "acc_ci": [
+            0.8922713032581454,
+            0.8999582289055973
+          ],
+          "bal_ci": [
+            0.8915487585146152,
+            0.8994010396786729
+          ],
+          "kappa_ci": [
+            0.8801258457618086,
+            0.8886913611280558
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.8607718267984558,
+          "cos_target_ci": [
+            0.8597806705498358,
+            0.8617008495793904
+          ],
+          "cos_global_mean_baseline": 0.8146781695454243,
+          "cos_global_mean_baseline_ci": [
+            0.8135546781103701,
+            0.8158952269619121
+          ],
+          "excess_cos_over_trivial": 0.04609365725303154,
+          "excess_cos_over_trivial_ci": [
+            0.04540933927332822,
+            0.04674522324876802
+          ],
+          "cos_residual_within_song": 0.10874599232584427,
+          "cos_residual_within_song_ci": [
+            0.10576703165154519,
+            0.11206984759839658
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9279980461798615,
+          "within_song_top1": 0.0322890559732665,
+          "within_song_chance": 0.01245835183746394,
+          "within_song_top1_ci": [
+            0.030033416875522138,
+            0.03454469507101086
+          ],
+          "r2": 0.23064790418966463
+        }
+      },
+      "labram": {
+        "song": {
+          "acc": 0.26069340016708437,
+          "bal_acc": 0.25864939877480975,
+          "kappa": 0.17690075127799548,
+          "acc_ci": [
+            0.2556370091896408,
+            0.266375313283208
+          ],
+          "bal_ci": [
+            0.25353806833695103,
+            0.2641829223115877
+          ],
+          "kappa_ci": [
+            0.17125326308535915,
+            0.18320611680595014
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.8195374354334204,
+          "cos_target_ci": [
+            0.8182948359486989,
+            0.8206794382116088
+          ],
+          "cos_global_mean_baseline": 0.8146781695454243,
+          "cos_global_mean_baseline_ci": [
+            0.8135546781103701,
+            0.8158952269619121
+          ],
+          "excess_cos_over_trivial": 0.0048592658879962084,
+          "excess_cos_over_trivial_ci": [
+            0.004626030325391638,
+            0.005083524407344305
+          ],
+          "cos_residual_within_song": 0.0018928804420247525,
+          "cos_residual_within_song_ci": [
+            -0.0014618012866219458,
+            0.005247092264602627
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9011435059103851,
+          "within_song_top1": 0.022556390977443608,
+          "within_song_chance": 0.01245835183746394,
+          "within_song_top1_ci": [
+            0.020676691729323307,
+            0.024477861319966585
+          ],
+          "r2": 0.024133994440688422
+        }
+      },
+      "aldm": {
+        "song": {
+          "acc": 0.9102756892230577,
+          "bal_acc": 0.9100632955029393,
+          "kappa": 0.9001989843970521,
+          "acc_ci": [
+            0.9065570175438596,
+            0.9139515455304928
+          ],
+          "bal_ci": [
+            0.9063344553992431,
+            0.9136867035605432
+          ],
+          "kappa_ci": [
+            0.8960659724410033,
+            0.9042897506250966
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.9071751465088841,
+          "cos_target_ci": [
+            0.9061427069841919,
+            0.9082156143286915
+          ],
+          "cos_global_mean_baseline": 0.8146781695454243,
+          "cos_global_mean_baseline_ci": [
+            0.8135546781103701,
+            0.8158952269619121
+          ],
+          "excess_cos_over_trivial": 0.0924969769634599,
+          "excess_cos_over_trivial_ci": [
+            0.09144230573378198,
+            0.09366481294004292
+          ],
+          "cos_residual_within_song": 0.3823123072321782,
+          "cos_residual_within_song_ci": [
+            0.3773462632831332,
+            0.38731481146349545
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9620624348309603,
+          "within_song_top1": 0.059440267335004175,
+          "within_song_chance": 0.01245835183746394,
+          "within_song_top1_ci": [
+            0.056599832915622386,
+            0.06257309941520468
+          ],
+          "r2": 0.47895218435330345
+        }
+      },
+      "bridge": {
+        "song": {
+          "acc": 0.8832080200501253,
+          "bal_acc": 0.8828135208706206,
+          "kappa": 0.8700969417697307,
+          "acc_ci": [
+            0.8791541353383459,
+            0.8873454469507102
+          ],
+          "bal_ci": [
+            0.8785599142840212,
+            0.887113279766507
+          ],
+          "kappa_ci": [
+            0.8655885281998076,
+            0.8747197105827315
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.9071751465088841,
+          "cos_target_ci": [
+            0.9061427069841919,
+            0.9082156143286915
+          ],
+          "cos_global_mean_baseline": 0.8146781695454243,
+          "cos_global_mean_baseline_ci": [
+            0.8135546781103701,
+            0.8158952269619121
+          ],
+          "excess_cos_over_trivial": 0.0924969769634599,
+          "excess_cos_over_trivial_ci": [
+            0.09144230573378198,
+            0.09366481294004292
+          ],
+          "cos_residual_within_song": 0.3823123072321782,
+          "cos_residual_within_song_ci": [
+            0.3773462632831332,
+            0.38731481146349545
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9620624348309603,
+          "within_song_top1": 0.059440267335004175,
+          "within_song_chance": 0.01245835183746394,
+          "within_song_top1_ci": [
+            0.056599832915622386,
+            0.06257309941520468
+          ],
+          "r2": 0.47895218435330345
+        }
+      }
+    },
+    "split_segment": {
+      "bandpower": {
+        "song": {
+          "acc": 0.873141186299081,
+          "bal_acc": 0.8729718408397182,
+          "kappa": 0.8588990404500215,
+          "acc_ci": [
+            0.8556160957429843,
+            0.8894838407684793
+          ],
+          "bal_ci": [
+            0.8589649586852536,
+            0.891451232998874
+          ],
+          "kappa_ci": [
+            0.8392134482614108,
+            0.876897624072983
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.8592416316308175,
+          "cos_target_ci": [
+            0.8532112640515367,
+            0.8652434149950392
+          ],
+          "cos_global_mean_baseline": 0.8138055559972872,
+          "cos_global_mean_baseline_ci": [
+            0.8063155799549129,
+            0.8213888504508439
+          ],
+          "excess_cos_over_trivial": 0.04543607563353023,
+          "excess_cos_over_trivial_ci": [
+            0.04207180972203458,
+            0.04890007643795011
+          ],
+          "cos_residual_within_song": 0.12483552148337196,
+          "cos_residual_within_song_ci": [
+            0.10442370874006453,
+            0.14385576918237636
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9264998640283109,
+          "within_song_top1": null,
+          "within_song_chance": null,
+          "within_song_top1_ci": null,
+          "r2": 0.2261467095334917
+        }
+      },
+      "labram": {
+        "song": {
+          "acc": 0.2550125313283208,
+          "bal_acc": 0.2529560342377389,
+          "kappa": 0.1705974764882774,
+          "acc_ci": [
+            0.24658224283837593,
+            0.26354833042973286
+          ],
+          "bal_ci": [
+            0.24606636998878137,
+            0.26189287992402105
+          ],
+          "kappa_ci": [
+            0.16165014065921857,
+            0.17946153687865055
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.8186497330678038,
+          "cos_target_ci": [
+            0.8107202615579033,
+            0.8265811207810239
+          ],
+          "cos_global_mean_baseline": 0.8138055559972872,
+          "cos_global_mean_baseline_ci": [
+            0.8063155799549129,
+            0.8213888504508439
+          ],
+          "excess_cos_over_trivial": 0.004844177070516493,
+          "excess_cos_over_trivial_ci": [
+            0.004366187185306716,
+            0.005287363841645355
+          ],
+          "cos_residual_within_song": 0.018637460172246385,
+          "cos_residual_within_song_ci": [
+            -0.004660781743137926,
+            0.042860871683162556
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9002131943316288,
+          "within_song_top1": null,
+          "within_song_chance": null,
+          "within_song_top1_ci": null,
+          "r2": 0.023959102823174594
+        }
+      },
+      "aldm": {
+        "song": {
+          "acc": 0.9088554720133668,
+          "bal_acc": 0.9085545547203291,
+          "kappa": 0.898619053774109,
+          "acc_ci": [
+            0.904250704262318,
+            0.9140971065102044
+          ],
+          "bal_ci": [
+            0.9040777341669869,
+            0.9131763951067858
+          ],
+          "kappa_ci": [
+            0.8930115278189259,
+            0.9041896331597172
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.9040025179933386,
+          "cos_target_ci": [
+            0.8998977714144796,
+            0.9079471652541313
+          ],
+          "cos_global_mean_baseline": 0.8138055559972872,
+          "cos_global_mean_baseline_ci": [
+            0.8063155799549129,
+            0.8213888504508439
+          ],
+          "excess_cos_over_trivial": 0.0901969619960514,
+          "excess_cos_over_trivial_ci": [
+            0.08453743984040198,
+            0.0959538182237807
+          ],
+          "cos_residual_within_song": 0.37551678856472975,
+          "cos_residual_within_song_ci": [
+            0.36305959712639174,
+            0.3884863911861983
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9617650267275154,
+          "within_song_top1": null,
+          "within_song_chance": null,
+          "within_song_top1_ci": null,
+          "r2": 0.4637438361876647
+        }
+      },
+      "bridge": {
+        "song": {
+          "acc": 0.8827067669172932,
+          "bal_acc": 0.8822728862548953,
+          "kappa": 0.8695391647295224,
+          "acc_ci": [
+            0.8773787670243529,
+            0.8887274158566554
+          ],
+          "bal_ci": [
+            0.8762893490668687,
+            0.8876552194545809
+          ],
+          "kappa_ci": [
+            0.8633492271391879,
+            0.8758845449256296
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.9040025179933386,
+          "cos_target_ci": [
+            0.8998977714144796,
+            0.9079471652541313
+          ],
+          "cos_global_mean_baseline": 0.8138055559972872,
+          "cos_global_mean_baseline_ci": [
+            0.8063155799549129,
+            0.8213888504508439
+          ],
+          "excess_cos_over_trivial": 0.0901969619960514,
+          "excess_cos_over_trivial_ci": [
+            0.08453743984040198,
+            0.0959538182237807
+          ],
+          "cos_residual_within_song": 0.37551678856472975,
+          "cos_residual_within_song_ci": [
+            0.36305959712639174,
+            0.3884863911861983
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9617650267275154,
+          "within_song_top1": null,
+          "within_song_chance": null,
+          "within_song_top1_ci": null,
+          "r2": 0.4637438361876647
+        }
+      }
+    },
+    "split_subject": {
+      "bandpower": {
+        "song": {
+          "acc": 0.10576441102756892,
+          "bal_acc": 0.10571584518674344,
+          "kappa": 0.006459758469161707,
+          "acc_ci": [
+            0.0898078529657477,
+            0.12084586466165413
+          ],
+          "bal_ci": [
+            0.08979475122164586,
+            0.12114224131137113
+          ],
+          "kappa_ci": [
+            -0.011024344117330437,
+            0.022742804521114823
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.7495358773926545,
+          "cos_target_ci": [
+            0.7327536549106857,
+            0.7633769099176733
+          ],
+          "cos_global_mean_baseline": 0.8146977163608511,
+          "cos_global_mean_baseline_ci": [
+            0.81469770434721,
+            0.8146977311562912
+          ],
+          "excess_cos_over_trivial": -0.06516183896819651,
+          "excess_cos_over_trivial_ci": [
+            -0.08185689807003527,
+            -0.05060775638592983
+          ],
+          "cos_residual_within_song": -0.00027737360077683716,
+          "cos_residual_within_song_ci": [
+            -0.004011708685899027,
+            0.003876232509584675
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.8246921635473282,
+          "within_song_top1": 0.02046783625730994,
+          "within_song_chance": 0.01245835183746394,
+          "within_song_top1_ci": [
+            0.018503550543024227,
+            0.022766290726817042
+          ],
+          "r2": -0.3973062043576807
+        }
+      },
+      "labram": {
+        "song": {
+          "acc": 0.10877192982456141,
+          "bal_acc": 0.10873902358041965,
+          "kappa": 0.009263985152610187,
+          "acc_ci": [
+            0.1006265664160401,
+            0.11784252297410192
+          ],
+          "bal_ci": [
+            0.1002467044829794,
+            0.11834782913517843
+          ],
+          "kappa_ci": [
+            0.00018010329158014908,
+            0.019359181813845765
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.8084760618451344,
+          "cos_target_ci": [
+            0.8071862520288082,
+            0.809872595778913
+          ],
+          "cos_global_mean_baseline": 0.8146977163608511,
+          "cos_global_mean_baseline_ci": [
+            0.81469770434721,
+            0.8146977311562912
+          ],
+          "excess_cos_over_trivial": -0.006221654515716566,
+          "excess_cos_over_trivial_ci": [
+            -0.0075634987667862735,
+            -0.004843017967105062
+          ],
+          "cos_residual_within_song": -0.008204704058251936,
+          "cos_residual_within_song_ci": [
+            -0.01065765315399098,
+            -0.00543371956162464
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.890981845994641,
+          "within_song_top1": 0.021303258145363407,
+          "within_song_chance": 0.01245835183746394,
+          "within_song_top1_ci": [
+            0.01934001670843776,
+            0.023224728487886384
+          ],
+          "r2": -0.031082800016829726
+        }
+      },
+      "aldm": {
+        "song": {
+          "acc": 0.8405597326649958,
+          "bal_acc": 0.840628071443527,
+          "kappa": 0.822668697066122,
+          "acc_ci": [
+            0.8225563909774436,
+            0.8565611946532999
+          ],
+          "bal_ci": [
+            0.8231090245392267,
+            0.8560949929263686
+          ],
+          "kappa_ci": [
+            0.8026625173770261,
+            0.8404523299566466
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.9008784261680735,
+          "cos_target_ci": [
+            0.8970586506397609,
+            0.9047113283479286
+          ],
+          "cos_global_mean_baseline": 0.8146977163608511,
+          "cos_global_mean_baseline_ci": [
+            0.81469770434721,
+            0.8146977311562912
+          ],
+          "excess_cos_over_trivial": 0.08618070980722245,
+          "excess_cos_over_trivial_ci": [
+            0.08215476401335402,
+            0.09010500322188637
+          ],
+          "cos_residual_within_song": 0.36447558224262666,
+          "cos_residual_within_song_ci": [
+            0.3458815660918459,
+            0.3844667516580272
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9567920612213306,
+          "within_song_top1": 0.058813700918964075,
+          "within_song_chance": 0.01245835183746394,
+          "within_song_top1_ci": [
+            0.054008980785296576,
+            0.06349728487886382
+          ],
+          "r2": 0.44496547713528833
+        }
+      },
+      "bridge": {
+        "song": {
+          "acc": 0.8659565580618213,
+          "bal_acc": 0.8657034514674014,
+          "kappa": 0.8509122721696877,
+          "acc_ci": [
+            0.851795112781955,
+            0.8796606098579782
+          ],
+          "bal_ci": [
+            0.8520286694760009,
+            0.8794685148787013
+          ],
+          "kappa_ci": [
+            0.8351570948968917,
+            0.8661174801501325
+          ],
+          "chance": 0.1,
+          "majority": 0.11862990810359231,
+          "n": 23940
+        },
+        "continuous": {
+          "cos_target": 0.9008784261680735,
+          "cos_target_ci": [
+            0.8970586506397609,
+            0.9047113283479286
+          ],
+          "cos_global_mean_baseline": 0.8146977163608511,
+          "cos_global_mean_baseline_ci": [
+            0.81469770434721,
+            0.8146977311562912
+          ],
+          "excess_cos_over_trivial": 0.08618070980722245,
+          "excess_cos_over_trivial_ci": [
+            0.08215476401335402,
+            0.09010500322188637
+          ],
+          "cos_residual_within_song": 0.36447558224262666,
+          "cos_residual_within_song_ci": [
+            0.3458815660918459,
+            0.3844667516580272
+          ],
+          "cos_song_centroid_shrinkage_inflated": 0.9567920612213306,
+          "within_song_top1": 0.058813700918964075,
+          "within_song_chance": 0.01245835183746394,
+          "within_song_top1_ci": [
+            0.054008980785296576,
+            0.06349728487886382
+          ],
+          "r2": 0.44496547713528833
+        }
+      }
+    },
+    "audio_clap_ceiling": {
+      "random": {
+        "acc": 1.0,
+        "bal_acc": 1.0,
+        "kappa": 1.0,
+        "acc_ci": [
+          1.0,
+          1.0
+        ],
+        "bal_ci": [
+          1.0,
+          1.0
+        ],
+        "kappa_ci": [
+          1.0,
+          1.0
+        ],
+        "chance": 0.1,
+        "majority": 0.11862990810359231,
+        "n": 23940
+      },
+      "segment": {
+        "acc": 1.0,
+        "bal_acc": 1.0,
+        "kappa": 1.0,
+        "acc_ci": [
+          1.0,
+          1.0
+        ],
+        "bal_ci": [
+          1.0,
+          1.0
+        ],
+        "kappa_ci": [
+          1.0,
+          1.0
+        ],
+        "chance": 0.1,
+        "majority": 0.11862990810359231,
+        "n": 23940
+      },
+      "subject": {
+        "acc": 1.0,
+        "bal_acc": 1.0,
+        "kappa": 1.0,
+        "acc_ci": [
+          1.0,
+          1.0
+        ],
+        "bal_ci": [
+          1.0,
+          1.0
+        ],
+        "kappa_ci": [
+          1.0,
+          1.0
+        ],
+        "chance": 0.1,
+        "majority": 0.11862990810359231,
+        "n": 23940
+      }
+    }
+  },
+  "nmedh": {
+    "split_segment": {
+      "bandpower": {
+        "song": {
+          "acc": 0.999834656084656,
+          "bal_acc": 0.9998391032522265,
+          "kappa": 0.9997793817348212,
+          "acc_ci": [
+            0.9995764933205313,
+            1.0
+          ],
+          "bal_ci": [
+            0.9995732903697413,
+            1.0
+          ],
+          "kappa_ci": [
+            0.9994294643461878,
+            1.0
+          ],
+          "chance": 0.25,
+          "majority": 0.25992063492063494,
+          "n": 12096
+        }
+      },
+      "labram": {
+        "song": {
+          "acc": 0.9170800264550265,
+          "bal_acc": 0.9164809274765799,
+          "kappa": 0.8893538373717312,
+          "acc_ci": [
+            0.9115492894187934,
+            0.9227280755586578
+          ],
+          "bal_ci": [
+            0.911286038459007,
+            0.9217935288770072
+          ],
+          "kappa_ci": [
+            0.8815229202759913,
+            0.8962557474375994
+          ],
+          "chance": 0.25,
+          "majority": 0.25992063492063494,
+          "n": 12096
+        }
+      },
+      "aldm": {
+        "song": {
+          "acc": 0.9997519841269841,
+          "bal_acc": 0.999748702441415,
+          "kappa": 0.9996690717330793,
+          "acc_ci": [
+            0.9994292237442922,
+            1.0
+          ],
+          "bal_ci": [
+            0.999421099655203,
+            1.0
+          ],
+          "kappa_ci": [
+            0.9992387412776697,
+            1.0
+          ],
+          "chance": 0.25,
+          "majority": 0.25992063492063494,
+          "n": 12096
+        }
+      },
+      "bridge": {
+        "song": {
+          "acc": 0.9995866402116402,
+          "bal_acc": 0.9995872037334046,
+          "kappa": 0.9994484527677494,
+          "acc_ci": [
+            0.9991721304626967,
+            0.9999142661179699
+          ],
+          "bal_ci": [
+            0.9991700505040484,
+            0.9999110243055556
+          ],
+          "kappa_ci": [
+            0.9988850200277589,
+            0.9998853184898662
+          ],
+          "chance": 0.25,
+          "majority": 0.25992063492063494,
+          "n": 12096
+        }
+      }
+    },
+    "split_subject": {
+      "bandpower": {
+        "song": {
+          "acc": 0.30886243386243384,
+          "bal_acc": 0.3095984951989099,
+          "kappa": 0.07634353538683858,
+          "acc_ci": [
+            0.21888865998985801,
+            0.4064838691122949
+          ],
+          "bal_ci": [
+            0.21617063631475777,
+            0.40636634765339213
+          ],
+          "kappa_ci": [
+            -0.04454442843132013,
+            0.20322201695797953
+          ],
+          "chance": 0.25,
+          "majority": 0.25992063492063494,
+          "n": 12096
+        }
+      },
+      "labram": {
+        "song": {
+          "acc": 0.3296957671957672,
+          "bal_acc": 0.3262694691110978,
+          "kappa": 0.10551194615076989,
+          "acc_ci": [
+            0.25078651559245263,
+            0.41412861481088986
+          ],
+          "bal_ci": [
+            0.2483470788625003,
+            0.41202711253371627
+          ],
+          "kappa_ci": [
+            -0.0017400941000588457,
+            0.2126095585233237
+          ],
+          "chance": 0.25,
+          "majority": 0.25992063492063494,
+          "n": 12096
+        }
+      },
+      "aldm": {
+        "song": {
+          "acc": 0.9994212962962963,
+          "bal_acc": 0.9994076060322552,
+          "kappa": 0.9992278321848213,
+          "acc_ci": [
+            0.9985922315942692,
+            1.0
+          ],
+          "bal_ci": [
+            0.9985852513836236,
+            1.0
+          ],
+          "kappa_ci": [
+            0.9981185702816062,
+            1.0
+          ],
+          "chance": 0.25,
+          "majority": 0.25992063492063494,
+          "n": 12096
+        }
+      },
+      "bridge": {
+        "song": {
+          "acc": 0.9995039682539683,
+          "bal_acc": 0.9994974048828299,
+          "kappa": 0.9993381420175637,
+          "acc_ci": [
+            0.9988416301565581,
+            0.9999179527569823
+          ],
+          "bal_ci": [
+            0.9988766680976736,
+            0.9999307862679956
+          ],
+          "kappa_ci": [
+            0.9984405634049037,
+            0.9998887178485417
+          ],
+          "chance": 0.25,
+          "majority": 0.25992063492063494,
+          "n": 12096
+        }
+      }
+    }
+  },
+  "style_family": {
+    "bandpower": {
+      "segment_heldout": {
+        "acc": 0.9995282495282495,
+        "bal_acc": 0.9993790900863269,
+        "kappa": 0.9989420393355953,
+        "acc_ci": [
+          0.9992534070598543,
+          0.9997655006941016
+        ],
+        "bal_ci": [
+          0.9989794922496896,
+          0.9997120939165821
+        ],
+        "kappa_ci": [
+          0.9983312919130127,
+          0.9994625325769789
+        ],
+        "chance": 0.5,
+        "majority": 0.6643356643356644,
+        "n": 36036
+      }
+    },
+    "labram": {
+      "segment_heldout": {
+        "acc": 0.99997224997225,
+        "bal_acc": 0.999958664021164,
+        "kappa": 0.9999377772014796,
+        "acc_ci": [
+          0.9999138705089593,
+          1.0
+        ],
+        "bal_ci": [
+          0.9998673036093418,
+          1.0
+        ],
+        "kappa_ci": [
+          0.9998044093192795,
+          1.0
+        ],
+        "chance": 0.5,
+        "majority": 0.6643356643356644,
+        "n": 36036
+      }
+    },
+    "aldm": {
+      "segment_heldout": {
+        "acc": 0.9998889998889999,
+        "bal_acc": 0.99989600737956,
+        "kappa": 0.999751124075091,
+        "acc_ci": [
+          0.9997718912031388,
+          0.9999731648081412
+        ],
+        "bal_ci": [
+          0.9997690051871487,
+          0.9999797086144204
+        ],
+        "kappa_ci": [
+          0.9994752041915833,
+          0.9999412993486579
+        ],
+        "chance": 0.5,
+        "majority": 0.6643356643356644,
+        "n": 36036
+      }
+    },
+    "bridge": {
+      "segment_heldout": {
+        "acc": 0.99991674991675,
+        "bal_acc": 0.9999168929267613,
+        "kappa": 0.9998133392391813,
+        "acc_ci": [
+          0.9998039863572107,
+          1.0
+        ],
+        "bal_ci": [
+          0.9997947991420338,
+          1.0
+        ],
+        "kappa_ci": [
+          0.999563745259778,
+          1.0
+        ],
+        "chance": 0.5,
+        "majority": 0.6643356643356644,
+        "n": 36036
+      }
+    }
+  },
+  "subject_identity_control": {
+    "source": "mainv2/results/subject_id_probe_result.json (block 70/10/20 split, 2058 test rows)",
+    "task": "68-way subject identification; windows are shared across subjects, so the audio-target control is the meaningful zero",
+    "bandpower": 0.9965986394557823,
+    "labram_mean_pooled_200": 0.9664723032069971,
+    "aligned_embedding": 0.673955296404276,
+    "audio_target_control": 0.0,
+    "read": "subject identity is nearly saturated in bandpower/LaBraM and still 0.67 in the aligned embedding; any split that keeps subjects in train can exploit it."
+  },
+  "representation_notes": {
+    "bandpower": "frozen 1804-d band-power features.",
+    "labram": "frozen LaBraM-Base, 200-d mean-pooled patches (a compressed representation, not the full token grid).",
+    "aldm": "stage-1 trained alignment head output (512-d). Trained on ALL rows, so its subject-held-out numbers are transductive/optimistic; the frozen rows are the clean cross-subject comparison.",
+    "bridge": "EEG-ALDM -> audio-CLAP ridge refit inside each training fold; inherits aldm's training.",
+    "audio_clap_ceiling": "audio-CLAP -> song label probe; validates the label but is not an EEG result.",
+    "style_family": "NMED-T vs NMED-H is a batch/song-set confound (no song is shared between batches), so 1.0 is not evidence of style decoding."
+  },
+  "protocol": {
+    "nmedt": "20 subjects x 10 songs, fully crossed; subject-held-out is a real cross-listener test.",
+    "nmedh": "48 subjects x 1 song each; subject and song are confounded by design, so it is never pooled into a held-out-subject claim.",
+    "bridge": "EEG-ALDM -> audio-CLAP ridge refit inside every training fold (inductive).",
+    "genre_oracle": "not used as a level (see label_validity).",
+    "within_song": "only defined for random/subject splits, where the true segment exists in the training centroids; undefined for segment-held-out.",
+    "metrics": "discrete: acc/balanced acc/Cohen kappa vs chance+majority; continuous: cosine to true CLAP, cosine to train-only song centroid, within-song segment top-1, pooled R^2; 95% CI by bootstrapping the held-out unit."
+  }
+}

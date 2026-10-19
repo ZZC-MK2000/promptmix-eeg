@@ -1,0 +1,37 @@
+{
+  "n_windows": 2000,
+  "arms": {
+    "A_current12": {
+      "n_prompts": 12,
+      "trivial_global_mean": 0.8091252446174622,
+      "best_single_prompt": 0.4529983103275299,
+      "uniform_mixture": 0.39349305629730225,
+      "convex_mixture": 0.49474457668097843,
+      "convex_minus_trivial": -0.3143806679364837,
+      "convex_minus_best_single": 0.041746266353448525
+    },
+    "B_plus_new_genres": {
+      "n_prompts": 22,
+      "trivial_global_mean": 0.8091252446174622,
+      "best_single_prompt": 0.47808143496513367,
+      "uniform_mixture": 0.3818376958370209,
+      "convex_mixture": 0.5540093481537233,
+      "convex_minus_trivial": -0.2551158964637389,
+      "convex_minus_best_single": 0.0759279131885896
+    },
+    "C_plus_paraphrases": {
+      "n_prompts": 22,
+      "trivial_global_mean": 0.8091252446174622,
+      "best_single_prompt": 0.4726935029029846,
+      "uniform_mixture": 0.3802914619445801,
+      "convex_mixture": 0.5090553917096811,
+      "convex_minus_trivial": -0.3000698529077811,
+      "convex_minus_best_single": 0.03636188880669644
+    }
+  },
+  "verdict": {
+    "new_genre_gain": 0.05926477147274484,
+    "paraphrase_gain": 0.014310815028702628,
+    "new_beats_control": true
+  }
+}

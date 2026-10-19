@@ -1,0 +1,191 @@
+{
+  "clips_per_prompt": 6,
+  "reproduction_max_abs_delta": 0.0,
+  "windows": {
+    "n60": 60,
+    "nwide": 2000
+  },
+  "arms": {
+    "existing_12_prompts": {
+      "n_prompts": 12,
+      "on60": {
+        "convex_mixture": 0.8789925465291635,
+        "best_single_clip": 0.7968701561292012,
+        "best_prompt_mean": 0.775501670440038,
+        "uniform_over_prompts": 0.7296755909919739,
+        "trivial_library_mean": 0.7300375699996948,
+        "trivial_target_mean": 0.8197842240333557,
+        "oracle_prompt_dist": [
+          32,
+          1,
+          1,
+          1,
+          3,
+          0,
+          9,
+          7,
+          0,
+          2,
+          4,
+          0
+        ]
+      },
+      "on2000": {
+        "convex_mixture": 0.8260495027206232,
+        "best_single_clip": 0.7435554807633161,
+        "best_prompt_mean": 0.6940103645473719,
+        "uniform_over_prompts": 0.6191975474357605,
+        "trivial_library_mean": 0.6203510761260986,
+        "trivial_target_mean": 0.8091252446174622,
+        "oracle_prompt_dist": [
+          1246,
+          11,
+          19,
+          13,
+          8,
+          45,
+          399,
+          94,
+          1,
+          110,
+          28,
+          26
+        ]
+      }
+    },
+    "existing_plus_10_new_genres_22": {
+      "n_prompts": 22,
+      "on60": {
+        "convex_mixture": 0.8853438676451397,
+        "best_single_clip": 0.7995816568533579,
+        "best_prompt_mean": 0.7823675254980723,
+        "uniform_over_prompts": 0.7152222394943237,
+        "trivial_library_mean": 0.716303288936615,
+        "trivial_target_mean": 0.8197842240333557,
+        "oracle_prompt_dist": [
+          27,
+          1,
+          1,
+          1,
+          3,
+          0,
+          5,
+          7,
+          0,
+          2,
+          3,
+          0,
+          0,
+          8,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      },
+      "on2000": {
+        "convex_mixture": 0.8320518963851163,
+        "best_single_clip": 0.7455145867615938,
+        "best_prompt_mean": 0.7064384380578995,
+        "uniform_over_prompts": 0.6050246357917786,
+        "trivial_library_mean": 0.6069941520690918,
+        "trivial_target_mean": 0.8091252446174622,
+        "oracle_prompt_dist": [
+          997,
+          0,
+          1,
+          11,
+          0,
+          26,
+          225,
+          79,
+          0,
+          110,
+          19,
+          11,
+          0,
+          441,
+          0,
+          0,
+          0,
+          12,
+          56,
+          0,
+          12,
+          0
+        ]
+      }
+    },
+    "greedy_12_of_22": {
+      "picked": [
+        0,
+        7,
+        6,
+        13,
+        4,
+        9,
+        10,
+        18,
+        20,
+        1,
+        2,
+        3
+      ],
+      "on60": {
+        "convex_mixture": 0.8772304212494938,
+        "best_single_clip": 0.7954715112845103,
+        "best_prompt_mean": 0.782367526491483,
+        "uniform_over_prompts": 0.737037718296051,
+        "trivial_library_mean": 0.7370820641517639,
+        "trivial_target_mean": 0.8197842240333557,
+        "oracle_prompt_dist": [
+          27,
+          7,
+          5,
+          8,
+          3,
+          2,
+          3,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "on2000": {
+        "convex_mixture": 0.8125163264393618,
+        "best_single_clip": 0.7421475400179625,
+        "best_prompt_mean": 0.70603907507658,
+        "uniform_over_prompts": 0.634833574295044,
+        "trivial_library_mean": 0.63625168800354,
+        "trivial_target_mean": 0.8091252446174622,
+        "oracle_prompt_dist": [
+          1007,
+          83,
+          229,
+          465,
+          0,
+          110,
+          23,
+          56,
+          13,
+          2,
+          1,
+          11
+        ]
+      }
+    }
+  },
+  "summary": {
+    "existing12": 0.8789925465291635,
+    "expanded22": 0.8853438676451397,
+    "greedy12of22": 0.8772304212494938,
+    "gain_22_over_12": 0.0063513211159762495,
+    "gain_greedy12_over_12": -0.0017621252796696796
+  }
+}

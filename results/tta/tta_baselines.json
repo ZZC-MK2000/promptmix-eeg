@@ -1,0 +1,33 @@
+{
+  "protocol": {
+    "corpus": "NMED-T 20 subjects x 10 songs",
+    "split": "per-subject 50/50 by audio segment",
+    "pca_dim": 100,
+    "shrinkage": 0.01,
+    "note": "EA/CORAL use unlabelled fit rows; probe_k uses k labels"
+  },
+  "features": {
+    "bandpower": {
+      "zero": 0.10279918773352636,
+      "subj_zscore": 0.10323823767808185,
+      "ea_pca": 0.11799700679031708,
+      "coral_pca": 0.11799835946143673,
+      "probe_10": 0.32629169759787086,
+      "probe_20": 0.42675548962844506,
+      "probe_50": 0.5591958535027249,
+      "probe_100": 0.6223312342748877,
+      "probe_200": 0.6611479966223799
+    },
+    "labram": {
+      "zero": 0.0989994227558821,
+      "subj_zscore": 0.09848694597466259,
+      "ea_pca": 0.10490781701949467,
+      "coral_pca": 0.10482322319240696,
+      "probe_10": 0.18443607888660812,
+      "probe_20": 0.22377974670830492,
+      "probe_50": 0.2822940956848445,
+      "probe_100": 0.3207949781172898,
+      "probe_200": 0.3603610035978606
+    }
+  }
+}

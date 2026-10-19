@@ -1,0 +1,949 @@
+{
+  "protocol": {
+    "corpus": "NMED-T 20 subjects x 10 songs",
+    "split": "per-subject 50/50 by audio segment",
+    "strategies": [
+      "random",
+      "dopt_closest",
+      "dopt_fps",
+      "dopt_uniform",
+      "dopt_hybrid",
+      "balanced_fps",
+      "balanced_uniform",
+      "balanced_hybrid"
+    ],
+    "k": [
+      10,
+      20,
+      30,
+      50,
+      75,
+      100,
+      150,
+      200,
+      300
+    ],
+    "n_random": 10,
+    "n_uniform": 5
+  },
+  "features": {
+    "bandpower": {
+      "baselines": {
+        "zero": 0.08897671614232405,
+        "within": 0.7544250704682429,
+        "oracle": 0.7061806247662188
+      },
+      "curve": {
+        "10": {
+          "random": {
+            "acc": 0.3409065519690029,
+            "sd": 0.04982871480966448,
+            "class_coverage": 6.465000000000001,
+            "within_class_cos": 0.28623737034748375
+          },
+          "dopt_closest": {
+            "acc": 0.45422933939832444,
+            "sd": 0.09911020803489831,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "dopt_fps": {
+            "acc": 0.4619361382361268,
+            "sd": 0.09136362131574875,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "dopt_uniform": {
+            "acc": 0.40997305548909735,
+            "sd": 0.07961193969196717,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "dopt_hybrid": {
+            "acc": 0.45422933939832444,
+            "sd": 0.09911020803489831,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "balanced_fps": {
+            "acc": 0.4619361382361268,
+            "sd": 0.09136362131574875,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "balanced_uniform": {
+            "acc": 0.4091460058175154,
+            "sd": 0.07507734489015178,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "balanced_hybrid": {
+            "acc": 0.45422933939832444,
+            "sd": 0.09911020803489831,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          }
+        },
+        "20": {
+          "random": {
+            "acc": 0.42591009705117006,
+            "sd": 0.07036202153395582,
+            "class_coverage": 8.714999999999998,
+            "within_class_cos": 0.4692887224892435
+          },
+          "dopt_closest": {
+            "acc": 0.5004726407609744,
+            "sd": 0.09835922623376342,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.8532613431022483
+          },
+          "dopt_fps": {
+            "acc": 0.44805860523890306,
+            "sd": 0.12596455782996543,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5076387277124033
+          },
+          "dopt_uniform": {
+            "acc": 0.48452085381953164,
+            "sd": 0.09587956215979289,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6722852048910736
+          },
+          "dopt_hybrid": {
+            "acc": 0.5004726407609744,
+            "sd": 0.09835922623376342,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.8532613431022483
+          },
+          "balanced_fps": {
+            "acc": 0.44805860523890306,
+            "sd": 0.12596455782996543,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5076387277124033
+          },
+          "balanced_uniform": {
+            "acc": 0.4876716757041054,
+            "sd": 0.09397668848076571,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6734677624772345
+          },
+          "balanced_hybrid": {
+            "acc": 0.5004726407609744,
+            "sd": 0.09835922623376342,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.8532613431022483
+          }
+        },
+        "30": {
+          "random": {
+            "acc": 0.48500474983724,
+            "sd": 0.08777551530241065,
+            "class_coverage": 9.58,
+            "within_class_cos": 0.5731493883725982
+          },
+          "dopt_closest": {
+            "acc": 0.5298230356697812,
+            "sd": 0.10334463382650004,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.8412777635840059
+          },
+          "dopt_fps": {
+            "acc": 0.47409251588271273,
+            "sd": 0.11977449447031836,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5381481111252514
+          },
+          "dopt_uniform": {
+            "acc": 0.5247220428023647,
+            "sd": 0.09317668645861295,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6730473750228676
+          },
+          "dopt_hybrid": {
+            "acc": 0.5289272771690231,
+            "sd": 0.13103648101014595,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6243400738157843
+          },
+          "balanced_fps": {
+            "acc": 0.47409251588271273,
+            "sd": 0.11977449447031836,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5381481111252514
+          },
+          "balanced_uniform": {
+            "acc": 0.5133183492097102,
+            "sd": 0.08894290136071088,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6754934314358818
+          },
+          "balanced_hybrid": {
+            "acc": 0.5289272771690231,
+            "sd": 0.13103648101014595,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6243400738157843
+          }
+        },
+        "50": {
+          "random": {
+            "acc": 0.5420648333933998,
+            "sd": 0.09232579795851069,
+            "class_coverage": 9.950000000000001,
+            "within_class_cos": 0.6583840102312549
+          },
+          "dopt_closest": {
+            "acc": 0.5529113444124878,
+            "sd": 0.10731666911362087,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.8294559170667147
+          },
+          "dopt_fps": {
+            "acc": 0.5293327535953625,
+            "sd": 0.11812886227003101,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5687362045650051
+          },
+          "dopt_uniform": {
+            "acc": 0.5731235411727622,
+            "sd": 0.09729333148144886,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6772966699754386
+          },
+          "dopt_hybrid": {
+            "acc": 0.5754938501044011,
+            "sd": 0.11476352010743705,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5961152476760516
+          },
+          "balanced_fps": {
+            "acc": 0.5293327535953625,
+            "sd": 0.11812886227003101,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5687362045650051
+          },
+          "balanced_uniform": {
+            "acc": 0.5688437321111073,
+            "sd": 0.10084439907875455,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.676016944317147
+          },
+          "balanced_hybrid": {
+            "acc": 0.5754938501044011,
+            "sd": 0.11476352010743705,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5961152476760516
+          }
+        },
+        "75": {
+          "random": {
+            "acc": 0.5805739439657968,
+            "sd": 0.09238929266579402,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6735649500206121
+          },
+          "dopt_closest": {
+            "acc": 0.5767431189477666,
+            "sd": 0.11406137742602067,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.8162339195476885
+          },
+          "dopt_fps": {
+            "acc": 0.5904764249505157,
+            "sd": 0.13178598638187655,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5908614223614921
+          },
+          "dopt_uniform": {
+            "acc": 0.6080204887419136,
+            "sd": 0.09875203898221324,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6762683079088121
+          },
+          "dopt_hybrid": {
+            "acc": 0.6046506408165748,
+            "sd": 0.1108029917691847,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6054977208481095
+          },
+          "balanced_fps": {
+            "acc": 0.5886579246861241,
+            "sd": 0.13205583927129932,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5911245614593494
+          },
+          "balanced_uniform": {
+            "acc": 0.6073986357251805,
+            "sd": 0.09752692988789272,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6738040402346374
+          },
+          "balanced_hybrid": {
+            "acc": 0.6042217954179584,
+            "sd": 0.11186211990998488,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6055151709744152
+          }
+        },
+        "100": {
+          "random": {
+            "acc": 0.6028421639344405,
+            "sd": 0.095405579346472,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6741622972754205
+          },
+          "dopt_closest": {
+            "acc": 0.5910227428864585,
+            "sd": 0.10981904008681405,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.8068205881983678
+          },
+          "dopt_fps": {
+            "acc": 0.6240824898719188,
+            "sd": 0.11733827699690577,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6076966318607953
+          },
+          "dopt_uniform": {
+            "acc": 0.6300062781497461,
+            "sd": 0.1015670803397822,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6768460134540988
+          },
+          "dopt_hybrid": {
+            "acc": 0.6350382715631547,
+            "sd": 0.10643610121809079,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6168325310108569
+          },
+          "balanced_fps": {
+            "acc": 0.6240824898719188,
+            "sd": 0.11733827699690577,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6076966318607953
+          },
+          "balanced_uniform": {
+            "acc": 0.6235963270375467,
+            "sd": 0.10315030909016898,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.678272769049386
+          },
+          "balanced_hybrid": {
+            "acc": 0.6350382715631547,
+            "sd": 0.10643610121809079,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6168325310108569
+          }
+        },
+        "150": {
+          "random": {
+            "acc": 0.6362205084646466,
+            "sd": 0.09513215603980293,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6759244389529255
+          },
+          "dopt_closest": {
+            "acc": 0.6120816229169868,
+            "sd": 0.1103053945558915,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.7924427117643807
+          },
+          "dopt_fps": {
+            "acc": 0.6751714340050812,
+            "sd": 0.10262860815490193,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6299573033607222
+          },
+          "dopt_uniform": {
+            "acc": 0.6565371445739911,
+            "sd": 0.09727958437154642,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6762320876941166
+          },
+          "dopt_hybrid": {
+            "acc": 0.6776395678387932,
+            "sd": 0.10278648078618777,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6338008334899755
+          },
+          "balanced_fps": {
+            "acc": 0.6751714340050812,
+            "sd": 0.10262860815490193,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6299573033607222
+          },
+          "balanced_uniform": {
+            "acc": 0.6546108501880643,
+            "sd": 0.10060807466445373,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.678195773312593
+          },
+          "balanced_hybrid": {
+            "acc": 0.6776395678387932,
+            "sd": 0.10278648078618777,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6338008334899755
+          }
+        },
+        "200": {
+          "random": {
+            "acc": 0.655906547800773,
+            "sd": 0.09536220927270449,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6757521871989691
+          },
+          "dopt_closest": {
+            "acc": 0.6283313960870259,
+            "sd": 0.10550183125865104,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.7801579208811322
+          },
+          "dopt_fps": {
+            "acc": 0.7086154665879736,
+            "sd": 0.08897918600461664,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.644992314052656
+          },
+          "dopt_uniform": {
+            "acc": 0.66458318781539,
+            "sd": 0.09837228736662394,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6762296028010187
+          },
+          "dopt_hybrid": {
+            "acc": 0.7076097576420728,
+            "sd": 0.08779136521088445,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.647796618898959
+          },
+          "balanced_fps": {
+            "acc": 0.7086154665879736,
+            "sd": 0.08897918600461664,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.644992314052656
+          },
+          "balanced_uniform": {
+            "acc": 0.6663685228665106,
+            "sd": 0.10180842367595835,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6769428002673571
+          },
+          "balanced_hybrid": {
+            "acc": 0.7076097576420728,
+            "sd": 0.08779136521088445,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.647796618898959
+          }
+        },
+        "300": {
+          "random": {
+            "acc": 0.6735598481216238,
+            "sd": 0.09608105489324442,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6758077451567447
+          },
+          "dopt_closest": {
+            "acc": 0.6522309530864898,
+            "sd": 0.10665651855115166,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.7576540193534929
+          },
+          "dopt_fps": {
+            "acc": 0.7234839324810618,
+            "sd": 0.0926706182103262,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6618343893563241
+          },
+          "dopt_uniform": {
+            "acc": 0.6862860964483518,
+            "sd": 0.10255640014239588,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6760732661830232
+          },
+          "dopt_hybrid": {
+            "acc": 0.7214457078039419,
+            "sd": 0.09393619055656738,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6631697130205894
+          },
+          "balanced_fps": {
+            "acc": 0.7234839324810618,
+            "sd": 0.0926706182103262,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6618343893563241
+          },
+          "balanced_uniform": {
+            "acc": 0.6896295058830968,
+            "sd": 0.09651493026889336,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6752152146986579
+          },
+          "balanced_hybrid": {
+            "acc": 0.7214457078039419,
+            "sd": 0.09393619055656738,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6631697130205894
+          }
+        }
+      }
+    },
+    "labram": {
+      "baselines": {
+        "zero": 0.10214909143141852,
+        "within": 0.39333330168880065,
+        "oracle": 0.37814074571556117
+      },
+      "curve": {
+        "10": {
+          "random": {
+            "acc": 0.18735022871940143,
+            "sd": 0.021716213288336995,
+            "class_coverage": 6.365,
+            "within_class_cos": 0.1646277140379065
+          },
+          "dopt_closest": {
+            "acc": 0.2521474699584486,
+            "sd": 0.03375263842567682,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "dopt_fps": {
+            "acc": 0.25310920337399484,
+            "sd": 0.0330598977432039,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "dopt_uniform": {
+            "acc": 0.19807372247758853,
+            "sd": 0.028021637804042706,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "dopt_hybrid": {
+            "acc": 0.2521474699584486,
+            "sd": 0.03375263842567682,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "balanced_fps": {
+            "acc": 0.25310920337399484,
+            "sd": 0.0330598977432039,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "balanced_uniform": {
+            "acc": 0.1998708718308602,
+            "sd": 0.0270217365434668,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          },
+          "balanced_hybrid": {
+            "acc": 0.2521474699584486,
+            "sd": 0.03375263842567682,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.0
+          }
+        },
+        "20": {
+          "random": {
+            "acc": 0.22376055119350183,
+            "sd": 0.025822026027925417,
+            "class_coverage": 8.7,
+            "within_class_cos": 0.2756119954289461
+          },
+          "dopt_closest": {
+            "acc": 0.27486341796851277,
+            "sd": 0.03169722613198932,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.7348259517608184
+          },
+          "dopt_fps": {
+            "acc": 0.23368963499996925,
+            "sd": 0.04116792461915128,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.030192070586309523
+          },
+          "dopt_uniform": {
+            "acc": 0.23513076245118106,
+            "sd": 0.03461013556738656,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3820937630534587
+          },
+          "dopt_hybrid": {
+            "acc": 0.27486341796851277,
+            "sd": 0.03169722613198932,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.7348259517608184
+          },
+          "balanced_fps": {
+            "acc": 0.23368963499996925,
+            "sd": 0.04116792461915128,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.030192070586309523
+          },
+          "balanced_uniform": {
+            "acc": 0.23848403038808366,
+            "sd": 0.03169817846043981,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.378125594872818
+          },
+          "balanced_hybrid": {
+            "acc": 0.27486341796851277,
+            "sd": 0.03169722613198932,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.7348259517608184
+          }
+        },
+        "30": {
+          "random": {
+            "acc": 0.24631593685122594,
+            "sd": 0.029814107694263268,
+            "class_coverage": 9.455000000000002,
+            "within_class_cos": 0.32439992094605574
+          },
+          "dopt_closest": {
+            "acc": 0.2862664291271207,
+            "sd": 0.03977238402405186,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.7193427823110582
+          },
+          "dopt_fps": {
+            "acc": 0.25367042759462155,
+            "sd": 0.04309176812204723,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.12120876180302742
+          },
+          "dopt_uniform": {
+            "acc": 0.26244025400156573,
+            "sd": 0.032530290826778864,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3825937695698872
+          },
+          "dopt_hybrid": {
+            "acc": 0.2788199968285699,
+            "sd": 0.035060034137930136,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.27240463203301063
+          },
+          "balanced_fps": {
+            "acc": 0.25367042759462155,
+            "sd": 0.04309176812204723,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.12120876180302742
+          },
+          "balanced_uniform": {
+            "acc": 0.25524218634531487,
+            "sd": 0.03412429169474882,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3867112515065755
+          },
+          "balanced_hybrid": {
+            "acc": 0.2788199968285699,
+            "sd": 0.035060034137930136,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.27240463203301063
+          }
+        },
+        "50": {
+          "random": {
+            "acc": 0.2780530835802811,
+            "sd": 0.03604992393857934,
+            "class_coverage": 9.94,
+            "within_class_cos": 0.37573706509395044
+          },
+          "dopt_closest": {
+            "acc": 0.30300694099803566,
+            "sd": 0.04004487861273334,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6976313886364804
+          },
+          "dopt_fps": {
+            "acc": 0.27830975743367714,
+            "sd": 0.057267762396266034,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.19123930194152103
+          },
+          "dopt_uniform": {
+            "acc": 0.286428440960115,
+            "sd": 0.04126531154671002,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.38728529776186316
+          },
+          "dopt_hybrid": {
+            "acc": 0.29783420902541763,
+            "sd": 0.04585332248410427,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.2338683104515237
+          },
+          "balanced_fps": {
+            "acc": 0.27830975743367714,
+            "sd": 0.057267762396266034,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.19123930194152103
+          },
+          "balanced_uniform": {
+            "acc": 0.28702287356957995,
+            "sd": 0.03455494989728757,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.39610814609768147
+          },
+          "balanced_hybrid": {
+            "acc": 0.29783420902541763,
+            "sd": 0.04585332248410427,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.2338683104515237
+          }
+        },
+        "75": {
+          "random": {
+            "acc": 0.30016934563444775,
+            "sd": 0.03630670624778312,
+            "class_coverage": 9.985000000000001,
+            "within_class_cos": 0.3892222219352718
+          },
+          "dopt_closest": {
+            "acc": 0.3143026562251312,
+            "sd": 0.046290369659228885,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.677471399265816
+          },
+          "dopt_fps": {
+            "acc": 0.30247045510947085,
+            "sd": 0.04706810823148068,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.2353816990190217
+          },
+          "dopt_uniform": {
+            "acc": 0.30636266922695987,
+            "sd": 0.04025811954706443,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.39079253706142214
+          },
+          "dopt_hybrid": {
+            "acc": 0.31484213245486437,
+            "sd": 0.0415337332439802,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.2580423155021221
+          },
+          "balanced_fps": {
+            "acc": 0.3034980612761884,
+            "sd": 0.047308302723319505,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.23589313076754798
+          },
+          "balanced_uniform": {
+            "acc": 0.3012079030380096,
+            "sd": 0.040728644093942744,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.389148233688456
+          },
+          "balanced_hybrid": {
+            "acc": 0.31348373252372735,
+            "sd": 0.04860153422899322,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.25764355183164966
+          }
+        },
+        "100": {
+          "random": {
+            "acc": 0.3104482935090636,
+            "sd": 0.04149591070249728,
+            "class_coverage": 9.99,
+            "within_class_cos": 0.38783291216418936
+          },
+          "dopt_closest": {
+            "acc": 0.3231199118743745,
+            "sd": 0.04505451883596426,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6581870845759694
+          },
+          "dopt_fps": {
+            "acc": 0.33167846492314024,
+            "sd": 0.048644082514259564,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.25964932873585067
+          },
+          "dopt_uniform": {
+            "acc": 0.31833030168061716,
+            "sd": 0.042541406230870715,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.38797235483680237
+          },
+          "dopt_hybrid": {
+            "acc": 0.33631730130253173,
+            "sd": 0.0545411682149221,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.2760790412160733
+          },
+          "balanced_fps": {
+            "acc": 0.33167846492314024,
+            "sd": 0.048644082514259564,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.25964932873585067
+          },
+          "balanced_uniform": {
+            "acc": 0.31793852187153393,
+            "sd": 0.04230204999177474,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3875535845622267
+          },
+          "balanced_hybrid": {
+            "acc": 0.33631730130253173,
+            "sd": 0.0545411682149221,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.2760790412160733
+          }
+        },
+        "150": {
+          "random": {
+            "acc": 0.33308095224070633,
+            "sd": 0.04269429672307421,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3876185196990818
+          },
+          "dopt_closest": {
+            "acc": 0.3308254241774014,
+            "sd": 0.04556901263159017,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.6289989370056062
+          },
+          "dopt_fps": {
+            "acc": 0.3643740184086093,
+            "sd": 0.05649450274854867,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.29497974437644536
+          },
+          "dopt_uniform": {
+            "acc": 0.33840064276508997,
+            "sd": 0.046964217724830816,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3891254846739983
+          },
+          "dopt_hybrid": {
+            "acc": 0.3653157712500509,
+            "sd": 0.05297224493279461,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.30315023038353106
+          },
+          "balanced_fps": {
+            "acc": 0.3643740184086093,
+            "sd": 0.05649450274854867,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.29497974437644536
+          },
+          "balanced_uniform": {
+            "acc": 0.33817021978120276,
+            "sd": 0.042330980361317265,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3898318597991716
+          },
+          "balanced_hybrid": {
+            "acc": 0.3653157712500509,
+            "sd": 0.05297224493279461,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.30315023038353106
+          }
+        },
+        "200": {
+          "random": {
+            "acc": 0.3424950849059538,
+            "sd": 0.04544667289315403,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.38872618850518226
+          },
+          "dopt_closest": {
+            "acc": 0.3451525749978456,
+            "sd": 0.04449475533231994,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.603399228401089
+          },
+          "dopt_fps": {
+            "acc": 0.3875716792975729,
+            "sd": 0.05700431328033228,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.31988450738088753
+          },
+          "dopt_uniform": {
+            "acc": 0.34998310660136245,
+            "sd": 0.048444024947713195,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.38864813487470184
+          },
+          "dopt_hybrid": {
+            "acc": 0.3811066416575507,
+            "sd": 0.05643604044034612,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3257668632257108
+          },
+          "balanced_fps": {
+            "acc": 0.3875716792975729,
+            "sd": 0.05700431328033228,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.31988450738088753
+          },
+          "balanced_uniform": {
+            "acc": 0.3527287416013367,
+            "sd": 0.04829801398700691,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3890796975347012
+          },
+          "balanced_hybrid": {
+            "acc": 0.3811066416575507,
+            "sd": 0.05643604044034612,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3257668632257108
+          }
+        },
+        "300": {
+          "random": {
+            "acc": 0.35795887054666853,
+            "sd": 0.04951775159103811,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.39043052834933606
+          },
+          "dopt_closest": {
+            "acc": 0.3548341890912138,
+            "sd": 0.04357957799526866,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.5554963600105476
+          },
+          "dopt_fps": {
+            "acc": 0.4032072028628825,
+            "sd": 0.05719988032434337,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.35304443011541514
+          },
+          "dopt_uniform": {
+            "acc": 0.3603415440522547,
+            "sd": 0.048586238555805066,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.3897583855085819
+          },
+          "dopt_hybrid": {
+            "acc": 0.39721727732635725,
+            "sd": 0.05317632454961002,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.35507200322564025
+          },
+          "balanced_fps": {
+            "acc": 0.4032072028628825,
+            "sd": 0.05719988032434337,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.35304443011541514
+          },
+          "balanced_uniform": {
+            "acc": 0.3614061303006563,
+            "sd": 0.04729785683257311,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.38920999786799915
+          },
+          "balanced_hybrid": {
+            "acc": 0.39721727732635725,
+            "sd": 0.05317632454961002,
+            "class_coverage": 10.0,
+            "within_class_cos": 0.35507200322564025
+          }
+        }
+      }
+    }
+  }
+}

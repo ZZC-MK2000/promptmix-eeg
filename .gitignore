@@ -21,3 +21,7 @@ __pycache__/
 Thumbs.db
 # voided artifacts kept locally for traceability, not published (contain absolute local paths)
 results/_voided_*/
+
+# --- small derived CLAP cache needed by code/information/codebook_select.py ---
+!results/coverage_expanded/library_emb.npy
+!results/coverage_expanded/library_owner.npy

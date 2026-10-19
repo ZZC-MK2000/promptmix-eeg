@@ -1,0 +1,51 @@
+  prompt00 'upbeat indian bollywood dance song wit' [51s]
+  prompt01 'melodic indian film ballad with lush s' [78s]
+  prompt02 'catchy pop song with airy female vocal' [107s]
+  prompt03 'smooth r&b groove with warm bass and c' [137s]
+  prompt04 'energetic electronic dance music with ' [165s]
+  prompt05 'mellow acoustic pop with fingerpicked ' [192s]
+  prompt06 'funky groove with slap bass and punchy' [217s]
+  prompt07 'latin reggaeton beat with tropical syn' [243s]
+  prompt08 'dreamy ambient synth pad with slow evo' [269s]
+  prompt09 'classic rock with a driving electric g' [295s]
+  prompt10 'hip hop trap beat with boomy 808 bass ' [321s]
+  prompt11 'cinematic orchestral action cue with p' [347s]
+  prompt12 'hindustani classical raga with sitar a' [373s]
+  prompt13 'indian folk song with dholak and harmo' [399s]
+  prompt14 'indian semi-classical thumri with expr' [425s]
+  prompt15 'goth rock with dark detuned guitar and' [451s]
+  prompt16 'progressive instrumental rock in odd t' [477s]
+  prompt17 'deep house groove with muffled kick, s' [503s]
+  prompt18 'new age instrumental with soft pads an' [529s]
+  prompt19 'soft jazz trio with brushed drums upri' [555s]
+  prompt20 'indie rock with jangly clean guitars a' [581s]
+  prompt21 'electronic track with glitching synths' [607s]
+reproduction check vs results/library_b: max|Δ|=1.49e-08 mean cos=1.000000
+targets: 60 held-out windows (comparable to fig1) and 2000 windows (stability)
+loaded 132 cached clip embeddings (512-d), no generation
+reproduction check vs results/library_b: max|Δ|=0.00e+00 mean cos=1.000000
+targets: 60 held-out windows (comparable to fig1) and 2000 windows (stability)
+  existing_12_prompts              convex 0.7374 / best-single-clip 0.7969 / trivial 0.8198   (n=2000: 0.6543)
+  existing_plus_10_new_genres_22   convex 0.7446 / best-single-clip 0.7996 / trivial 0.8198   (n=2000: 0.6678)
+  greedy 12-of-22 selected prompt indices: [0, 1, 2, 3, 4, 6, 7, 9, 10, 13, 18, 20]
+  greedy_12_of_22                convex 0.7525
+SUMMARY convex mixture: existing 12 = 0.7374 | 22 prompts = 0.7446 (+0.0073) | greedy 12-of-22 = 0.7525 (+0.0151)
+saved -> D:\Projects\CLaBraM\promptmix-eeg\results\coverage_expanded\coverage_expanded.json  [70s]
+loaded 132 cached clip embeddings (512-d), no generation
+reproduction check vs results/library_b: max|Δ|=0.00e+00 mean cos=1.000000
+targets: 60 held-out windows (comparable to fig1) and 2000 windows (stability)
+  existing_12_prompts              convex 0.8050 / best-single-clip 0.7969 / trivial 0.8198   (n=2000: 0.7131)
+  existing_plus_10_new_genres_22   convex 0.8152 / best-single-clip 0.7996 / trivial 0.8198   (n=2000: 0.7285)
+  greedy 12-of-22 selected prompt indices: [0, 1, 2, 3, 4, 6, 7, 9, 10, 13, 18, 20]
+  greedy_12_of_22                convex 0.8116
+SUMMARY convex mixture: existing 12 = 0.8050 | 22 prompts = 0.8152 (+0.0102) | greedy 12-of-22 = 0.8116 (+0.0066)
+saved -> D:\Projects\CLaBraM\promptmix-eeg\results\coverage_expanded\coverage_expanded.json  [61s]
+loaded 132 cached clip embeddings (512-d), no generation
+reproduction check vs results/library_b: max|Δ|=0.00e+00 mean cos=1.000000
+targets: 60 held-out windows (comparable to fig1) and 2000 windows (stability)
+  existing_12_prompts              convex 0.8790 / best-single-clip 0.7969 / trivial(target mean) 0.8198   (n=2000: 0.8260)
+  existing_plus_10_new_genres_22   convex 0.8853 / best-single-clip 0.7996 / trivial(target mean) 0.8198   (n=2000: 0.8321)
+  greedy 12-of-22 selected prompt indices: [0, 1, 2, 3, 4, 6, 7, 9, 10, 13, 18, 20]
+  greedy_12_of_22                convex 0.8772
+SUMMARY convex mixture: existing 12 = 0.8790 | 22 prompts = 0.8853 (+0.0064) | greedy 12-of-22 = 0.8772 (+-0.0018)
+saved -> D:\Projects\CLaBraM\promptmix-eeg\results\coverage_expanded\coverage_expanded.json  [256s]
