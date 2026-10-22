@@ -105,8 +105,10 @@
     <div class="links">
       <a href="#method">How it works</a>
       <a href="#listener">The listener</a>
+      <a href="#kshot">k-shot</a>
       <a href="#part1">Part 1 · retrieve</a>
       <a href="#part2">Part 2 · generate</a>
+      <a href="#paths">Three paths</a>
       <a href="#heard">Heard vs generated</a>
       <a href="#listen">Listen</a>
       <a href="#limits">Limitations</a>
@@ -118,14 +120,16 @@
 
   <div class="hero">
     <h1>Brain signals → frozen MusicGen,<br>music by construction.</h1>
-    <p class="sub">An EEG window picks a <b>mixture of 12 fixed genre prompts</b>; the <b>frozen</b> MusicGen
-      samples it natively. But the hard part is not the generator or the prompt library — it is the
-      <b>listener</b>. Zero-shot cross-subject song decoding is at chance; a per-subject fiber estimated from
-      <b>10 labelled windows</b> lifts it to 45%. The generator's weights are never touched, so every output is,
+    <p class="sub">An EEG window can <b>retrieve the heard song</b>, or steer a <b>frozen MusicGen</b>
+      at genre level. The hard part is the listener: zero-shot cross-subject song decoding is at chance;
+      a per-subject fiber estimated from <b>10 labelled windows</b> lifts it to 45%. The same calibration
+      unlocks <b>song-level description selection</b> (.350) but <b>not</b> the 12-way genre task
+      (shared κ .40 vs k-shot .045). The generator's weights are never touched, so every output is,
       by construction, a native clip of the original model.</p>
     <div class="pills">
       <span class="pill hl">zero-shot cross-subject ≈ chance</span>
       <span class="pill">10 labels → 45% song decoding</span>
+      <span class="pill">k-shot: song yes · genre no</span>
       <span class="pill">generator weights never touched</span>
       <a class="pill" href="https://github.com/ZZC-MK2000/promptmix-eeg">code →</a>
     </div>
@@ -218,10 +222,37 @@
       advantage is sample efficiency at small k — this is not “just fine-tuning”.</div>
   </section>
 
+  <section id="kshot">
+    <h2>What k-shot unlocks — and what it does not</h2>
+    <p class="lead">The same per-subject calibration that rescues song decoding does <b>not</b> rescue
+      genre decoding. Song-level description selection rises from <b>.103</b> at k=0 to <b>.350</b> at k=100
+      (10-way, 5 folds; chance .10, majority floor .119). The 12-way genre task stays with the shared
+      classifier: <b>κ ≈ .40</b>; k-shot reaches at most <b>κ .045</b>, and matching the Qwen genre prompts
+      by CLAP scores <b>.056</b> against a <b>.672</b> majority floor.</p>
+
+    <div class="figcard">
+      <span class="figno">Fig 17 · k-shot: song vs genre</span>
+      <figure><img src="assets/fig/fig17_kshot_two_levels.png" alt="k-shot song selection versus genre selection"></figure>
+      <figcaption><b>Left:</b> 10-way song-description top-1, 5-fold held-out subjects. Discriminative tag
+        descriptions (blue) reach .350 with 100 labels; Qwen free-text captions (orange) reach .201 — the
+        captions are coherent but too generic. <b>Right:</b> 12-way genre selection, Cohen's κ. The shared
+        classifier is κ .399 (fold mean); k-shot head + classifier (purple) and the clip-only head (grey)
+        stay at ≤ .045. The CLAP text-prompt selector is below the majority floor (.056 acc vs .672).
+        Same listener, same calibration budget: one task moves, the other does not.</figcaption>
+    </div>
+
+    <div class="note"><b>Why the asymmetry?</b> The subject fiber is a within-listener transform of the
+      <b>song</b> code; calibrating it adds song identity, not the coarse 12-way genre label. Genre is a
+      shared interface already handled by the mainline classifier — k-shot should not be used there.</div>
+  </section>
+
   <section id="part1">
     <h2>Part 1 — retrieve the song the subject heard</h2>
     <p class="lead">Song-level nearest-centroid retrieval after the A→L bridge: 36,036 EEG queries over 14 songs
-      against a 1,103-window audio corpus (chance 7.1%).</p>
+      against a 1,103-window audio corpus (chance 7.1%). <b>This headline is segment-held-out</b> (subjects
+      remain in training); on truly unseen subjects the calibrated query retrieves a real clip at
+      <b>.413 / .504</b> (bandpower k=10 / 100) — the honest cross-subject number used in
+      <a href="#paths">Three paths</a>.</p>
 
     <div class="figcard">
       <span class="figno">Fig 11 · 14-way song confusion</span>
@@ -229,8 +260,10 @@
       <figcaption><b>Held-out audio segments</b> (subjects remain in training), 14-way: top-1 <b>88.2%</b>
         vs 7.1% chance. This is a different protocol from the headline retrieval line, which scores
         <b>84.9%</b> song-level over 36,036 queries (chance 7.1%; smoothed 88.4%). On truly unseen subjects,
-        the same pipeline is at <b>0.106 ± 0.020</b> (5 folds, 14-way; chance 0.071) — see
-        <a href="#listener">The listener</a>. T0–T9 are NMED-T songs, H0–H3 NMED-H.</figcaption>
+        the zero-shot retrain is at <b>0.106 ± 0.020</b> (5 folds, 14-way; chance 0.071); with per-subject
+        calibration the query retrieves real clips at <b>.413 / .504</b> (bandpower k=10 / 100) — see
+        <a href="#listener">The listener</a> and <a href="#paths">Three paths</a>.
+        T0–T9 are NMED-T songs, H0–H3 NMED-H.</figcaption>
     </div>
 
     <div class="figcard">
@@ -285,8 +318,10 @@
     <div class="figcard">
       <span class="figno">Fig 4 · which prompt the EEG picks</span>
       <figure><img src="assets/fig/fig4_genre_confusion.png" alt="genre confusion matrix"></figure>
-      <figcaption>EEG → genre prompt (corpus-matched library), held-out subjects: overall 0.738,
-        Cohen's κ <b>0.563 [0.54, 0.59]</b> — the EEG genuinely carries genre information.</figcaption>
+      <figcaption>EEG → genre prompt, <b>5-fold held-out subjects</b>:
+        overall <b>.748</b>, κ <b>.405</b> pooled (5-fold mean .742/.399), balanced .283. The shared classifier is the working genre
+        selector; k-shot does not help the 12-way task (κ ≤ .045; see <a href="#kshot">k-shot</a>).
+        The majority class is large, so κ is the honest statistic.</figcaption>
     </div>
 
     <div class="figcard">
@@ -304,6 +339,47 @@
       <figcaption>One window (row 1083): the heard stimulus and three delivered native clips show harmonic
         structure (zcr 0.031–0.082); the interpolated clip is broadband noise (0.490).</figcaption>
     </div>
+  </section>
+
+  <section id="paths">
+    <h2>Three downstream paths</h2>
+    <p class="lead">Same listener, same frozen generator, three different outputs. Only the first closes
+      the song-level gap under subject shift; the second is genre-level by design; the third has a working
+      selector but no song-level audio.</p>
+
+    <div class="figcard">
+      <span class="figno">Fig 18 · retrieval / genre reconstruction / song reconstruction</span>
+      <figure><img src="assets/fig/fig18_three_paths.png" alt="three downstream paths: retrieval, genre reconstruction, song reconstruction"></figure>
+      <figcaption><b>Retrieval</b> returns a real clip (bandpower k=10 .413, k=100 .504; through the CLAP
+        query .339/.383; chance .10). <b>Genre-level reconstruction</b> uses the shared 12-way classifier
+        (.742 acc, κ .399; pooled .748/.405) and a Qwen genre prompt; k-shot does not help (κ ≤ .045) and
+        CLAP prompt matching is below majority (.056 vs .672). <b>Song-level reconstruction</b> uses the
+        k-shot description selector (.350 tag / .201 Qwen; floor .119), but the generated audio is still
+        genre-level: the true-song prompt does not beat a same-genre wrong prompt
+        (+.034, t = 1.02, n.s.).</figcaption>
+    </div>
+
+    <table class="restable">
+      <thead><tr><th>path</th><th>selector</th><th>output</th><th>evidence</th><th>song-level?</th></tr></thead>
+      <tbody>
+        <tr><td><b>Retrieval</b></td><td>calibrated query</td><td>nearest real clip</td>
+          <td>.413 / .504 (bandpower k=10 / 100); .339 / .383 (CLAP)</td>
+          <td class="hi">yes</td></tr>
+        <tr><td><b>Genre-level reconstruction</b></td><td>shared 12-way classifier</td>
+          <td>Qwen genre prompt → frozen MusicGen</td>
+          <td>.742 acc / κ .399; k-shot κ ≤ .045; CLAP prompt .056 vs .672</td>
+          <td>genre only</td></tr>
+        <tr><td><b>Song-level reconstruction</b></td><td>k-shot description selection</td>
+          <td>description → frozen MusicGen</td>
+          <td>.350 tag / .201 Qwen; oracle − same-genre +.034 (t = 1.02, n.s.)</td>
+          <td class="lo">no</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note"><b>Two retrieval protocols, not one.</b> The 84.9% / 88.2% in Part 1 are
+      segment-held-out (subjects remain in training). The .413/.504 numbers here are subject-held-out with
+      per-subject calibration — the honest cross-subject numbers, and the ones used in the three-path
+      comparison. Only retrieval closes the song-level gap under subject shift.</div>
   </section>
 
   <section id="heard">
@@ -351,20 +427,25 @@
     <details><summary>Is the generated clip a reconstruction of what was heard?</summary>
       <p>No — genre-level only (+0.103, and −0.005 within the same genre). Song identity is Part 1's job:
         84.9% song-level retrieval (held-out segments; subjects remain in training). On truly unseen subjects
-        the same pipeline is at 0.106 ± 0.020; the k-shot fiber calibration recovers 0.454 with 10 labels.</p></details>
+        the calibrated query retrieves real clips at <b>.413 / .504</b> (bandpower k=10 / 100; chance .10),
+        and k-shot song-description selection reaches <b>.350</b>; the generation arm remains genre-level.</p></details>
     <details><summary>Why keep the generator frozen?</summary>
       <p>Fine-tuning scored 7,404 vs 1,389 on distributional texture, and freezing keeps every output inside the
         generator's own distribution by construction.</p></details>
     <details><summary>Why not interpolate between two prompts?</summary>
       <p>39% of the 66 pairs go off-manifold: crackle instead of a blend.</p></details>
     <details><summary>What is still missing?</summary>
-      <p>A human listening test (MOS); coverage is relative to the trivial baseline, not absolute.</p></details>
+      <p>Song-level generation; a human listening test (MOS); coverage is relative to the trivial baseline,
+        not absolute. Free-text captions (LP-MusicCaps, Qwen2-Audio) did not beat the discriminative tags for
+        song selection (.201 vs .350).</p></details>
 
     <ul class="lim">
       <li>Small corpus (14 songs, 68 subjects); genre labels skew, so κ — not accuracy — is the honest statistic.</li>
       <li>The five-fold subject-held-out retrain and the block-split control are single-seed; NMED-T has only 20 crossed subjects.</li>
       <li>The fiber theory assumes a shared codebook and an isometric/low-rank transform; LaBraM-200 is only partially recoverable (0.391 oracle).</li>
-      <li>The k-shot calibration is evaluated on retrieval; the calibrated downstream generation is pending.</li>
+      <li>K-shot calibrates song-level description selection (.350), but <b>not</b> the 12-way genre task (κ .045 vs shared .40); calibrated generation remains genre-level.</li>
+      <li>Song-level reconstruction is not solved: the generated audio is genre-level; retrieval of real clips (.38–.50) is the honest song-level path.</li>
+      <li>Free-text Qwen song captions are coherent but generic (.201 vs .350 tags); no title/artist leakage, but the text→audio interface still collapses song identity to genre.</li>
       <li>The FMA-pool margin measures pull toward this corpus, not song identity (Bollywood stimuli vs a mostly-Western pool).</li>
       <li>Off-manifold interpolation makes the mixture effectively near-single-prompt, or waveform blending.</li>
       <li>No metric replaces listening; MOS has not been run.</li>

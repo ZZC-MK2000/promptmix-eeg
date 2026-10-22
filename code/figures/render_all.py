@@ -20,7 +20,8 @@ PRE = [(ROOT / "code" / "radii" / "coverage_unified.py", "coverage table under o
 SCRIPTS = ["make_fig_align_structure.py", "make_figures.py",
            "make_figures_spectro.py", "make_fig_genre_confusion.py", "make_fig_compat_map.py",
            "make_fig_retrieval_pool.py", "make_fig_mfcc_fad.py", "make_fig_info_ladder.py",
-           "make_fig_k_shot.py", "make_fig_oracle_alignment.py"]
+           "make_fig_k_shot.py", "make_fig_oracle_alignment.py",
+           "make_fig_kshot_two_levels.py", "make_fig_three_paths.py"]
 
 for p, why in PRE:
     print(f"\n===== {p.name} ({why}) =====", flush=True)

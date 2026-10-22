@@ -1,0 +1,67 @@
+{
+  "k": [
+    0,
+    10,
+    100,
+    300
+  ],
+  "song": {
+    "tag": [
+      0.10277686981229936,
+      0.3133275682999169,
+      0.35045719039893114,
+      0.3485213957170112
+    ],
+    "qwen": [
+      0.10490401221263498,
+      0.18044958526495775,
+      0.20145361765384728,
+      0.20559091813200797
+    ],
+    "chance": 0.1,
+    "majority": 0.11862669111392074,
+    "n_candidates": 10
+  },
+  "genre": {
+    "k": [
+      0,
+      10,
+      100,
+      300
+    ],
+    "head_calib_kappa": [
+      0.013104112954592812,
+      0.022983663233381236,
+      0.04342098954138358,
+      0.044913154491770926
+    ],
+    "clip_calib_kappa": [
+      0.023523222913255825,
+      0.026073611481674964,
+      0.04444874415074371,
+      0.04933580248137215
+    ],
+    "mainline_acc": 0.7421540854582466,
+    "mainline_kappa": 0.3987826918006681,
+    "clap_prompt_acc": [
+      0.04827926755037033,
+      0.05291773153484317,
+      0.05639547222574406,
+      0.054567025951111556
+    ],
+    "clap_prompt_kappa": [
+      0.0029489378845809155,
+      0.017986235216235123,
+      0.0185582155631538,
+      0.018706228239543415
+    ],
+    "clap_majority": 0.6721325390353571
+  },
+  "sources": {
+    "song_kshot": "results/calib_head_pilot/desc_selection_nmedt.json + results/descriptions/desc_selection_qwen_medoid.json",
+    "genre_kshot": "results/calib_head_pilot/genre_readout.json",
+    "genre_clap": "results/descriptions/genre_selection_qwen.json (library_b/oracle_all)",
+    "retrieval": "results/bandpower_clap_k_shot/bridge.json",
+    "song_generation": "results/descriptions/pilot_qwen_two_paths.json (song arms)"
+  }
+}

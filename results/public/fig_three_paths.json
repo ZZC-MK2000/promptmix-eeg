@@ -1,0 +1,35 @@
+{
+  "retrieval": {
+    "bp_10": 0.413048263629263,
+    "bp_100": 0.5039285041085219,
+    "clap_10": 0.3386590431734517,
+    "clap_100": 0.3832601262347852
+  },
+  "retrieval_chance": 0.1,
+  "genre": {
+    "mainline_acc": 0.7421540854582466,
+    "mainline_kappa": 0.3987826918006681,
+    "kshot_kappa": 0.04342098954138358,
+    "clap_prompt_acc": 0.05639547222574406,
+    "clap_majority": 0.6721325390353571
+  },
+  "song": {
+    "tag_k100": 0.35045719039893114,
+    "qwen_k100": 0.20145361765384728,
+    "floor": 0.11862669111392074,
+    "generation": {
+      "oracle": 0.0453725466504693,
+      "calib": 0.06935963593423367,
+      "samegenre": 0.011046512052416801,
+      "oracle_minus_samegenre": 0.0343260345980525,
+      "t": 1.02064243073441
+    }
+  },
+  "sources": {
+    "song_kshot": "results/calib_head_pilot/desc_selection_nmedt.json + results/descriptions/desc_selection_qwen_medoid.json",
+    "genre_kshot": "results/calib_head_pilot/genre_readout.json",
+    "genre_clap": "results/descriptions/genre_selection_qwen.json (library_b/oracle_all)",
+    "retrieval": "results/bandpower_clap_k_shot/bridge.json",
+    "song_generation": "results/descriptions/pilot_qwen_two_paths.json (song arms)"
+  }
+}
