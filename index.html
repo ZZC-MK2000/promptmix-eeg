@@ -137,22 +137,26 @@
 
   <section id="method">
     <h2>How it works</h2>
-    <p class="lead">A CLAP-style two-tower alignment produces the EEG embedding <code>z_win</code>; two heads
-      then retrieve or generate. This page shows the current version only — every number comes straight from the
-      result files. All result figures regenerate on CPU (<code>python code/figures/render_all.py</code>); the
-      system diagram (Fig 0) is hand-supplied.</p>
+    <p class="lead">A CLAP-style two-tower alignment produces the EEG embedding <code>z_win</code>; the same
+      embedding then drives three downstream tasks: song identification, genre-conditioned generation, and
+      song-level description selection. This page shows the current version only — every number comes straight
+      from the result files. All result figures regenerate on CPU
+      (<code>python code/figures/render_all.py</code>); the system diagram (Fig 0) is hand-supplied.</p>
 
     <div class="figcard">
       <span class="figno">Fig 0 · system</span>
-      <figure><img src="assets/fig/fig0_architecture.png" alt="two-tower TRIAD alignment and downstream tasks"></figure>
+      <figure><img src="assets/fig/fig0_architecture.png" alt="two-tower TRIAD alignment and three downstream tasks"></figure>
       <figcaption><b>Alignment (training).</b> 8-s EEG → LaBraM backbone → trainable projection head →
         <code>z_win</code>; heard audio → frozen CLAP → <code>a_win</code> (training-time only). Both feed
-        <b>TRIAD</b> (window / second / song). <b>Part 1</b> retrieves the heard song from <code>z_win</code>
-        through the A→L bridge: <b>84.9%</b> song-level over 36,036 queries and a 1,103-window corpus
-        (held-out segments; subjects remain in training).
-        <b>Part 2</b> maps <code>z_win</code> to weights over 12 native prompts and samples a frozen MusicGen
-        at 32 kHz. <span class="mut">The diagram shows the frozen-backbone / head variant; the 84.9% number
-        comes from the main-line arm, which also fine-tunes the LaBraM backbone (7.72M trainable).</span></figcaption>
+        <b>TRIAD</b> (window / second / song). <b>Part 1 · Identification</b> retrieves the heard song from
+        <code>z_win</code> through the A→L bridge: <b>84.9%</b> song-level over 36,036 queries and a
+        1,103-window corpus (held-out segments; subjects remain in training); under subject shift the
+        calibrated query retrieves real clips at <b>.413 / .504</b> (bandpower k=10 / 100).
+        <b>Part 2 · Generation</b> samples a frozen MusicGen at 32 kHz from a genre-conditioned prompt;
+        it is genre-level by design. <b>Part 3 · Selection</b> picks among 14 song descriptions
+        (k-shot <b>.350</b> tag / <b>.201</b> Qwen); this is text selection, not song-level audio generation.
+        <span class="mut">The diagram shows the frozen-backbone / head variant; the 84.9% number comes from the
+        main-line arm, which also fine-tunes the LaBraM backbone (7.72M trainable).</span></figcaption>
     </div>
 
     <div class="figcard">
