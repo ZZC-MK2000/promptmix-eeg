@@ -6,7 +6,9 @@
 # Single-instance: launched through launch_guard.py (rule 38).
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-MAINV2_DIR="${MAINV2_DIR:-$ROOT/vendor/mainv2}"
+DEFAULT_M2="$ROOT/../mainv2"
+if [ ! -d "$DEFAULT_M2/data" ]; then DEFAULT_M2="$ROOT/vendor/mainv2"; fi
+MAINV2_DIR="${MAINV2_DIR:-$DEFAULT_M2}"
 PY="${PYTHON:-python}"
 OUT="$ROOT/results/subject_holdout"
 GUARD="$ROOT/code/information/launch_guard.py"

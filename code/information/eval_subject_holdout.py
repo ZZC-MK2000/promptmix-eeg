@@ -15,7 +15,8 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[2]
-M2 = Path(os.environ.get("MAINV2_DIR", ROOT / "vendor" / "mainv2"))
+_EXT = ROOT.parent / "mainv2"
+M2 = Path(os.environ.get("MAINV2_DIR", _EXT if (_EXT / "data").exists() else ROOT / "vendor" / "mainv2"))
 OUT = ROOT / "results" / "subject_holdout"
 GATE = M2 / "data" / "gate_nmedh14_ov2_a.npz"
 RES = M2 / "results" / "align_ladder_result.json"

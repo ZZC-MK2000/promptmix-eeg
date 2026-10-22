@@ -40,7 +40,7 @@ environment variables and the privacy/copyright boundary.
 
 - `run_subject_holdout.sh` calls the vendored trainer at
   `vendor/mainv2/src/align/nmedt_align_v2.py`. The public drivers use `MAINV2_DIR`
-  (default: `vendor/mainv2`); set `MAINV2_DIR` to your original workspace if the
+  (default: sibling `mainv2` if it has `data/`, else `vendor/mainv2`); set `MAINV2_DIR` to your original workspace if the
   data caches live there.
 - The stage-1 trainer needs the LaBraM code and `labram-base.pth`; set `LABRAM_DIR` /
   `LABRAM_CKPT`. These are third-party assets and are not redistributed.

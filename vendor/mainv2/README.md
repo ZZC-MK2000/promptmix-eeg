@@ -32,8 +32,8 @@ data/eegcond/                # NMED-T/NMED-H caches (cond/codes/group)
 
 ## Environment
 
-- `MAINV2_DIR` — workspace containing `data/` and `results/`; defaults to this directory
-  for the shell drivers. Set it to your original `mainv2` if the caches live there.
+- `MAINV2_DIR` — workspace containing `data/` and `results/`; defaults to the sibling `mainv2` if it has `data/`,
+  else this directory. Set it to your original `mainv2` if the caches live there.
 - `MAINV2_DATA` / `MAINV2_RESULTS` — override the cache/result directories.
 - `NMEDT_ROOT` — raw NMED-T audio/EEG root, if a script needs it.
 - `LABRAM_DIR` / `LABRAM_CKPT` — LaBraM code and `labram-base.pth`.
