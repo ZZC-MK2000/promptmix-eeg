@@ -2,7 +2,7 @@
 
 Song identification/retrieval (song-level), genre-conditioned generation (shared
 classifier + Qwen genre prompt), and song-level description selection (k-shot text +
-frozen generator; not audio reconstruction).
+frozen generator; not song-level audio generation).
 Numbers come from results/public/fig_three_paths.json.
 
 Run: python code/figures/make_fig_three_paths.py

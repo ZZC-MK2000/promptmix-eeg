@@ -345,7 +345,7 @@
     <h2>Three downstream tasks</h2>
     <p class="lead">Same listener, same frozen generator, three different tasks. Only song identification
       is song-level under subject shift; the second is genre-conditioned generation; the third is a text-level
-      description selector, not audio reconstruction.</p>
+      description selector, not audio generation.</p>
 
     <div class="figcard">
       <span class="figno">Fig 18 · three downstream tasks</span>
@@ -356,7 +356,7 @@
         (κ ≤ .045) and CLAP prompt matching is below majority (.056 vs .672).
         <b>Song-level description selection</b> uses the k-shot selector (.350 tag / .201 Qwen; floor .119),
         but the generated audio is still genre-level: the true-song prompt does not beat a same-genre wrong
-        prompt (+.034, t = 1.02, n.s.). It is not audio reconstruction.</figcaption>
+        prompt (+.034, t = 1.02, n.s.). It is not song-level audio generation.</figcaption>
     </div>
 
     <table class="restable">
@@ -424,8 +424,8 @@
     <details><summary>Why is there no stimulus audio?</summary>
       <p>The stimuli are excerpts of commercially released songs, so only spectrograms are shown and raw EEG is
         not published. Every playable file is generated.</p></details>
-    <details><summary>Is the generated clip a reconstruction of what was heard?</summary>
-      <p>No — this is <b>genre-conditioned generation</b>, not reconstruction. The generated audio is genre-level
+    <details><summary>Is the generated clip the song that was heard?</summary>
+      <p>No — this is <b>genre-conditioned generation</b>, not the heard song. The generated audio is genre-level
         only (+0.103, and −0.005 within the same genre). Song identity is the job of song identification:
         84.9% song-level retrieval (held-out segments; subjects remain in training). On truly unseen subjects
         the calibrated query retrieves real clips at <b>.413 / .504</b> (bandpower k=10 / 100; chance .10),
