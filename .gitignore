@@ -33,3 +33,9 @@ docs/OVERNIGHT_STATUS.md
 docs/INCIDENT_duplicate_control_2026-10-19.md
 docs/prereg_*.md
 docs/INCIDENT_*.md
+
+# --- vendored code expects external data/weights; never publish these ---
+vendor/mainv2/data/
+vendor/mainv2/results/
+vendor/models/
+vendor/LaBraM-main/

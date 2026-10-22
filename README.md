@@ -1,71 +1,104 @@
 [![live demo](https://img.shields.io/badge/live%20demo-GitHub%20Pages-blue)](https://zzc-mk2000.github.io/promptmix-eeg/)
 
-> **Live demo (static GitHub Pages):** https://zzc-mk2000.github.io/promptmix-eeg/ — method, a heard-vs-generated spectrogram table (stimulus audio withheld for copyright), retrieval evidence, and playable generated clips.
+> **Live demo:** https://zzc-mk2000.github.io/promptmix-eeg/ — the current three-task story,
+> k-shot song-vs-genre evidence, retrieval, and playable frozen-MusicGen clips.
+> Stimulus audio is withheld for copyright.
 
 # PromptMix-EEG
 
-**Frozen-Generator Music Synthesis from Brain Signals via Prompt-Library Mixture Weights.**
-Two decoupled parts: **Alignment** (EEG→laion-CLAP bridge → *retrieve the heard song*, 84.9% 14-way) and **Generation** (tiny adapter → mixture weights over a frozen native-prompt library → **frozen** MusicGen 32 kHz → *pleasant music by construction*).
+**Brain signals → frozen MusicGen, with the listener as the bottleneck.**
 
-Renamed from `CLaBraM` (the upstream EEG-encoder's name, no longer apt). This folder is the **self-contained project root** — code, data, results, docs, listening clips are all real files here (no symlinks/junctions). `../mainv3` is kept as the original working tree / legacy fallback. The large legacy fine-tune checkpoints (`gen_eegcond*/*.pt`, ~3 GB) were intentionally NOT copied (reproducible by training; not part of the PromptMix-EEG deliverable) — everything else (embeddings, JSONs, classifier weights, all listenable wavs) is present.
+The current version has three downstream tasks:
 
-## Structure (one glance)
+1. **Song identification / retrieval** — a calibrated EEG query retrieves a real audio clip
+   (subject-held-out bandpower retrieval **.413 at k=10**, **.504 at k=100**; chance .10).
+   The mainline A→L bridge reaches **84.9%** 14-way on **held-out segments** (subjects remain
+   in training); that is a different, easier protocol.
+2. **Genre-conditioned generation** — the shared 12-way classifier selects a genre prompt
+   (**.742 acc, κ .399**) and a frozen MusicGen samples at 32 kHz. k-shot does **not** help
+   this task (κ ≤ .045), and zero-shot CLAP prompt matching scores .056 against a .672
+   majority floor.
+3. **Song-level description selection** — the k-shot calibrated query selects among 14 song
+   descriptions (**.350** with discriminative tags, **.201** with Qwen free-text captions;
+   10-way, floor .119). This is **text selection, not song-level audio generation**: the
+   generated audio remains genre-level (true song prompt vs same-genre control: +.034,
+   t = 1.02, n.s.). Song-level delivery is retrieval.
+
+The listener story: zero-shot cross-subject song decoding is at chance; a per-subject fiber
+estimated from **10 labelled windows** lifts bandpower song decoding to **.454**, and the
+same k-shot calibration is what unlocks the song-level description selection above.
+
+## Repository layout
 
 ```
 promptmix-eeg/
-├── code/                      # all experiment code, grouped by function
-│   ├── radii/                 # the three-radius pre-gate (coverage / tolerance / label-validity)
-│   │     library_radius.py · validate_mode_a_labels.py · compat_matrix_b.py · library_b_experiment.py
-│   │     coverage_k24.py · coverage_k48.py · coverage_unified.py  (one-convention coverage table:
-│   │     every library at 6 clips/prompt; run this before the figures)
-│   ├── classifier/            # the trainable projection layer (EEG -> prompt weights)
-│   │     finetune_prompt_classifier.py · compute_true_oracle(_fast).py · eval_true_oracle.py · bootstrap_genre_ci.py
-│   ├── delivery/              # turn EEG -> listenable frozen-native audio
-│   │     deliver_mode_a.py · deliver_mode_b.py · deliver_library_b.py · genre_gallery.py
-│   ├── evaluation/            # musicality / quality metrics (incl. honest negatives)
-│   │     learned_musicality.py · musicality_metric.py · mixed_eval.py · score_listen.py · score_identity.py
-│   ├── alignment/             # Part 1: retrieval of the heard song
-│   │     retrieval_eval.py · retrieval_audio.py · second_ridge_*.py · bridge_gap.py
-│   ├── figures/               # paper figures — run render_all.py to rebuild every PNG from cached results
-│   │     render_all.py · figstyle.py · make_fig_architecture.py · make_figures.py
-│   │     make_figures_spectro.py · make_fig_genre_confusion.py · make_fig_compat_map.py
-│   │     make_fig_retrieval_pool.py · make_fig_mfcc_fad.py
-│   ├── shared/                # helpers imported across groups (embed_text/gen_from_enc, CondWidthModel)
-│   │     stratified_sample.py   # THE only sanctioned row sampler — never use `idx[:n]` (see docs/INCIDENT_...)
-│   ├── evaluation/ …          # + audit_sample_coverage.py: coverage/dedup audit, exits non-zero on a bad showcase
-│   │     arms_2x2.py · pilot_multitoken.py
-│   └── legacy/                # earlier fine-tune arms (ep16/mixed2) kept for contrast, not the main route
-├── results/                   # real artifacts (JSONs, embeddings, classifier weights, wavs)
-│   ├── gen_eegcond/library_radius/   # coverage + tolerance radii (radius.json, library clips)
-│   ├── coverage_k24/                 # K=24 library-size ablation
-│   ├── library_b/                    # corpus-matched library + compat map + gallery + classifier.pt
-│   ├── prompt_classifier/            # cond_oracle classifier + label-validity + true_oracle labels
-│   ├── prompt_classifier_true/       # true_oracle classifier + kappa/CI eval + genre_ci.json
-│   ├── retrieval_line/               # Part-1 alignment retrieval (song_hit 0.849)
-│   └── gen_eegcond_{k8,mixed,mixed2}/# legacy fine-tune arms
-├── listening/                 # THE deliverable: paired GEN/REF wavs to judge "pleasant"
-│   ├── LISTENING_MANIFEST.md  #    every clip paired with the true heard window + cos
-│   ├── gallery/               #    one native clip per genre (12)
-│   ├── modeA_corpus_matched/  #    EEG->genre->frozen sample (recommended)
-│   ├── modeA_original/ · modeB_mix/
-├── docs/                      # write-ups
-│   ├── outline_promptmix_eeg.md   # top-venue paper outline (two-part, three-radius, real numbers)
-│   ├── RESULTS_SUMMARY.md         # achievements summary
-│   └── PROJECT_NAME.md            # rename rationale
-├── env/
-│   └── ENVIRONMENT.md         # measured toolchain versions + install + Windows gotchas
-├── data/                      # real EEG corpus (cond/codes/group) + fma8s distractors (EEG corpus, codes)
-├── listening/ · docs/ · env/    # real files (see above)
-└── README.md                  # this file
+├── index.html                  # static GitHub Pages demo (current version only)
+├── assets/fig/                 # published figures (TNR, shared palette)
+├── code/
+│   ├── information/            # cross-subject listener analysis + selection/retrieval
+│   ├── figures/                # figure scripts (CPU; see render_all.py)
+│   ├── classifier/ · radii/ · alignment/ · delivery/ · evaluation/ · shared/
+├── vendor/mainv2/              # vendored stage-1 trainer + local import closure
+├── docs/DATA_AND_MODELS.md     # expected data caches, model weights, env vars
+├── results/public/             # small JSONs used by the webpage figures
+├── requirements.txt
+└── README.md
 ```
 
-## Headline numbers (all verified against source JSONs)
-- Alignment: song retrieval **0.849** (chance/constant/shuffled ≈ 0.07); **hard pool 4146 → 0.266 (1103× chance)**.
-- Coverage radius: mixture **0.863 → 0.879 (corpus-matched) → 0.890 (K=36)**; **greedy best-12-of-36 = 0.882** (selection matters more than size); trivial baseline 0.70–0.73 (absolute value is laion-clustering-inflated).
-- Tolerance radius: embedding interpolation off-manifold for **39% of all 66 pairs** → never interpolate conditions; mix natively.
-- EEG→song-genre (direct classifier): **κ 0.551 [0.528, 0.574]** held-out subjects; contrastive bridge lifts the argmax readout 16.7%→28.4%.
-- Delivery: frozen native samples, un-clipped; cos-to-heard 0.536 (mode A) / 0.607 (B-mix). End-to-end demo: `code/delivery/demo_eeg_to_music.py`.
-- Musicality: **MFCC-Fréchet frozen 3444 vs fine-tuned 29472 (8.6× closer to real timbre)** — the texture metric that resolves the CLAP-FD tie. Human MOS remains the final gate.
+## Code map
+
+- **Listener / k-shot:** `code/information/info_ladder.py`, `oracle_alignment.py`,
+  `k_shot_calibration_v2.py`, `tta_baselines.py`, `codebook_select.py`
+- **Subject-held-out retrain + block control:**
+  `code/information/run_subject_holdout.sh`, `run_block_control.sh`,
+  `eval_subject_holdout.py`; trainer in `vendor/mainv2/`
+- **Calibration heads / genre:** `calib_head_pilot.py`, `calib_head_5fold.py`,
+  `calib_head_laion_5fold.py`, `calib_head_genre.py`
+- **Retrieval / selection:** `bandpower_clap_k_shot.py`, `mainline_k_shot.py`,
+  `mainline_linear_probe.py`, `desc_selection_nmedt.py`, `desc_selection_captions.py`,
+  `clap_descriptions.py`, `genre_prompts_qwen.py`, `genre_selection_qwen.py`
+- **Generation pilot:** `desc_generate.py`, `desc_controls.py`, `desc_fixedseed.py`,
+  `desc_samegenre.py`, `desc_margin_all.py`, `pilot_qwen_two_paths.py`,
+  `caption_qwen.py`, `caption_lp.py`, `make_caption_audio.py`
+- **Figures:** `code/figures/render_all.py` (CPU; Fig 0 is hand-supplied and excluded)
+
+See [`code/information/README.md`](code/information/README.md) for the script-to-claim map.
+
+## What is and is not in this repository
+
+**Included:** code, figure scripts, published figures, the small `results/public/` JSONs
+used by the new webpage figures, and the requirements.
+
+**Not included:** raw NMED-T / NMED-H EEG or audio; derived embedding caches (`data/eegcond`,
+`vendor/mainv2/data`); trained checkpoints (`eeg_to_clap_proj.pt`, LaBraM, CLAP, MERT,
+MusicGen, Qwen2-Audio); and the raw experiment result JSONs. They are subject to dataset
+terms, copyright, privacy, model licenses, or size.
+
+The subject-held-out trainer is vendored; it needs the data caches and the external LaBraM
+code/checkpoint. See [`docs/DATA_AND_MODELS.md`](docs/DATA_AND_MODELS.md) for the exact
+layout and environment variables (`MAINV2_DIR`, `LABRAM_DIR`, `LABRAM_CKPT`, ...).
 
 ## Quick start
-See `env/ENVIRONMENT.md` for setup; run entry points listed there. All code reads/writes real files under this folder (`data/`, `results/`) — fully self-contained, no links.
+
+```bash
+pip install -r requirements.txt
+# place data caches and model weights as documented in docs/DATA_AND_MODELS.md
+export MAINV2_DIR=/path/to/mainv2-with-caches
+export LABRAM_DIR=/path/to/LaBraM-main
+export LABRAM_CKPT=$LABRAM_DIR/checkpoints/labram-base.pth
+
+python code/information/info_ladder.py
+python code/information/oracle_alignment.py
+python code/information/k_shot_calibration_v2.py
+python code/figures/build_public_fig_data.py   # rebuild the public figure JSONs
+python code/figures/render_all.py               # rebuild figures (Fig 0 excluded)
+```
+
+## Honest boundaries
+
+- 84.9% / 88.2% are **segment-held-out** (subjects remain in training), not subject-held-out.
+- The 12-way genre classifier is majority-heavy; **κ**, not accuracy, is the honest statistic.
+- k-shot helps song-level description selection, not genre selection.
+- Free-text Qwen captions do not beat discriminative tags for selection.
+- Generated audio is **genre-level**; **song-level audio generation is not solved**.
+- No human MOS has been run; retrieval of real clips is the song-level deliverable.

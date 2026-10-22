@@ -1,5 +1,5 @@
 # PromptMix-EEG runtime deps (measured versions on the working machine, 2026-10-15)
-python=3.12
+# python=3.12
 torch==2.11.0            # +cu128 build for RTX 50xx (sm_120)
 transformers==5.17.0
 numpy==2.5.3
@@ -9,3 +9,13 @@ soundfile==0.14.0
 matplotlib==3.11.2
 scipy==1.18.1
 gradio>=4               # for app.py (the demo website)
+
+# --- added for the cross-subject / captioner analysis ---
+torchaudio>=2.0
+psutil>=5.9
+safetensors>=0.4
+tqdm>=4.66
+huggingface_hub>=0.23
+peft>=0.10          # optional LoRA branch in vendor/mainv2 musicgen_clap_finetune
+modelscope>=1.0     # optional: download Qwen2-Audio
+bitsandbytes>=0.43  # optional: 4-bit Qwen2-Audio

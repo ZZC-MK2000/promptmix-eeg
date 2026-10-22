@@ -9,12 +9,13 @@ Run after run_subject_holdout.sh:
     python code/information/eval_subject_holdout.py
 """
 import json
+import os
 from pathlib import Path
 
 import numpy as np
 
-ROOT = Path("D:/Projects/CLaBraM/promptmix-eeg")
-M2 = ROOT.parent / "mainv2"
+ROOT = Path(__file__).resolve().parents[2]
+M2 = Path(os.environ.get("MAINV2_DIR", ROOT / "vendor" / "mainv2"))
 OUT = ROOT / "results" / "subject_holdout"
 GATE = M2 / "data" / "gate_nmedh14_ov2_a.npz"
 RES = M2 / "results" / "align_ladder_result.json"

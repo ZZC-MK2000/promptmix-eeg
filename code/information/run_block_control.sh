@@ -5,11 +5,13 @@
 #
 # Single-instance: launched through launch_guard.py (rule 38).
 set -euo pipefail
-PY=/c/Users/18439/.conda/envs/clabram312/python.exe
-cd /d/Projects/CLaBraM/mainv2
-OUT=/d/Projects/CLaBraM/promptmix-eeg/results/subject_holdout
-GUARD=/d/Projects/CLaBraM/promptmix-eeg/code/information/launch_guard.py
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+MAINV2_DIR="${MAINV2_DIR:-$ROOT/vendor/mainv2}"
+PY="${PYTHON:-python}"
+OUT="$ROOT/results/subject_holdout"
+GUARD="$ROOT/code/information/launch_guard.py"
 mkdir -p "$OUT"
+cd "$MAINV2_DIR"
 exec "$PY" "$GUARD" --tag SH_ctrl_blocksplit_stock_s0 \
   --log "$OUT/control_run.log" -- \
   "$PY" src/align/nmedt_align_v2.py \
