@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PromptMix-EEG — brain → frozen MusicGen, music by construction</title>
+<title>Auditory EEG encoder — beyond generic foundation models</title>
 <style>
   :root{
-    --bg:#f6f7f9; --card:#ffffff; --ink:#1c2333; --mut:#5a6478; --line:#e4e8ee;
+    --bg:#f6f7f9; --card:#fff; --ink:#1c2333; --mut:#5a6478; --line:#e4e8ee;
     --acc:#2e7d32; --acc-soft:#e8f5e9; --blue:#1565c0; --blue-soft:#e3f2fd;
     --serif:Georgia,"Times New Roman","Songti SC",serif;
     --sans:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"PingFang SC","Microsoft YaHei",sans-serif;
@@ -14,104 +14,64 @@
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;font:16px/1.65 var(--sans);background:var(--bg);color:var(--ink)}
-  a{color:var(--blue);text-decoration:none}
-  a:hover{text-decoration:underline}
-
-  header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
-         border-bottom:1px solid var(--line)}
-  .nav{max-width:1060px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-  .nav .brand{font:700 18px var(--serif);color:var(--ink)}
-  .nav .brand span{color:var(--acc)}
-  .nav .links{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
-  .nav a{color:var(--mut);font-size:14px;padding:6px 10px;border-radius:8px}
-  .nav a:hover{background:var(--acc-soft);color:var(--acc);text-decoration:none}
-
+  a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+  header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{max-width:1060px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;
+    gap:18px;flex-wrap:wrap}
+  .brand{font:700 18px var(--serif)} .brand span{color:var(--acc)}
+  .links{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+  .links a{color:var(--mut);font-size:14px;padding:6px 10px;border-radius:8px}
+  .links a:hover{background:var(--acc-soft);color:var(--acc);text-decoration:none}
   .wrap{max-width:1060px;margin:0 auto;padding:40px 20px 90px}
-
-  .hero{padding:34px 0 10px}
-  h1{font:700 40px/1.15 var(--serif);margin:0 0 12px;letter-spacing:.2px}
-  .sub{color:var(--mut);font-size:17px;max-width:760px;margin:0 0 18px}
+  .hero{padding:30px 0 8px}
+  h1{font:700 38px/1.16 var(--serif);margin:0 0 14px;letter-spacing:.2px}
+  .sub{color:var(--mut);font-size:17px;max-width:850px;margin:0 0 18px}
   .sub b{color:var(--ink)}
   .pills{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px}
-  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);color:var(--mut);
-        border-radius:999px;padding:4px 13px;font-size:13.5px}
+  .pill{display:inline-block;background:var(--card);border:1px solid var(--line);
+    color:var(--mut);border-radius:999px;padding:4px 13px;font-size:13.5px}
   .pill.hl{background:var(--acc-soft);border-color:#cde7cf;color:var(--acc);font-weight:600}
-
   section{margin-top:52px}
-  h2{font:700 27px/1.2 var(--serif);margin:0 0 4px;color:var(--ink)}
+  h2{font:700 27px/1.2 var(--serif);margin:0 0 4px}
   h2::before{content:"";display:inline-block;width:6px;height:22px;background:var(--acc);
-             border-radius:3px;margin-right:12px;vertical-align:-2px}
-  .lead{color:var(--mut);margin:4px 0 20px;max-width:820px}
-
-  figure{margin:0 0 10px}
+    border-radius:3px;margin-right:12px;vertical-align:-2px}
+  .lead{color:var(--mut);margin:4px 0 20px;max-width:860px}
   .figcard{background:var(--card);border:1px solid var(--line);border-radius:14px;
-           padding:20px 20px 14px;margin:0 0 22px;box-shadow:0 1px 2px rgba(20,30,50,.04)}
+    padding:20px 20px 14px;margin:0 0 22px;box-shadow:0 1px 2px rgba(20,30,50,.04)}
   .figcard img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:8px}
   .figcard figcaption{color:var(--mut);font-size:13.5px;margin-top:12px;line-height:1.55}
-  .figcard figcaption b{color:var(--ink)}
-  .figno{display:inline-block;font-size:12px;font-weight:600;color:var(--acc);background:var(--acc-soft);
-         border-radius:6px;padding:2px 8px;margin-bottom:10px}
-
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-  @media (max-width:860px){.grid2{grid-template-columns:1fr}}
-
-  .note{background:var(--blue-soft);border-left:4px solid var(--blue);border-radius:0 12px 12px 0;
-        padding:14px 18px;font-size:14.5px;color:#2a3a55;margin:0 0 20px;line-height:1.6}
-  .note b{color:#123b6b}
-
-  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--card);
-        border:1px solid var(--line);border-radius:14px;overflow:hidden}
-  thead th{text-align:left;color:var(--mut);font-weight:600;font-size:12.5px;padding:12px 12px;
-           background:#fafbfd;border-bottom:1px solid var(--line)}
-  tbody td{padding:12px;vertical-align:middle;border-bottom:1px solid var(--line)}
-  tbody tr:last-child td{border-bottom:none}
-  td img{width:170px;height:auto;border-radius:6px;border:1px solid var(--line);display:block}
-  td audio{width:170px;margin-top:6px}
-  .cos{font-variant-numeric:tabular-nums;white-space:nowrap}
-  .cos b{color:var(--ink)}
-  .mut{color:var(--mut)}
-  .tfoot td{color:var(--mut);font-size:13px;background:#fafbfd}
-
-  .restable{width:100%;border-collapse:collapse;font-size:14px;table-layout:auto}
-  .restable th{text-align:left;color:var(--mut);font-weight:600;font-size:12.5px;padding:10px 12px;
-               background:#fafbfd;border-bottom:1px solid var(--line)}
+  .figno{display:inline-block;font-size:12px;font-weight:600;color:var(--acc);
+    background:var(--acc-soft);border-radius:6px;padding:2px 8px;margin-bottom:10px}
+  .note{background:var(--blue-soft);border-left:4px solid var(--blue);
+    border-radius:0 12px 12px 0;padding:14px 18px;font-size:14.5px;color:#2a3a55;
+    margin:0 0 20px;line-height:1.6}
+  .restable{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .restable th{text-align:left;color:var(--mut);font-weight:600;font-size:12.5px;
+    padding:10px 12px;background:#fafbfd;border-bottom:1px solid var(--line)}
   .restable td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
   .restable tr:last-child td{border-bottom:none}
-  .restable .lo{color:#c62828;font-weight:700}
-  .restable .hi{color:var(--acc);font-weight:700}
-
-  .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  @media (max-width:860px){.gal{grid-template-columns:1fr 1fr}}
-  @media (max-width:560px){.gal{grid-template-columns:1fr}}
-  .gcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
-  .gcard b{font-size:14px}
-  .gcard audio{width:100%;margin-top:8px}
-
-  details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 18px;margin:10px 0}
-  summary{cursor:pointer;font-weight:600}
-  details p{color:var(--mut);margin:10px 0 0;font-size:14.5px}
-
   ul.lim{color:var(--mut);font-size:14.5px;padding-left:20px}
   ul.lim li{margin:7px 0}
-
   footer{margin-top:60px;color:var(--mut);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
   code{background:#eef1f5;padding:1px 6px;border-radius:5px;color:#34415c;font-size:13.5px}
+  @media (max-width:700px){h1{font-size:31px}.nav{gap:8px}
+    .restable{display:block;overflow-x:auto;white-space:nowrap}}
 </style>
 </head>
 <body>
 <header>
   <div class="nav">
-    <div class="brand">PromptMix<span>-EEG</span></div>
+    <div class="brand">Auditory EEG<span> · encoder</span></div>
     <div class="links">
-      <a href="#method">How it works</a>
-      <a href="#listener">The listener</a>
-      <a href="#kshot">k-shot</a>
-      <a href="#part1">Part 1 · identify</a>
-      <a href="#part2">Part 2 · genre generation</a>
-      <a href="#paths">Three tasks</a>
-      <a href="#heard">Heard vs generated</a>
-      <a href="#listen">Listen</a>
-      <a href="#limits">Limitations</a>
+      <a href="#protocol">Protocol audit</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#ablations">Ablations</a>
+      <a href="#data">Data</a>
+      <a href="#limits">Limits</a>
+      <a href="https://github.com/ZZC-MK2000/promptmix-eeg">Code →</a>
     </div>
   </div>
 </header>
@@ -119,383 +79,145 @@
 <div class="wrap">
 
   <div class="hero">
-    <h1>Brain signals → frozen MusicGen,<br>music by construction.</h1>
-    <p class="sub">An EEG window can <b>retrieve the heard song</b>, or steer a <b>frozen MusicGen</b>
-      at genre level. The hard part is the listener: zero-shot cross-subject song decoding is at chance;
-      a per-subject fiber estimated from <b>10 labelled windows</b> lifts it to 45%. The same calibration
-      unlocks <b>song-level description selection</b> (.350) but <b>not</b> the 12-way genre task
-      (shared κ .40 vs k-shot .045). The generator's weights are never touched, so every output is,
-      by construction, a native clip of the original model.</p>
+    <h1>Beyond generic EEG foundation models.<br>A spatial-spectral encoder for auditory EEG.</h1>
+    <p class="sub">A compact encoder trained on <b>six auditory datasets</b> (195 dataset-subject entries,
+      <b>69,108</b> eight-second windows, <b>153.6 hours</b>) and evaluated on NMED-T, which the encoder
+      never sees. The headline is deliberately narrow: <b>only the encoder is target-unseen</b>; the linear
+      and CLAP probes are fit on NMED-T training halves. Under that protocol the encoder beats frozen LaBraM
+      on trial-wise decoding and semantic top-1, while band-power remains the stronger closed-set label baseline.
+      No cross-subject top-1 claim: held-out listeners stay at chance.</p>
     <div class="pills">
-      <span class="pill hl">zero-shot cross-subject ≈ chance</span>
-      <span class="pill">10 labels → 45% song decoding</span>
-      <span class="pill">k-shot: song yes · genre no</span>
-      <span class="pill">generator weights never touched</span>
-      <a class="pill" href="https://github.com/ZZC-MK2000/promptmix-eeg">code →</a>
+      <span class="pill hl">6 datasets · 153.6 h</span>
+      <span class="pill">encoder target-unseen</span>
+      <span class="pill">NMED 10-way .607 vs LaBraM .358</span>
+      <span class="pill">CLAP trial top-1 .435</span>
+      <span class="pill">subject top-1: chance</span>
     </div>
   </div>
 
+  <section id="protocol">
+    <h2>Protocol first: most of the gap is the split</h2>
+    <p class="lead">We varied only the split on NMED-T, keeping the same windows and band-power features.
+      Random rows (0.896) and held-out blocks (0.873) keep the listener in training; held-out subjects
+      collapse to 0.106. A short-window study reports 88.69% under a within-participant random split
+      (1-s inputs, random time chunks); that is a within-listener number, not cross-subject evidence.</p>
+
+    <div class="figcard">
+      <span class="figno">Fig 1 · protocol pitfalls</span>
+      <figure><img src="assets/fig/fig20_protocol_pitfalls.png" alt="protocol pitfalls: split ladder and answer-conditioned query audit"></figure>
+      <figcaption><b>(a)</b> What each split holds out. <b>(b)</b> NMED-T 10-way accuracy:
+        band-power 0.896 random rows, 0.873 held-out blocks, 0.106 held-out subjects.
+        <b>(c)</b> A CLAP alignment head reaches 0.669 on held-out blocks but 0.105 on held-out subjects.
+        <b>(d)</b> Answer-conditioned audit on the released implementation: real, zeroed, and shuffled EEG
+        all report 1.000 pair accuracy; the label-free pairwise and EEG-only variants are near 0.50.
+        This is a protocol observation, not an allegation of intent.</figcaption>
+    </div>
+
+    <div class="note"><b>Minimum controls we recommend.</b> Split by listener, not by window; report a
+      held-out-block split to quantify adjacent-window optimism; include zero-EEG and shuffled-EEG controls;
+      and for any answer-conditioned query, report label-free pairwise and EEG-only variants. Each control
+      changes the conclusion in the cases we examined.</div>
+  </section>
+
   <section id="method">
-    <h2>How it works</h2>
-    <p class="lead">A CLAP-style two-tower alignment produces the EEG embedding <code>z_win</code>; the same
-      embedding then drives three downstream tasks: song identification, genre-conditioned generation, and
-      song-level description selection. This page shows the current version only — every number comes straight
-      from the result files. All result figures regenerate on CPU
-      (<code>python code/figures/render_all.py</code>); the system diagram (Fig 0) is hand-supplied.</p>
+    <h2>Method: spatial filtering + frozen CLAP alignment</h2>
+    <p class="lead">The encoder is 1.14M parameters: K = 32 learnable spatial filters, one-second spectral
+      tokens (five bands), a four-layer temporal Transformer, and a CLAP alignment head. The CLAP audio and
+      text towers are frozen; only the EEG projection is trained. The four alignment terms are window
+      InfoNCE, per-second dense InfoNCE, a song-ID auxiliary, and a subspace placement anchor; a
+      VICReg-style variance-covariance term on the encoder prevents dimensional collapse.</p>
 
     <div class="figcard">
-      <span class="figno">Fig 0 · system</span>
-      <figure><img src="assets/fig/fig0_architecture.png" alt="two-tower TRIAD alignment and three downstream tasks"></figure>
-      <figcaption><b>Alignment (training).</b> 8-s EEG → LaBraM backbone → trainable projection head →
-        <code>z_win</code>; heard audio → frozen CLAP → <code>a_win</code> (training-time only). Both feed
-        <b>TRIAD</b> (window / second / song). <b>Part 1 · Identification</b> retrieves the heard song from
-        <code>z_win</code> through the A→L bridge: <b>84.9%</b> song-level over 36,036 queries and a
-        1,103-window corpus (held-out segments; subjects remain in training); under subject shift the
-        calibrated query retrieves real clips at <b>.413 / .504</b> (bandpower k=10 / 100).
-        <b>Part 2 · Generation</b> samples a frozen MusicGen at 32 kHz from a genre-conditioned prompt;
-        it is genre-level by design. <b>Part 3 · Selection</b> picks among 14 song descriptions
-        (k-shot <b>.350</b> tag / <b>.201</b> Qwen); this is text selection, not song-level audio generation.
-        <span class="mut">The diagram shows the frozen-backbone / head variant; the 84.9% number comes from the
-        main-line arm, which also fine-tunes the LaBraM backbone (7.72M trainable).</span></figcaption>
-    </div>
-
-    <div class="figcard">
-      <span class="figno">Fig 13 · alignment training</span>
-      <figure><img src="assets/fig/fig13_align_structure.png" alt="stage-1 alignment structure"></figure>
-      <figcaption>How the alignment is trained: the window vector is pulled to its own audio's CLAP embedding
-        (×1.0, other windows of the <b>same song</b> as extra negatives), its eight per-second states to MERT's
-        per-second embeddings (×0.5), and a song-label classifier anchors it (×1.0) — the three terms of
-        <b>TRIAD</b>. In the frozen-backbone variant shown in Fig 0, only the head, the two 64-d projections and
-        the classifier train. The 84.9% retrieval result uses the main-line arm, where the LaBraM backbone is
-        also fine-tuned (7.72M trainable).</figcaption>
+      <span class="figno">Fig 2 · method and losses</span>
+      <figure><img src="assets/fig/fig22_method_losses.png" alt="spatial-spectral encoder and CLAP losses"></figure>
+      <figcaption><b>Encoder objective:</b> masked spectral reconstruction, cross-subject contrastive,
+        VICReg. <b>CLAP alignment objective:</b> window InfoNCE, per-second dense, song-ID CE, subspace
+        anchor. The four-term CLAP head is analyzed on NMED-T under block/subject splits; it is not part
+        of the six-dataset encoder pretraining.</figcaption>
     </div>
   </section>
 
-  <section id="listener">
-    <h2>The listener is the bottleneck</h2>
-    <p class="lead">We varied only the split, keeping the same 8-s windows and representations. Frozen EEG
-      features decode the heard song at 0.90 within a listener but fall to chance (0.10) on unseen listeners.
-      A clean subject-held-out retraining reaches <b>0.106 ± 0.020</b> (14-way; chance 0.071) across five
-      folds; a block-split stock control stays at <b>0.53</b> on the same T rows. The split, not the
-      initialization, is the dominant factor.</p>
+  <section id="results">
+    <h2>Results on unseen NMED-T</h2>
+    <p class="lead">The encoder is trained without NMED-T. The probes are fit on NMED-T training halves
+      (trial-wise) or on other listeners (subject-held-out). Band-power is a strong label-feature baseline;
+      the encoder is not a replacement for it. The encoder's advantage is semantic stability: under subject
+      shift, band-power CLAP cosine drops 0.796 → 0.678, while the encoder changes 0.764 → 0.780.</p>
 
     <div class="figcard">
-      <span class="figno">Fig 14 · information ladder</span>
-      <figure><img src="assets/fig/fig14_info_ladder.png" alt="information ladder"></figure>
-      <figcaption>Frozen band-power: 0.896 random-row / 0.873 held-out-segment / <b>0.106 held-out-subject</b>
-        (chance 0.10). The trained embedding's 0.84 is transductive: the encoder saw the held-out subjects.
-        Subject identity is near-saturated (0.997 band-power), so any split that keeps subjects in training
-        can exploit it.</figcaption>
-    </div>
-
-    <div class="figcard">
-      <span class="figno">Fig 16 · the subject fiber</span>
-      <figure><img src="assets/fig/fig16_oracle_alignment.png" alt="oracle per-subject alignment"></figure>
-      <figcaption><b>Oracle</b> per-subject orthogonal Procrustes (fit on half of that listener's labelled
-        windows): cross-subject song decoding 0.089 → <b>0.706</b>; class-centroid cosine 0.013 → 0.759.
-        The song information is present but personal.</figcaption>
-    </div>
-
-    <div class="figcard">
-      <span class="figno">Fig 15 · k-shot calibration</span>
-      <figure><img src="assets/fig/fig15_k_shot.png" alt="k-shot calibration"></figure>
-      <figcaption>One labelled window per song lifts decoding from 0.09 to <b>0.454</b>; 100 windows reach
-        0.635, 300 reach 0.721. Active anchors (codebook coverage + within-class diversity) win at small
-        k (+0.11 at k=10). The generator is never trained.</figcaption>
-    </div>
-
-    <div class="figcard">
-      <span class="figno">Split vs initialization</span>
-      <table class="restable">
-        <thead><tr><th>setting</th><th>init</th><th>split</th><th>14-way (merged)</th><th>T rows</th></tr></thead>
-        <tbody>
-          <tr><td>mainline</td><td>indomain</td><td>block</td><td>0.7070</td><td>0.5873</td></tr>
-          <tr><td>control</td><td>stock</td><td>block</td><td>0.6686</td><td>0.5332</td></tr>
-          <tr><td>5-fold</td><td>stock</td><td><b>held-out subjects</b></td><td>0.106 ± 0.020</td>
-              <td class="lo">0.106</td></tr>
-        </tbody>
-      </table>
-      <figcaption style="margin-top:12px">Merged 14-way is inflated by the H rows (subject–song confounded,
-        saturating at 1.000); the T rows are the honest comparison. On the same T rows the split costs
-        <b>0.43</b> and the initialization is worth <b>+0.054</b>.</figcaption>
-    </div>
-
-    <div class="note"><b>Adaptation baselines (same split).</b> Unsupervised alignment stays at chance:
-      per-subject z-score 0.103, Euclidean alignment 0.118, CORAL 0.118. A supervised nearest-centroid probe
-      needs 100 labels to reach 0.622; the structured fiber calibration reaches <b>0.454 with 10</b>. The
-      advantage is sample efficiency at small k — this is not “just fine-tuning”.</div>
-  </section>
-
-  <section id="kshot">
-    <h2>What k-shot unlocks — and what it does not</h2>
-    <p class="lead">The same per-subject calibration that rescues song decoding does <b>not</b> rescue
-      genre decoding. Song-level description selection rises from <b>.103</b> at k=0 to <b>.350</b> at k=100
-      (10-way, 5 folds; chance .10, majority floor .119). The 12-way genre task stays with the shared
-      classifier: <b>κ ≈ .40</b>; k-shot reaches at most <b>κ .045</b>, and matching the Qwen genre prompts
-      by CLAP scores <b>.056</b> against a <b>.672</b> majority floor.</p>
-
-    <div class="figcard">
-      <span class="figno">Fig 17 · k-shot: song vs genre</span>
-      <figure><img src="assets/fig/fig17_kshot_two_levels.png" alt="k-shot song selection versus genre selection"></figure>
-      <figcaption><b>Left:</b> 10-way song-description top-1, 5-fold held-out subjects. Discriminative tag
-        descriptions (blue) reach .350 with 100 labels; Qwen free-text captions (orange) reach .201 — the
-        captions are coherent but too generic. <b>Right:</b> 12-way genre selection, Cohen's κ. The shared
-        classifier is κ .399 (fold mean); k-shot head + classifier (purple) and the clip-only head (grey)
-        stay at ≤ .045. The CLAP text-prompt selector is below the majority floor (.056 acc vs .672).
-        Same listener, same calibration budget: one task moves, the other does not.</figcaption>
-    </div>
-
-    <div class="note"><b>Why the asymmetry?</b> The subject fiber is a within-listener transform of the
-      <b>song</b> code; calibrating it adds song identity, not the coarse 12-way genre label. Genre is a
-      shared interface already handled by the mainline classifier — k-shot should not be used there.</div>
-  </section>
-
-  <section id="part1">
-    <h2>Part 1 — identify the heard song</h2>
-    <p class="lead">Song-level nearest-centroid retrieval after the A→L bridge: 36,036 EEG queries over 14 songs
-      against a 1,103-window audio corpus (chance 7.1%). <b>This headline is segment-held-out</b> (subjects
-      remain in training); on truly unseen subjects the calibrated query retrieves a real clip at
-      <b>.413 / .504</b> (bandpower k=10 / 100) — the honest cross-subject number used in
-      <a href="#paths">Three tasks</a>.</p>
-
-    <div class="figcard">
-      <span class="figno">Fig 11 · 14-way song confusion</span>
-      <figure><img src="assets/fig/fig11_song_confusion.png" alt="14-way song confusion matrix"></figure>
-      <figcaption><b>Held-out audio segments</b> (subjects remain in training), 14-way: top-1 <b>88.2%</b>
-        vs 7.1% chance. This is a different protocol from the headline retrieval line, which scores
-        <b>84.9%</b> song-level over 36,036 queries (chance 7.1%; smoothed 88.4%). On truly unseen subjects,
-        the zero-shot retrain is at <b>0.106 ± 0.020</b> (5 folds, 14-way; chance 0.071); with per-subject
-        calibration the query retrieves real clips at <b>.413 / .504</b> (bandpower k=10 / 100) — see
-        <a href="#listener">The listener</a> and <a href="#paths">Three tasks</a>.
-        T0–T9 are NMED-T songs, H0–H3 NMED-H.</figcaption>
-    </div>
-
-    <div class="figcard">
-      <span class="figno">Fig 9 · pool robustness</span>
-      <figure><img src="assets/fig/fig9_retrieval_pool.png" alt="retrieval vs pool size"></figure>
-      <figcaption>Same readout against a growing FMA distractor pool: <b>0.882 at 14 candidates →
-        0.266 at 4,146</b> (1103× the 1/pool chance).</figcaption>
-    </div>
-  </section>
-
-  <section id="part2">
-    <h2>Part 2 — genre-conditioned generation</h2>
-    <p class="lead">Three measurements decide the design: <b>coverage</b> (can a convex mixture of the library
-      reach real windows), <b>tolerance</b> (is interpolation safe), and <b>which prompt</b> the EEG actually
-      selects. The generator stays frozen because that keeps every output inside the model's own distribution.</p>
-
-    <div class="note"><b>The library is saturated.</b> Expanding the pool from 12 to 22 prompts, or re-selecting
-      12 from 22 on training songs, does not improve coverage on unseen songs (0.830 vs 0.834 vs 0.825; random
-      12 = 0.814). The trivial target-mean baseline is 0.815, above the codebook coverage, so only the gap over
-      the library mean is informative. The bottleneck is upstream, in the listener.</div>
-
-    <div class="figcard">
-      <span class="figno">Fig 1 · coverage radius</span>
-      <figure><img src="assets/fig/fig1_coverage_radius.png" alt="coverage radius"></figure>
-      <figcaption><b>Coverage</b>: a convex mixture over the 72-clip corpus-matched library (12 prompts × 6 clips)
-        reaches held-out real windows at <b>0.879</b> vs 0.730 for the trivial global-mean predictor
-        (+0.149, t = 20.8, 60/60). Only the gap over trivial counts — absolute cosines are inflated in this space.</figcaption>
-    </div>
-
-    <div class="figcard">
-      <span class="figno">Fig 3 · why a corpus-matched library</span>
-      <figure><img src="assets/fig/fig3_oracle_collapse.png" alt="oracle genre collapse"></figure>
-      <figcaption>The true-audio genre labels collapse onto <b>chiptune (54.6%)</b> under the original 12 prompts —
-        an attractor artifact of the library, not of the EEG. Re-labelling to corpus-matched genres removes it
-        (Bollywood becomes the honest plurality), which is the library used in Figs 1 and 4.</figcaption>
-    </div>
-
-    <div class="grid2">
-      <div class="figcard">
-        <span class="figno">Fig 8 · tolerance map</span>
-        <figure><img src="assets/fig/fig8_tolerance_map.png" alt="tolerance map"></figure>
-        <figcaption><b>Tolerance</b>: interpolating two prompt embeddings goes off-manifold for
-          <b>39% of the 66 pairs</b> (zcr &gt; 0.15) — so prompts are picked natively, never interpolated.</figcaption>
-      </div>
-      <div class="figcard">
-        <span class="figno">Fig 2 · tolerance radius</span>
-        <figure><img src="assets/fig/fig2_tolerance_radius.png" alt="tolerance radius"></figure>
-        <figcaption>The same effect over the blend weight: jazz↔choir peaks at zcr <b>0.46</b> vs 0.056 for real music.</figcaption>
-      </div>
-    </div>
-
-    <div class="figcard">
-      <span class="figno">Fig 4 · which prompt the EEG picks</span>
-      <figure><img src="assets/fig/fig4_genre_confusion.png" alt="genre confusion matrix"></figure>
-      <figcaption>EEG → genre prompt, <b>5-fold held-out subjects</b>:
-        overall <b>.748</b>, κ <b>.405</b> pooled (5-fold mean .742/.399), balanced .283. The shared classifier is the working genre
-        selector; k-shot does not help the 12-way task (κ ≤ .045; see <a href="#kshot">k-shot</a>).
-        The majority class is large, so κ is the honest statistic.</figcaption>
-    </div>
-
-    <div class="figcard">
-      <span class="figno">Fig 10 · texture: why stay frozen</span>
-      <figure><img src="assets/fig/fig10_mfcc_fad.png" alt="MFCC-Fréchet distance"></figure>
-      <figcaption><b>Texture</b> (MFCC-Fréchet to the real windows, one checkpoint per arm, same 60 rows):
-        frozen <b>1,389</b> vs fine-tuned 7,404 / 5,200 (<b>5.3×</b> closer). Per window the order flips
-        (median Mahalanobis 8.4 frozen vs 6.9 / 7.6, real 4.5): frozen wins distributional texture,
-        not clip-by-clip realism.</figcaption>
-    </div>
-
-    <div class="figcard">
-      <span class="figno">Fig 7 · structure, not noise</span>
-      <figure><img src="assets/fig/fig7_spectrograms.png" alt="spectrogram panels"></figure>
-      <figcaption>One window (row 1083): the heard stimulus and three delivered native clips show harmonic
-        structure (zcr 0.031–0.082); the interpolated clip is broadband noise (0.490).</figcaption>
-    </div>
-  </section>
-
-  <section id="paths">
-    <h2>Three downstream tasks</h2>
-    <p class="lead">Same listener, same frozen generator, three different tasks. Only song identification
-      is song-level under subject shift; the second is genre-conditioned generation; the third is a text-level
-      description selector, not audio generation.</p>
-
-    <div class="figcard">
-      <span class="figno">Fig 18 · three downstream tasks</span>
-      <figure><img src="assets/fig/fig18_three_paths.png" alt="three downstream tasks: song identification, genre-conditioned generation, song-level description selection"></figure>
-      <figcaption><b>Song identification / retrieval</b> returns a real clip (bandpower k=10 .413, k=100 .504;
-        through the CLAP query .339/.383; chance .10). <b>Genre-conditioned generation</b> uses the shared
-        12-way classifier (.742 acc, κ .399; pooled .748/.405) and a Qwen genre prompt; k-shot does not help
-        (κ ≤ .045) and CLAP prompt matching is below majority (.056 vs .672).
-        <b>Song-level description selection</b> uses the k-shot selector (.350 tag / .201 Qwen; floor .119),
-        but the generated audio is still genre-level: the true-song prompt does not beat a same-genre wrong
-        prompt (+.034, t = 1.02, n.s.). It is not song-level audio generation.</figcaption>
+      <span class="figno">Fig 3 · main results</span>
+      <figure><img src="assets/fig/fig23_main_results.png" alt="NMED-T closed-set and CLAP results"></figure>
+      <figcaption><b>(a)</b> Closed-set 10-way: band-power 0.840, encoder 0.607 ± 0.006, LaBraM 0.358.
+        <b>(b)</b> CLAP cosine trial-wise vs held-out subjects. <b>(c)</b> CLAP top-1: all subject-held-out
+        values are at chance (.10). No cross-subject retrieval is claimed.</figcaption>
     </div>
 
     <table class="restable">
-      <thead><tr><th>task</th><th>selector</th><th>output</th><th>evidence</th><th>song-level audio?</th></tr></thead>
+      <thead><tr><th>method</th><th>NMED 10-way ↑</th><th>CLAP trial cos / top-1 ↑</th><th>CLAP subject cos / top-1 ↑</th></tr></thead>
       <tbody>
-        <tr><td><b>Song identification / retrieval</b></td><td>calibrated query</td><td>nearest real clip</td>
-          <td>.413 / .504 (bandpower k=10 / 100); .339 / .383 (CLAP)</td>
-          <td class="hi">yes</td></tr>
-        <tr><td><b>Genre-conditioned generation</b></td><td>shared 12-way classifier</td>
-          <td>Qwen genre prompt → frozen MusicGen</td>
-          <td>.742 acc / κ .399; k-shot κ ≤ .045; CLAP prompt .056 vs .672</td>
-          <td>genre only</td></tr>
-        <tr><td><b>Song-level description selection</b></td><td>k-shot description selection</td>
-          <td>description → frozen MusicGen</td>
-          <td>.350 tag / .201 Qwen; oracle − same-genre +.034 (t = 1.02, n.s.)</td>
-          <td class="lo">text only</td></tr>
+        <tr><td>LaBraM-200 (frozen)</td><td>0.358</td><td>0.729 / 0.265</td><td>0.784 / 0.109</td></tr>
+        <tr><td>Band-power 82×22</td><td><b>0.840</b></td><td><b>0.796 / 0.678</b></td><td>0.678 / 0.108</td></tr>
+        <tr><td>Encoder (6 datasets)</td><td>0.607 ± 0.006</td><td>0.764 / 0.435</td><td><b>0.780 / 0.099</b></td></tr>
       </tbody>
     </table>
-
-    <div class="note"><b>Two retrieval protocols, not one.</b> The 84.9% / 88.2% in Part 1 are
-      segment-held-out (subjects remain in training). The .413/.504 numbers here are subject-held-out with
-      per-subject calibration — the honest cross-subject numbers, and the ones used in the three-task
-      comparison. Only song identification / retrieval closes the song-level gap under subject shift.</div>
   </section>
 
-  <section id="heard">
-    <h2>Heard vs generated</h2>
-    <p class="lead">The heard stimulus (spectrogram only — audio withheld for copyright) next to what the frozen
-      generator produced from that same window's EEG. 14 rows = 14 distinct source groups, 9 songs, 5 subjects.</p>
-    <div class="note">Generated clip vs its own stimulus: CLAP cos <b>0.609</b> vs <b>0.506</b> to the other 13
-      stimuli (+0.103, t = 3.4, 12/14). Against stimuli sharing the <b>same</b> genre prompt the margin is
-      <b>−0.005</b> (t = −0.17) — the match is <b>genre-level, not song-level</b>. Scale: a real window sits
-      0.897 to its own song's centroid and 0.696 to the others' across the full corpus.</div>
+  <section id="ablations">
+    <h2>Ablations and the cross-listener wall</h2>
+    <p class="lead">The dense per-second term is the strongest single addition to the CLAP objective.
+      The song-ID auxiliary raises the closed-set number but can select a checkpoint that is not the best
+      for CLAP retrieval, so it is reported separately. The subspace anchor is a geometry control, not a
+      performance claim. A strong within-listener CLAP head still falls to chance on held-out subjects.</p>
 
     <div class="figcard">
-      <span class="figno">Fig 12 · five of the 14 pairs</span>
-      <figure><img src="assets/fig/fig12_stim_vs_gen.png" alt="heard vs generated spectrograms"></figure>
-      <figcaption>Five of the 14 pairs by cosine rank (min / 25th / 50th / 75th / max). Heard left, generated
-        right, common colour scale.</figcaption>
+      <span class="figno">Fig 4 · ablation and subject-held-out control</span>
+      <figure><img src="assets/fig/fig24_ablations.png" alt="CLAP loss arms and subject-held-out folds"></figure>
+      <figcaption><b>(a)</b> Window InfoNCE .223 → + dense .252 → + song CE .508 on held-out blocks.
+        <b>(b)</b> Subject-held-out folds .083–.130, mean .106 (chance .10). The CLAP alignment head is
+        analyzed on NMED-T under block/subject splits; it is not part of the six-dataset encoder pretraining.</figcaption>
     </div>
-
-    <table>
-      <thead><tr>
-        <th style="width:7%">window</th>
-        <th style="width:26%">heard stimulus — spectrogram only</th>
-        <th style="width:26%">generated from this window's EEG — playable</th>
-        <th style="width:25%">prompt the EEG selected</th>
-        <th style="width:16%">CLAP cos: own vs FMA pool</th>
-      </tr></thead>
-      <tbody id="pairs"><tr><td colspan="5" class="mut">loading <code>assets/pairs.json</code>…</td></tr></tbody>
-      <tfoot id="pairsfoot"></tfoot>
-    </table>
-    <p class="mut" style="font-size:13px;margin-top:10px">Numbers from
-      <code>results/stim_vs_gen/cos_matrix.json</code> (<code>code/figures/make_fig_stim_vs_gen.py</code>).</p>
   </section>
 
-  <section id="listen">
-    <h2>Listen — the prompt library</h2>
-    <p class="lead">One native MusicGen sample per genre prompt: the 12 styles the EEG head can select.</p>
-    <div class="gal" id="gallery"></div>
+  <section id="data">
+    <h2>What was trained on</h2>
+    <p class="lead">Six auditory datasets, all cut into non-overlapping 8-s windows. SparrKULee is speech;
+      the other five are music or natural-sound listening. SparrKULee is mapped from BioSemi64 to the 19
+      standard 10–20 channels and resampled 120 → 200 Hz. NMED-T is never used for encoder training.</p>
+    <table class="restable">
+      <thead><tr><th>dataset</th><th>subjects</th><th>windows</th><th>approx. hours</th><th>role</th></tr></thead>
+      <tbody>
+        <tr><td>CIRE</td><td>35</td><td>8,400</td><td>18.7</td><td>train</td></tr>
+        <tr><td>KUL</td><td>16</td><td>11,968</td><td>26.6</td><td>train</td></tr>
+        <tr><td>DTU</td><td>18</td><td>6,480</td><td>14.4</td><td>train</td></tr>
+        <tr><td>MUSIN-G</td><td>20</td><td>3,760</td><td>8.4</td><td>train</td></tr>
+        <tr><td>ds002725</td><td>21</td><td>4,991</td><td>11.1</td><td>train</td></tr>
+        <tr><td>SparrKULee</td><td>85</td><td>33,509</td><td>74.5</td><td>train (train/val only)</td></tr>
+        <tr><td><b>total</b></td><td><b>195</b></td><td><b>69,108</b></td><td><b>153.6</b></td><td>NMED-T held out entirely</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section id="limits">
-    <h2>Limitations & FAQ</h2>
-    <details><summary>Why is there no stimulus audio?</summary>
-      <p>The stimuli are excerpts of commercially released songs, so only spectrograms are shown and raw EEG is
-        not published. Every playable file is generated.</p></details>
-    <details><summary>Is the generated clip the song that was heard?</summary>
-      <p>No — this is <b>genre-conditioned generation</b>, not the heard song. The generated audio is genre-level
-        only (+0.103, and −0.005 within the same genre). Song identity is the job of song identification:
-        84.9% song-level retrieval (held-out segments; subjects remain in training). On truly unseen subjects
-        the calibrated query retrieves real clips at <b>.413 / .504</b> (bandpower k=10 / 100; chance .10),
-        and k-shot song-description selection reaches <b>.350</b>; genre-conditioned generation remains
-        genre-level.</p></details>
-    <details><summary>Why keep the generator frozen?</summary>
-      <p>Fine-tuning scored 7,404 vs 1,389 on distributional texture, and freezing keeps every output inside the
-        generator's own distribution by construction.</p></details>
-    <details><summary>Why not interpolate between two prompts?</summary>
-      <p>39% of the 66 pairs go off-manifold: crackle instead of a blend.</p></details>
-    <details><summary>What is still missing?</summary>
-      <p>Song-level generation; a human listening test (MOS); coverage is relative to the trivial baseline,
-        not absolute. Free-text captions (LP-MusicCaps, Qwen2-Audio) did not beat the discriminative tags for
-        song selection (.201 vs .350).</p></details>
-
+    <h2>Boundaries</h2>
     <ul class="lim">
-      <li>Small corpus (14 songs, 68 subjects); genre labels skew, so κ — not accuracy — is the honest statistic.</li>
-      <li>The five-fold subject-held-out retrain and the block-split control are single-seed; NMED-T has only 20 crossed subjects.</li>
-      <li>The fiber theory assumes a shared codebook and an isometric/low-rank transform; LaBraM-200 is only partially recoverable (0.391 oracle).</li>
-      <li>K-shot calibrates song-level description selection (.350), but <b>not</b> the 12-way genre task (κ .045 vs shared .40); calibrated generation remains genre-level.</li>
-      <li>Song-level audio generation is not solved: the generated audio is genre-level; the working song-level tasks are description selection (.350) and retrieval of real clips (.38–.50).</li>
-      <li>Free-text Qwen song captions are coherent but generic (.201 vs .350 tags); no title/artist leakage, but the text→audio interface still collapses song identity to genre.</li>
-      <li>The FMA-pool margin measures pull toward this corpus, not song identity (Bollywood stimuli vs a mostly-Western pool).</li>
-      <li>Off-manifold interpolation makes the mixture effectively near-single-prompt, or waveform blending.</li>
-      <li>No metric replaces listening; MOS has not been run.</li>
-      <li>Conditioning is genre-level by design, so song identity is out of reach for the generation arm.</li>
+      <li><b>Only the encoder is target-unseen.</b> The linear and CLAP probes are fit on NMED-T training
+        halves; this is not a zero-shot pipeline.</li>
+      <li><b>No cross-subject top-1.</b> Subject-held-out top-1 is at chance for every method.</li>
+      <li><b>Band-power wins closed-set decoding.</b> We do not claim state-of-the-art classification or a
+        replacement for high-dimensional spectral features.</li>
+      <li><b>No phase or raw-waveform claim.</b> Raw-patch/codebook pilots are negative and the
+        phase-randomization audit does not support that claim.</li>
+      <li><b>No data-scaling claim.</b> At 153.6 hours we do not claim data or model scaling.</li>
+      <li><b>Sparr channel mapping is an assumption.</b> BioSemi64 order → 19 10–20 channels.</li>
     </ul>
+    <div class="note"><b>Code.</b> Encoder, evaluation, protocol audit and figure scripts:
+      <a href="https://github.com/ZZC-MK2000/promptmix-eeg">github.com/ZZC-MK2000/promptmix-eeg</a>.
+      The working manuscript is not linked here; the page reports only the results above.</div>
   </section>
 
   <footer>
-    Code: <a href="https://github.com/ZZC-MK2000/promptmix-eeg/tree/master/code/information">cross-subject analysis</a> ·
-    <a href="https://github.com/ZZC-MK2000/promptmix-eeg/blob/master/docs/DATA_AND_MODELS.md">data &amp; model setup</a> ·
-    figures regenerate on CPU with <code>python code/figures/render_all.py</code> ·
-    static GitHub Pages demo, no backend. Raw EEG/audio and pretrained weights are not published.
+    Current version only · results from the six-dataset encoder · no raw EEG or checkpoints are published.
   </footer>
 </div>
-
-<script>
-const clips = [
- ["00_upbeatindi.wav","upbeat Indian bollywood dance"],["01_melodicindi.wav","melodic Indian film ballad"],
- ["02_catchypop.wav","catchy pop, airy vocals"],["03_smoothrb.wav","smooth R&B groove"],
- ["04_energeticelec.wav","energetic EDM"],["05_mellowacou.wav","mellow acoustic pop"],
- ["06_funkygroo.wav","funky slap-bass groove"],["07_latinregg.wav","latin reggaeton"],
- ["08_dreamyambi.wav","dreamy ambient pad"],["09_classicrock.wav","classic rock"],
- ["10_hiphop.wav","hip-hop trap"],["11_cinematicorch.wav","cinematic orchestral"]
-];
-document.getElementById('gallery').innerHTML = clips.map(([f,name])=>
- `<div class="gcard"><b>${name}</b><audio controls preload="none" src="assets/audio/${f}"></audio></div>`).join('');
-
-fetch('assets/pairs.json').then(r=>r.json()).then(d=>{
-  const rows = d.rows.slice().sort((a,b)=>a.row-b.row);
-  document.getElementById('pairs').innerHTML = rows.map(r=>`
-   <tr>
-    <td>row ${r.row}</td>
-    <td><a href="assets/fig/spectro/row${r.row}_ref.png" target="_blank" rel="noopener"><img loading="lazy" src="assets/fig/spectro/row${r.row}_ref.png" alt="spectrogram of the heard stimulus, window ${r.row}"></a></td>
-    <td><a href="assets/fig/spectro/row${r.row}_gen.png" target="_blank" rel="noopener"><img loading="lazy" src="assets/fig/spectro/row${r.row}_gen.png" alt="spectrogram of the generated clip, window ${r.row}"></a>
-        <audio controls preload="none" src="assets/audio/pairs/${r.gen_file}"></audio></td>
-    <td>${r.prompt_text} <span class="mut">(zcr ${r.zcr.toFixed(3)})</span></td>
-    <td class="cos"><b>${r.cos_own.toFixed(2)}</b> own<br><span class="mut">pool ${r.cos_fma_mean.toFixed(2)} (${r.margin_fma>=0?'+':''}${r.margin_fma.toFixed(2)})</span><br><span class="mut">others ${r.cos_others.toFixed(2)}</span></td>
-   </tr>`).join('');
-  document.getElementById('pairsfoot').innerHTML =
-   `<tr><td colspan="5">mean over ${d.n_pairs} rows — own ${d.mean_cos_own.toFixed(3)} vs others ${d.mean_cos_others.toFixed(3)} (<b>${d.mean_margin>=0?'+':''}${d.mean_margin.toFixed(3)}, t = ${d.margin_t.toFixed(1)}</b>, ${d.rows_own_above_others}/${d.n_pairs}); same-genre control ${d.genre_control.own_vs_same_prompt.margin.toFixed(3)} (t = ${d.genre_control.own_vs_same_prompt.t.toFixed(2)}); vs FMA pool ${d.fma.own_minus_pool_mean>=0?'+':''}${d.fma.own_minus_pool_mean.toFixed(3)} (t = ${d.fma.t.toFixed(1)}).</td></tr>`;
-}).catch(e=>{
-  document.getElementById('pairs').innerHTML =
-   `<tr><td colspan="5" class="mut">could not load assets/pairs.json (${e}) — open this page over http, not file://</td></tr>`;
-});
-</script>
 </body>
 </html>

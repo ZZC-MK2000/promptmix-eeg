@@ -1,104 +1,61 @@
-[![live demo](https://img.shields.io/badge/live%20demo-GitHub%20Pages-blue)](https://zzc-mk2000.github.io/promptmix-eeg/)
-
-> **Live demo:** https://zzc-mk2000.github.io/promptmix-eeg/ — the current three-task story,
-> k-shot song-vs-genre evidence, retrieval, and playable frozen-MusicGen clips.
-> Stimulus audio is withheld for copyright.
+[![live page](https://img.shields.io/badge/live-GitHub%20Pages-blue)](https://zzc-mk2000.github.io/promptmix-eeg/)
 
 # PromptMix-EEG
 
-**Brain signals → frozen MusicGen, with the listener as the bottleneck.**
+**Beyond generic EEG foundation models: a spatial-spectral encoder for naturalistic auditory EEG.**
 
-The current version has three downstream tasks:
+Live page: <https://zzc-mk2000.github.io/promptmix-eeg/>
 
-1. **Song identification / retrieval** — a calibrated EEG query retrieves a real audio clip
-   (subject-held-out bandpower retrieval **.413 at k=10**, **.504 at k=100**; chance .10).
-   The mainline A→L bridge reaches **84.9%** 14-way on **held-out segments** (subjects remain
-   in training); that is a different, easier protocol.
-2. **Genre-conditioned generation** — the shared 12-way classifier selects a genre prompt
-   (**.742 acc, κ .399**) and a frozen MusicGen samples at 32 kHz. k-shot does **not** help
-   this task (κ ≤ .045), and zero-shot CLAP prompt matching scores .056 against a .672
-   majority floor.
-3. **Song-level description selection** — the k-shot calibrated query selects among 14 song
-   descriptions (**.350** with discriminative tags, **.201** with Qwen free-text captions;
-   10-way, floor .119). This is **text selection, not song-level audio generation**: the
-   generated audio remains genre-level (true song prompt vs same-genre control: +.034,
-   t = 1.02, n.s.). Song-level delivery is retrieval.
+## Current version
 
-The listener story: zero-shot cross-subject song decoding is at chance; a per-subject fiber
-estimated from **10 labelled windows** lifts bandpower song decoding to **.454**, and the
-same k-shot calibration is what unlocks the song-level description selection above.
+A compact spatial-spectral encoder (1.14M parameters) is trained on six auditory EEG datasets
+(CIRE, KUL, DTU, MUSIN-G, ds002725, SparrKULee): **195 dataset-subject entries, 69,108
+eight-second windows, 153.6 hours**. NMED-T is never used for encoder training.
 
-## Repository layout
+Encoder objective: K=32 learnable spatial filters, one-second spectral tokens, a four-layer
+temporal Transformer, masked spectral reconstruction, cross-subject contrastive learning, and a
+VICReg-style variance-covariance regularizer. CLAP alignment (frozen audio/text towers) uses
+window InfoNCE, per-second dense InfoNCE, a song-ID auxiliary, and a subspace placement anchor.
 
-```
-promptmix-eeg/
-├── index.html                  # static GitHub Pages demo (current version only)
-├── assets/fig/                 # published figures (TNR, shared palette)
-├── code/
-│   ├── information/            # cross-subject listener analysis + selection/retrieval
-│   ├── figures/                # figure scripts (CPU; see render_all.py)
-│   ├── classifier/ · radii/ · alignment/ · delivery/ · evaluation/ · shared/
-├── vendor/mainv2/              # vendored stage-1 trainer + local import closure
-├── docs/DATA_AND_MODELS.md     # expected data caches, model weights, env vars
-├── results/public/             # small JSONs used by the webpage figures
-├── requirements.txt
-└── README.md
-```
+## Main numbers
 
-## Code map
+| Method | NMED 10-way | CLAP trial cos/top-1 | CLAP subject cos/top-1 |
+|---|---:|---:|---:|
+| LaBraM-200 (frozen) | .358 | .729 / .265 | .784 / .109 |
+| Band-power 82×22 | **.840** | **.796 / .678** | .678 / .108 |
+| Encoder (6 datasets) | .607 ± .006 | .764 / .435 | .780 / .099 |
 
-- **Listener / k-shot:** `code/information/info_ladder.py`, `oracle_alignment.py`,
-  `k_shot_calibration_v2.py`, `tta_baselines.py`, `codebook_select.py`
-- **Subject-held-out retrain + block control:**
-  `code/information/run_subject_holdout.sh`, `run_block_control.sh`,
-  `eval_subject_holdout.py`; trainer in `vendor/mainv2/`
-- **Calibration heads / genre:** `calib_head_pilot.py`, `calib_head_5fold.py`,
-  `calib_head_laion_5fold.py`, `calib_head_genre.py`
-- **Retrieval / selection:** `bandpower_clap_k_shot.py`, `mainline_k_shot.py`,
-  `mainline_linear_probe.py`, `desc_selection_nmedt.py`, `desc_selection_captions.py`,
-  `clap_descriptions.py`, `genre_prompts_qwen.py`, `genre_selection_qwen.py`
-- **Generation pilot:** `desc_generate.py`, `desc_controls.py`, `desc_fixedseed.py`,
-  `desc_samegenre.py`, `desc_margin_all.py`, `pilot_qwen_two_paths.py`,
-  `caption_qwen.py`, `caption_lp.py`, `make_caption_audio.py`
-- **Figures:** `code/figures/render_all.py` (CPU; Fig 0 is hand-supplied and excluded)
+**Only the encoder is target-unseen.** The linear and CLAP probes are fit on NMED-T training
+halves; this is not a zero-shot pipeline. Subject-held-out top-1 is at chance for all methods.
+Band-power remains the stronger closed-set label baseline.
 
-See [`code/information/README.md`](code/information/README.md) for the script-to-claim map.
+## Protocol audit
 
-## What is and is not in this repository
+- Split ladder (NMED-T, band-power): random rows .896 / held-out blocks .873 / held-out subjects .106.
+- A short-window study reports 88.69% under a within-participant random split (1-s inputs,
+  random time chunks); this is within-listener interpolation, not cross-subject evidence.
+- Answer-conditioned audit: real, zeroed and shuffled EEG all report 1.000 pair accuracy in the
+  released implementation, while label-free pairwise and EEG-only variants remain near .50.
 
-**Included:** code, figure scripts, published figures, the small `results/public/` JSONs
-used by the new webpage figures, and the requirements.
+These are protocol observations, not allegations of intent. The page lists the minimum controls:
+listener-level splits, block-held-out controls, zero/shuffled EEG controls, and label-free
+pairwise / EEG-only variants for answer-conditioned queries.
 
-**Not included:** raw NMED-T / NMED-H EEG or audio; derived embedding caches (`data/eegcond`,
-`vendor/mainv2/data`); trained checkpoints (`eeg_to_clap_proj.pt`, LaBraM, CLAP, MERT,
-MusicGen, Qwen2-Audio); and the raw experiment result JSONs. They are subject to dataset
-terms, copyright, privacy, model licenses, or size.
+## Figure and code map
 
-The subject-held-out trainer is vendored; it needs the data caches and the external LaBraM
-code/checkpoint. See [`docs/DATA_AND_MODELS.md`](docs/DATA_AND_MODELS.md) for the exact
-layout and environment variables (`MAINV2_DIR`, `LABRAM_DIR`, `LABRAM_CKPT`, ...).
+- `index.html` — current results page only.
+- `assets/fig/fig20_protocol_pitfalls.png` — split ladder + answer-conditioned query audit.
+- `assets/fig/fig22_method_losses.png` — encoder + CLAP alignment objectives.
+- `assets/fig/fig23_main_results.png` — NMED-T main results.
+- `assets/fig/fig24_ablations.png` — CLAP loss arms + subject-held-out controls.
+- `code/auditory_encoder/` — encoder, six-dataset cache builder, evaluators, VQ pilot.
+- `code/figures/make_fig_*.py` — figure scripts.
+- Working manuscript is kept locally and is not published with the page.
 
-## Quick start
+## Boundaries
 
-```bash
-pip install -r requirements.txt
-# place data caches and model weights as documented in docs/DATA_AND_MODELS.md
-export MAINV2_DIR=/path/to/mainv2-with-caches
-export LABRAM_DIR=/path/to/LaBraM-main
-export LABRAM_CKPT=$LABRAM_DIR/checkpoints/labram-base.pth
-
-python code/information/info_ladder.py
-python code/information/oracle_alignment.py
-python code/information/k_shot_calibration_v2.py
-python code/figures/build_public_fig_data.py   # rebuild the public figure JSONs
-python code/figures/render_all.py               # rebuild figures (Fig 0 excluded)
-```
-
-## Honest boundaries
-
-- 84.9% / 88.2% are **segment-held-out** (subjects remain in training), not subject-held-out.
-- The 12-way genre classifier is majority-heavy; **κ**, not accuracy, is the honest statistic.
-- k-shot helps song-level description selection, not genre selection.
-- Free-text Qwen captions do not beat discriminative tags for selection.
-- Generated audio is **genre-level**; **song-level audio generation is not solved**.
-- No human MOS has been run; retrieval of real clips is the song-level deliverable.
+- No cross-subject top-1 claim; held-out listeners remain at chance.
+- No phase or raw-waveform claim; raw-patch/codebook pilots are negative.
+- No data-scaling claim at 153.6 hours.
+- SparrKULee 64→19 channel mapping assumes BioSemi64 order; documented in code.
+- No raw EEG, checkpoints, or dataset audio are published.
