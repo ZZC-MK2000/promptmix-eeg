@@ -1,0 +1,23 @@
+{
+  "cache": "auditory_corpus_six",
+  "windows_file": "windows.npy",
+  "meta_file": "meta.npz",
+  "shape": [69108, 19, 1600],
+  "dtype": "float16",
+  "sampling_rate_hz": 200,
+  "window_seconds": 8,
+  "total_hours": 153.57333333333332,
+  "subjects": 195,
+  "datasets": {
+    "cire": {"subjects": 35, "windows": 8400, "hours": 18.7},
+    "kul": {"subjects": 16, "windows": 11968, "hours": 26.6},
+    "dtu": {"subjects": 18, "windows": 6480, "hours": 14.4},
+    "musin-g": {"subjects": 20, "windows": 3760, "hours": 8.4},
+    "ds002725": {"subjects": 21, "windows": 4991, "hours": 11.1},
+    "sparr": {"subjects": 85, "windows": 33509, "hours": 74.5}
+  },
+  "nmed_test": {"subjects": 20, "songs": 10, "windows": 7020, "hours": 15.6},
+  "not_redistributed": ["raw EEG", "audio", "checkpoints"],
+  "channel_mapping": "SparrKULee BioSemi64 -> 19 standard 10-20 channels; 120 -> 200 Hz",
+  "note": "Local cache only; this manifest describes shape and coverage, not data contents."
+}

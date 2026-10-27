@@ -1,0 +1,33 @@
+# Model zoo for AEB v0.1
+frozen:
+  bandpower_82x22:
+    family: feature
+    feature_dim: 1804
+    note: per-channel log band-power; strongest closed-set label baseline
+  labram_200:
+    family: pretrained_fm
+    checkpoint: local labram-base
+    feature_dim: 200
+  biot:
+    family: pretrained_fm
+    checkpoint: braindecode/biot-pretrained-six-datasets-18chs
+    channel_adapter: 19 -> 18 interpolation
+  cbramod:
+    family: pretrained_fm
+    checkpoint: braindecode/cbramod-pretrained
+    channel_adapter: 19 channels
+  encoder_6datasets:
+    family: domain_encoder
+    params: 1.14M
+    feature_dim: 128
+    note: target-unseen six-dataset encoder
+
+finetune:
+  eegnet: {params: 9K}
+  shallow: {params: 72K}
+  deep4: {params: 305K}
+  conformer: {params: 1.19M}
+
+excluded:
+  eegpt:
+    reason: released checkpoint uses a 62-channel token layout; no comparable 19-channel projection in v0.1

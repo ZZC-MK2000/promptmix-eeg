@@ -1,0 +1,21 @@
+# Fixed AEB split suite
+target: NMED-T
+seeds: [0, 1, 2]
+folds:
+  random_rows:
+    unit: window
+    fraction: [0.70, 0.15, 0.15]
+    intended_leakage: [subject, adjacent_window]
+  blocks:
+    unit: 5-window contiguous block within subject/song
+    fraction: [0.70, 0.15, 0.15]
+    intended_leakage: [subject]
+  subjects:
+    unit: subject
+    fraction: [0.70, 0.15, 0.15]
+    intended_leakage: []
+lodo:
+  unit: dataset
+  datasets: [cire, ds002725, dtu, kul, musin-g, sparr]
+  test: held_out_dataset
+  train_val: remaining_datasets

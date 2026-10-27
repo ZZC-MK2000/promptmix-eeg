@@ -1,0 +1,7 @@
+numpy>=2.0
+scipy>=1.10
+scikit-learn>=1.5
+torch>=2.0
+braindecode>=1.8.1
+mne>=1.6
+huggingface_hub>=0.23

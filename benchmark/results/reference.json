@@ -1,0 +1,120 @@
+{
+  "release": "v0.1",
+  "status": "reference; unified 3-seed grid and full LODO pending",
+  "protocol": {
+    "target": "NMED-T 10-way",
+    "split": "per-subject per-song 50/50",
+    "chance": 0.1,
+    "reps": 5,
+    "note": "frozen probe and fine-tune are separate tables"
+  },
+  "frozen": [
+    {
+      "model": "bandpower_82x22",
+      "family": "feature",
+      "feature_dim": 1804,
+      "logistic": 0.84,
+      "centroid": 0.67
+    },
+    {
+      "model": "encoder_6datasets",
+      "family": "domain_encoder",
+      "params": 1141408,
+      "feature_dim": 128,
+      "logistic": 0.607,
+      "logistic_sd": 0.006,
+      "centroid": 0.462
+    },
+    {
+      "model": "biot",
+      "family": "pretrained_fm",
+      "params": 3189258,
+      "feature_dim": 256,
+      "logistic": 0.381,
+      "logistic_sd": 0.003,
+      "centroid": 0.266
+    },
+    {
+      "model": "labram_200",
+      "family": "pretrained_fm",
+      "feature_dim": 200,
+      "logistic": 0.358,
+      "centroid": 0.291
+    },
+    {
+      "model": "cbramod",
+      "family": "pretrained_fm",
+      "params": 4924000,
+      "feature_dim": 200,
+      "logistic": 0.25,
+      "logistic_sd": 0.002,
+      "centroid": 0.218
+    }
+  ],
+  "finetune": [
+    {
+      "model": "eegnet",
+      "params": 9418,
+      "per_subject": 0.118,
+      "per_subject_sd": 0.006,
+      "pooled": 0.134,
+      "pooled_sd": 0.005
+    },
+    {
+      "model": "shallow",
+      "params": 71930,
+      "per_subject": 0.258,
+      "per_subject_sd": 0.003,
+      "pooled": 0.231,
+      "pooled_sd": 0.008
+    },
+    {
+      "model": "deep4",
+      "params": 305410,
+      "per_subject": 0.107,
+      "per_subject_sd": 0.009,
+      "pooled": 0.133,
+      "pooled_sd": 0.008
+    },
+    {
+      "model": "conformer",
+      "params": 1194570,
+      "per_subject": 0.142,
+      "per_subject_sd": 0.009,
+      "pooled": 0.12,
+      "pooled_sd": 0.005
+    }
+  ],
+  "controls": {
+    "split_ladder_bandpower": {
+      "random_rows": 0.896,
+      "blocks": 0.873,
+      "subjects": 0.106
+    },
+    "split_ladder_labram": {
+      "random_rows": 0.261,
+      "blocks": 0.255,
+      "subjects": 0.109
+    },
+    "answer_conditioned_kul_s1": {
+      "reported": 1.0,
+      "zero_eeg": 1.0,
+      "shuffled_eeg": 1.0,
+      "pairwise": 0.503,
+      "eeg_only": 0.501
+    },
+    "eegnet_overfit_example": {
+      "train": 1.0,
+      "test": 0.14
+    }
+  },
+  "excluded": {
+    "eegpt": "62-channel checkpoint; no comparable 19-channel projection in v0.1"
+  },
+  "notes": [
+    "No raw EEG or checkpoints are released.",
+    "BIOT uses 19->18-channel interpolation.",
+    "Supervised baselines are fixed-budget reference points, not tuned upper bounds.",
+    "Random-row and block splits keep subjects in training; only subject/LODO splits are listener-held-out."
+  ]
+}

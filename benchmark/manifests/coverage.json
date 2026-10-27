@@ -1,0 +1,37 @@
+{
+  "cire": {
+    "subjects": 35,
+    "windows": 8400,
+    "hours": 18.7
+  },
+  "ds002725": {
+    "subjects": 21,
+    "windows": 4991,
+    "hours": 11.1
+  },
+  "dtu": {
+    "subjects": 18,
+    "windows": 6480,
+    "hours": 14.4
+  },
+  "kul": {
+    "subjects": 16,
+    "windows": 11968,
+    "hours": 26.6
+  },
+  "musin-g": {
+    "subjects": 20,
+    "windows": 3760,
+    "hours": 8.4
+  },
+  "sparr": {
+    "subjects": 85,
+    "windows": 33509,
+    "hours": 74.5
+  },
+  "total": {
+    "subjects": 195,
+    "windows": 69108,
+    "hours": 153.6
+  }
+}

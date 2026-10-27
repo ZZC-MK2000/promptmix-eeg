@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use AEB, cite the benchmark release and the original dataset papers."
+title: "Auditory EEG Bench (AEB)"
+version: 0.1.0
+date-released: 2026-10-28
+url: "https://github.com/ZZC-MK2000/auditory-eeg-bench"
+license: MIT
+authors:
+  - name: "Auditory EEG Bench contributors"
+references:
+  - type: article
+    title: "Large Brain Model for Learning Generic Representations with Tremendous EEG Data in BCI"
+    authors: ["Jiang, Wei-Bang", "Zhao, Li-Ming", "Lu, Bao-Liang"]
+    year: 2024
+  - type: article
+    title: "BIOT: Biosignal Transformer for Cross-Data Learning in the Wild"
+    authors: ["Yang, Chaoqi", "Westover, M. Brandon", "Sun, Jimeng"]
+    year: 2023
+  - type: article
+    title: "CBraMod: A Criss-Cross Brain Foundation Model for EEG Decoding"
+    authors: ["Wang, Jiquan", "Zhao, Sha", "Luo, Zhiling", "Zhu, Yurong", "Zhao, Wen"]
+    year: 2025
+  - type: article
+    title: "Image-based EEG Classification of Brain Responses to Song Recordings"
+    authors: ["Ramirez-Aristizabal, Adolfo G.", "Ebrahimpour, Mohammad K.", "Kello, Christopher T."]
+    year: 2022

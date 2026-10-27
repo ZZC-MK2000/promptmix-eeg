@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>Auditory EEG Bench — leaderboard v0.1</title>
+<style>body{font:16px/1.6 Georgia,serif;max-width:980px;margin:40px auto;padding:0 20px}
+table{border-collapse:collapse;width:100%}th,td{padding:8px 10px;border-bottom:1px solid #ddd;text-align:left}
+th{background:#f3f5f7}code{background:#eee;padding:1px 5px}.warn{color:#a33}</style></head>
+<body><h1>Auditory EEG Bench — leaderboard v0.1</h1>
+<p>NMED-T 10-way, per-subject trial-wise 50/50; chance 0.10. Frozen probes and
+fine-tuning are separate protocols. <span class="warn">Reference results; unified 3-seed
+grid and full LODO are pending.</span></p>
+<table><thead><tr><th>model</th><th>family</th><th>params</th><th>10-way</th><th>protocol</th></tr></thead>
+<tbody><tr><td>bandpower_82x22</td><td>feature</td><td>—</td><td><b>0.840</b></td><td>frozen probe</td></tr>
+<tr><td>encoder_6datasets</td><td>domain_encoder</td><td>1141408</td><td><b>0.607</b></td><td>frozen probe</td></tr>
+<tr><td>biot</td><td>pretrained_fm</td><td>3189258</td><td><b>0.381</b></td><td>frozen probe</td></tr>
+<tr><td>labram_200</td><td>pretrained_fm</td><td>—</td><td><b>0.358</b></td><td>frozen probe</td></tr>
+<tr><td>cbramod</td><td>pretrained_fm</td><td>4924000</td><td><b>0.250</b></td><td>frozen probe</td></tr>
+<tr><td>eegnet</td><td>supervised</td><td>9418</td><td><b>0.118</b></td><td>per-subject fine-tune</td></tr>
+<tr><td>shallow</td><td>supervised</td><td>71930</td><td><b>0.258</b></td><td>per-subject fine-tune</td></tr>
+<tr><td>deep4</td><td>supervised</td><td>305410</td><td><b>0.107</b></td><td>per-subject fine-tune</td></tr>
+<tr><td>conformer</td><td>supervised</td><td>1194570</td><td><b>0.142</b></td><td>per-subject fine-tune</td></tr></tbody></table>
+<p>Controls: random rows .896 / blocks .873 / subjects .106 (band-power); answer-conditioned
+zero/shuffled EEG still 1.000 pair accuracy. See <code>README.md</code> and
+<code>manifests/split_audit.json</code>. No raw EEG or checkpoints are released.</p>
+</body></html>

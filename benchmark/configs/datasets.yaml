@@ -1,0 +1,53 @@
+# Local cache paths are examples; AEB does not redistribute raw EEG.
+cache:
+  six_dataset: /path/to/mainv2/data/auditory_corpus_six
+  nmed_test: /path/to/nmed_cache
+  sr: 200
+  n_chans: 19
+  window_seconds: 8
+
+datasets:
+  cire:
+    role: train
+    subjects: 35
+    windows: 8400
+    hours: 18.7
+    license: unverified
+  kul:
+    role: train
+    subjects: 16
+    windows: 11968
+    hours: 26.6
+    license: unverified
+  dtu:
+    role: train
+    subjects: 18
+    windows: 6480
+    hours: 14.4
+    license: unverified
+  musin-g:
+    role: train
+    subjects: 20
+    windows: 3760
+    hours: 8.4
+    license: CC0
+  ds002725:
+    role: train
+    subjects: 21
+    windows: 4991
+    hours: 11.1
+    license: CC0
+  sparr:
+    role: train
+    subjects: 85
+    windows: 33509
+    hours: 74.5
+    license: CC-BY-NC-4.0
+    notes: BioSemi64 -> 19 standard channels; 120 -> 200 Hz; train/val only
+  nmed-t:
+    role: test
+    subjects: 20
+    songs: 10
+    windows: 7020
+    hours: 15.6
+    license: research-use; stimuli copyrighted

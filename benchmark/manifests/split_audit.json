@@ -1,0 +1,234 @@
+{
+  "nmedt": {
+    "random_rows": [
+      {
+        "seed": 0,
+        "n": [
+          4914,
+          1053,
+          1053
+        ],
+        "row_overlap_train_test": 0,
+        "subject_overlap_train_test": 20,
+        "unit_overlap_train_test": 0,
+        "unit_overlap_train_val": 0
+      },
+      {
+        "seed": 1,
+        "n": [
+          4914,
+          1053,
+          1053
+        ],
+        "row_overlap_train_test": 0,
+        "subject_overlap_train_test": 20,
+        "unit_overlap_train_test": 0,
+        "unit_overlap_train_val": 0
+      },
+      {
+        "seed": 2,
+        "n": [
+          4914,
+          1053,
+          1053
+        ],
+        "row_overlap_train_test": 0,
+        "subject_overlap_train_test": 20,
+        "unit_overlap_train_test": 0,
+        "unit_overlap_train_val": 0
+      }
+    ],
+    "blocks": [
+      {
+        "seed": 0,
+        "n": [
+          4883,
+          1071,
+          1066
+        ],
+        "row_overlap_train_test": 0,
+        "subject_overlap_train_test": 20,
+        "unit_overlap_train_test": 0,
+        "unit_overlap_train_val": 0
+      },
+      {
+        "seed": 1,
+        "n": [
+          4904,
+          1060,
+          1056
+        ],
+        "row_overlap_train_test": 0,
+        "subject_overlap_train_test": 20,
+        "unit_overlap_train_test": 0,
+        "unit_overlap_train_val": 0
+      },
+      {
+        "seed": 2,
+        "n": [
+          4892,
+          1061,
+          1067
+        ],
+        "row_overlap_train_test": 0,
+        "subject_overlap_train_test": 20,
+        "unit_overlap_train_test": 0,
+        "unit_overlap_train_val": 0
+      }
+    ],
+    "subjects": [
+      {
+        "seed": 0,
+        "n": [
+          4914,
+          1053,
+          1053
+        ],
+        "row_overlap_train_test": 0,
+        "subject_overlap_train_test": 0,
+        "unit_overlap_train_test": 0,
+        "unit_overlap_train_val": 0
+      },
+      {
+        "seed": 1,
+        "n": [
+          4914,
+          1053,
+          1053
+        ],
+        "row_overlap_train_test": 0,
+        "subject_overlap_train_test": 0,
+        "unit_overlap_train_test": 0,
+        "unit_overlap_train_val": 0
+      },
+      {
+        "seed": 2,
+        "n": [
+          4914,
+          1053,
+          1053
+        ],
+        "row_overlap_train_test": 0,
+        "subject_overlap_train_test": 0,
+        "unit_overlap_train_test": 0,
+        "unit_overlap_train_val": 0
+      }
+    ]
+  },
+  "lodo": {
+    "cire": {
+      "n": [
+        54069,
+        6639,
+        8400
+      ],
+      "dataset_overlap_train_test": 0,
+      "subject_overlap_train_test": 0,
+      "datasets_train": [
+        "ds002725",
+        "dtu",
+        "kul",
+        "musin-g",
+        "sparr"
+      ],
+      "dataset_test": [
+        "cire"
+      ]
+    },
+    "ds002725": {
+      "n": [
+        58220,
+        5897,
+        4991
+      ],
+      "dataset_overlap_train_test": 0,
+      "subject_overlap_train_test": 0,
+      "datasets_train": [
+        "cire",
+        "dtu",
+        "kul",
+        "musin-g",
+        "sparr"
+      ],
+      "dataset_test": [
+        "ds002725"
+      ]
+    },
+    "dtu": {
+      "n": [
+        57201,
+        5427,
+        6480
+      ],
+      "dataset_overlap_train_test": 0,
+      "subject_overlap_train_test": 0,
+      "datasets_train": [
+        "cire",
+        "ds002725",
+        "kul",
+        "musin-g",
+        "sparr"
+      ],
+      "dataset_test": [
+        "dtu"
+      ]
+    },
+    "kul": {
+      "n": [
+        51629,
+        5511,
+        11968
+      ],
+      "dataset_overlap_train_test": 0,
+      "subject_overlap_train_test": 0,
+      "datasets_train": [
+        "cire",
+        "ds002725",
+        "dtu",
+        "musin-g",
+        "sparr"
+      ],
+      "dataset_test": [
+        "kul"
+      ]
+    },
+    "musin-g": {
+      "n": [
+        59195,
+        6153,
+        3760
+      ],
+      "dataset_overlap_train_test": 0,
+      "subject_overlap_train_test": 0,
+      "datasets_train": [
+        "cire",
+        "ds002725",
+        "dtu",
+        "kul",
+        "sparr"
+      ],
+      "dataset_test": [
+        "musin-g"
+      ]
+    },
+    "sparr": {
+      "n": [
+        32315,
+        3284,
+        33509
+      ],
+      "dataset_overlap_train_test": 0,
+      "subject_overlap_train_test": 0,
+      "datasets_train": [
+        "cire",
+        "ds002725",
+        "dtu",
+        "kul",
+        "musin-g"
+      ],
+      "dataset_test": [
+        "sparr"
+      ]
+    }
+  }
+}
