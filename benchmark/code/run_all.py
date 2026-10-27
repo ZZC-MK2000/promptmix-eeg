@@ -23,7 +23,10 @@ def main():
     ok = all(check(p) for p in required)
     if not ok:
         raise SystemExit("missing required artifacts; see README")
-    subprocess.run([sys.executable, str(HERE / "audit_splits.py")], check=False)
+    if (ROOT / "data" / "nmed.npz").exists():
+        subprocess.run([sys.executable, str(HERE / "audit_splits.py")], check=False)
+    else:
+        print("SKIP split re-audit: data/nmed.npz absent; using precomputed manifests/split_audit.json")
     subprocess.run([sys.executable, str(HERE / "make_leaderboard.py")], check=False)
     d = json.load(open(ROOT / "manifests/split_audit.json", encoding="utf-8"))
     print(json.dumps({k: len(v) for k, v in d["nmedt"].items()}, indent=2))

@@ -16,12 +16,10 @@ OUT = HERE.parent / "splits"
 MAN = HERE.parent / "manifests"
 
 
-def nmed():
-    import sys
-    sys.path.insert(0, str(HERE.parents[1] / "code" / "information"))
-    from eval_finetune_local75 import nmed_windows
-    X, song, subj = nmed_windows()
-    return X, np.asarray(song), np.asarray(subj)
+def nmed(path):
+    d = np.load(path, allow_pickle=True)
+    X = d["X"] if "X" in d else d["features"]
+    return np.asarray(X), np.asarray(d["song"]), np.asarray(d["subject"]).astype(str)
 
 
 def split_units(n, seed, frac=(0.70, 0.15, 0.15)):
@@ -38,12 +36,13 @@ def expand(selected, unit_ids):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--six", default=str(ROOT / "mainv2" / "data" / "auditory_corpus_six"))
+    ap.add_argument("--nmed", default=str(HERE.parent / "data" / "nmed.npz"))
+    ap.add_argument("--six", default=str(HERE.parent / "data" / "auditory_corpus_six"))
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True); MAN.mkdir(parents=True, exist_ok=True)
 
-    X, song, subj = nmed()
+    X, song, subj = nmed(args.nmed)
     subj = subj.astype(str)
     n = len(X)
     # contiguous 5-window blocks within each subject-song stream

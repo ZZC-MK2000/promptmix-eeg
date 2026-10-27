@@ -16,15 +16,17 @@ SPLITS = HERE.parent / "splits"
 OUT = HERE.parent / "manifests" / "split_audit.json"
 
 
-def nmed():
-    sys.path.insert(0, str(HERE.parents[1] / "code" / "information"))
-    from eval_finetune_local75 import nmed_windows
-    X, song, subj = nmed_windows()
-    return np.asarray(song), np.asarray(subj).astype(str)
+def nmed(path):
+    d = np.load(path, allow_pickle=True)
+    return np.asarray(d["song"]), np.asarray(d["subject"]).astype(str)
 
 
 def main():
-    song, subj = nmed()
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--nmed", default=str(HERE.parent / "data" / "nmed.npz"))
+    args = ap.parse_args()
+    song, subj = nmed(args.nmed)
     block = np.empty(len(subj), dtype=object)
     for s in sorted(set(subj.tolist())):
         for c in sorted(set(song.tolist())):
