@@ -1,0 +1,27 @@
+{
+  "protocol": {
+    "dataset": "NMED-T",
+    "split": "per-subject per-song 50/50",
+    "chance": 0.1,
+    "reps": 5,
+    "note": "frozen pretrained features; probe fit on training halves"
+  },
+  "models": {
+    "biot": {
+      "params": 3189258,
+      "feature_dim": 256,
+      "centroid": 0.2657062146892656,
+      "centroid_sd": 0.0049272533582859065,
+      "logistic": 0.3812429378531073,
+      "logistic_sd": 0.0026415072830646125
+    },
+    "cbramod": {
+      "params": 4924000,
+      "feature_dim": 200,
+      "centroid": 0.21779661016949153,
+      "centroid_sd": 0.006641722942230776,
+      "logistic": 0.24994350282485875,
+      "logistic_sd": 0.0016315852065755428
+    }
+  }
+}

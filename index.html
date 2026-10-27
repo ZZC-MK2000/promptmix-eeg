@@ -206,6 +206,31 @@
         <tr><td>EEG-Conformer</td><td>1.19M</td><td>0.142 ± 0.009</td><td>0.120 ± 0.005</td></tr>
       </tbody>
     </table>
+
+    <p class="lead" style="margin-top:22px">We also loaded the released pretrained weights for BIOT and CBraMod
+      through a Hugging Face mirror and evaluated them as frozen features with the same logistic probe.
+      BIOT reaches .381 and CBraMod .250; both remain below the six-dataset encoder (.607). LaBraM is .358.
+      EEGPT is not reported: its released checkpoint uses a 62-channel token layout, and a 19-channel
+      adaptation would require a new channel projection rather than a comparable frozen-feature run.</p>
+
+    <div class="figcard">
+      <span class="figno">Fig 6 · pretrained foundation models</span>
+      <figure><img src="assets/fig/fig26_foundation_comparison.png" alt="BIOT, CBraMod, LaBraM, band-power and our encoder"></figure>
+      <figcaption>Frozen pretrained features + the same per-subject logistic probe. No model is fine-tuned on
+        NMED-T. BIOT is evaluated with 19→18-channel interpolation; CBraMod at 19 channels. EEGPT omitted
+        for the channel-layout reason above.</figcaption>
+    </div>
+
+    <table class="restable">
+      <thead><tr><th>foundation model</th><th>params</th><th>feature dim</th><th>logistic</th><th>centroid</th></tr></thead>
+      <tbody>
+        <tr><td>BIOT (pretrained)</td><td>3.19M</td><td>256</td><td>0.381 ± 0.003</td><td>0.266 ± 0.005</td></tr>
+        <tr><td>CBraMod (pretrained)</td><td>4.92M</td><td>200</td><td>0.250 ± 0.002</td><td>0.218 ± 0.007</td></tr>
+        <tr><td>LaBraM-200 (frozen)</td><td>—</td><td>200</td><td>0.358</td><td>0.291</td></tr>
+        <tr><td>Encoder (6 datasets)</td><td>1.14M</td><td>128</td><td><b>0.607 ± 0.006</b></td><td>0.462</td></tr>
+        <tr><td>Band-power 82×22</td><td>—</td><td>1804</td><td><b>0.840</b></td><td>0.670</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section id="data">

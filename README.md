@@ -39,6 +39,15 @@ band-power (.840). The per-subject training set has ~17 windows per class; EEGNe
 but 0.14 test on a representative subject, so the baselines overfit. BIOT/CBraMod/EEGPT pretrained
 weights were not obtainable locally; no random-init versions are presented as foundation-model results.
 
+
+## Pretrained foundation-model comparison
+
+Frozen features + the same per-subject trial-wise logistic probe: BIOT **.381**, CBraMod **.250**,
+LaBraM-200 **.358**, our encoder **.607**, band-power **.840**. BIOT uses 19→18-channel interpolation;
+CBraMod runs at 19 channels. EEGPT is not reported because its released checkpoint uses a 62-channel
+token layout and a 19-channel adaptation would require a new channel projection, not a comparable
+frozen-feature run. See `fig26_foundation_comparison.png`.
+
 ## Protocol audit
 
 - Split ladder (NMED-T, band-power): random rows .896 / held-out blocks .873 / held-out subjects .106.
@@ -59,6 +68,7 @@ pairwise / EEG-only variants for answer-conditioned queries.
 - `assets/fig/fig23_main_results.png` — NMED-T main results.
 - `assets/fig/fig24_ablations.png` — CLAP loss arms + subject-held-out controls.
 - `assets/fig/fig25_model_comparison.png` — supervised EEG baselines vs frozen encoders.
+- `assets/fig/fig26_foundation_comparison.png` — BIOT/CBraMod/LaBraM vs our encoder.
 - `code/auditory_encoder/` — encoder, six-dataset cache builder, evaluators, VQ pilot.
 - `code/figures/make_fig_*.py` — figure scripts.
 - Working manuscript is kept locally and is not published with the page.
