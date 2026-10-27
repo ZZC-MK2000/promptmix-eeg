@@ -30,6 +30,14 @@ halves; this is not a zero-shot pipeline. Subject-held-out top-1 is at chance fo
 Band-power remains the stronger closed-set label baseline.
 
 
+
+## Audio demo
+
+The page restores the downstream frozen-MusicGen demo: 14 heard/generated pairs, 8
+oracle/calibrated/zero-shot rows, and 12 native prompt samples. It is illustrative and is
+**not** part of the six-dataset encoder benchmark; no new MOS or retrieval claim is attached.
+Assets live under `assets/audio/` with `assets/pairs.json` and `assets/calibrated_pairs.json`.
+
 ## Other architectures
 
 Four standard supervised EEG models were trained from scratch on the same per-subject trial-wise
@@ -69,6 +77,7 @@ pairwise / EEG-only variants for answer-conditioned queries.
 - `assets/fig/fig24_ablations.png` — CLAP loss arms + subject-held-out controls.
 - `assets/fig/fig25_model_comparison.png` — supervised EEG baselines vs frozen encoders.
 - `assets/fig/fig26_foundation_comparison.png` — BIOT/CBraMod/LaBraM vs our encoder.
+- `assets/audio/` — restored downstream demo audio (pairs, calibrated/oracle/zero, prompt library).
 - `code/auditory_encoder/` — encoder, six-dataset cache builder, evaluators, VQ pilot.
 - `code/figures/make_fig_*.py` — figure scripts.
 - Working manuscript is kept locally and is not published with the page.

@@ -1,0 +1,262 @@
+{
+  "protocol": {
+    "fold": 0,
+    "k": 100,
+    "windows_per_subject": 4,
+    "stimulus": "EnCodec-decoded codes (NMED-T audio not published)",
+    "generator": "frozen MusicGen-small, 400 tokens, temp 0.9, fixed seed",
+    "selection_accuracy_5fold": 0.295
+  },
+  "aggregate": {
+    "oracle": {
+      "clap_to_stimulus": 0.54019695520401,
+      "clap_to_query": 0.54019695520401,
+      "mel_frechet": 15291.03075228139,
+      "dtw_logmel_norm": 63.84577175380235,
+      "centroid_absdiff": 1038.3487721234424,
+      "rolloff_absdiff": 2468.9622107645873,
+      "zcr_gen": 0.05141584825469181,
+      "zcr_ref": 0.0561306718736887,
+      "desc_correct": 1.0,
+      "n": 16
+    },
+    "head_calib": {
+      "clap_to_stimulus": 0.4873211318627,
+      "clap_to_query": 0.0792798496549949,
+      "mel_frechet": 16566.90399602756,
+      "dtw_logmel_norm": 66.59671982839023,
+      "centroid_absdiff": 1201.2251041414956,
+      "rolloff_absdiff": 2662.8737267354127,
+      "zcr_gen": 0.07152204541489482,
+      "zcr_ref": 0.0561306718736887,
+      "desc_correct": 0.25,
+      "n": 16
+    },
+    "head_zero": {
+      "clap_to_stimulus": 0.3895641821436584,
+      "clap_to_query": 0.009765120455995202,
+      "mel_frechet": 23541.808268519002,
+      "dtw_logmel_norm": 76.6946340750701,
+      "centroid_absdiff": 1092.95587629632,
+      "rolloff_absdiff": 2524.755957620724,
+      "zcr_gen": 0.06648227508412674,
+      "zcr_ref": 0.0561306718736887,
+      "desc_correct": 0.125,
+      "n": 16
+    },
+    "mainline": {
+      "clap_to_stimulus": 0.5532610369846225,
+      "clap_to_query": 0.10560754628386348,
+      "mel_frechet": 12224.49156597854,
+      "dtw_logmel_norm": 60.46938937191955,
+      "centroid_absdiff": 1188.2518287819325,
+      "rolloff_absdiff": 2818.701270120724,
+      "zcr_gen": 0.06919821148039773,
+      "zcr_ref": 0.0561306718736887,
+      "desc_correct": null,
+      "n": 16
+    }
+  },
+  "rows": [
+    {
+      "row": 20,
+      "true_song": 9,
+      "oracle": {
+        "prompt": "aggressive, distorted, goth rock, chiptune, brass, orchestral, fast tempo, mid-tempo",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.5903089642524719,
+        "clap_to_query": 0.5903089642524719,
+        "audio": "assets/audio/calibrated/oracle_row20.wav"
+      },
+      "head_calib": {
+        "prompt": "aggressive, distorted, goth rock, chiptune, brass, orchestral, fast tempo, mid-tempo",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.5903089642524719,
+        "clap_to_query": 0.09140659868717194,
+        "audio": "assets/audio/calibrated/head_calib_row20.wav"
+      },
+      "head_zero": {
+        "prompt": "choir, devotional, heavy reverb, soul, female vocals, dreamy, cinematic, distorted",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.3872259557247162,
+        "clap_to_query": 0.024533212184906006,
+        "audio": "assets/audio/calibrated/head_zero_row20.wav"
+      }
+    },
+    {
+      "row": 1196,
+      "true_song": 3,
+      "oracle": {
+        "prompt": "synth pads, calm, choir, female vocals, ambient, film score, new age, synthesizer",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.3386392593383789,
+        "clap_to_query": 0.3386392593383789,
+        "audio": "assets/audio/calibrated/oracle_row1196.wav"
+      },
+      "head_calib": {
+        "prompt": "synth pads, calm, choir, female vocals, ambient, film score, new age, synthesizer",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.3386392593383789,
+        "clap_to_query": 0.03830903768539429,
+        "audio": "assets/audio/calibrated/head_calib_row1196.wav"
+      },
+      "head_zero": {
+        "prompt": "choir, devotional, heavy reverb, soul, female vocals, dreamy, cinematic, distorted",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.31404054164886475,
+        "clap_to_query": 0.05594700202345848,
+        "audio": "assets/audio/calibrated/head_zero_row1196.wav"
+      }
+    },
+    {
+      "row": 1988,
+      "true_song": 9,
+      "oracle": {
+        "prompt": "aggressive, distorted, goth rock, chiptune, brass, orchestral, fast tempo, mid-tempo",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.4806409478187561,
+        "clap_to_query": 0.4806409478187561,
+        "audio": "assets/audio/calibrated/oracle_row1988.wav"
+      },
+      "head_calib": {
+        "prompt": "aggressive, distorted, goth rock, chiptune, brass, orchestral, fast tempo, mid-tempo",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.4806409478187561,
+        "clap_to_query": 0.101207435131073,
+        "audio": "assets/audio/calibrated/head_calib_row1988.wav"
+      },
+      "head_zero": {
+        "prompt": "hip hop, driving beat, dholak, chiptune, trap, bass guitar, warm, tabla",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.6420851945877075,
+        "clap_to_query": 0.14486825466156006,
+        "audio": "assets/audio/calibrated/head_zero_row1988.wav"
+      }
+    },
+    {
+      "row": 3576,
+      "true_song": 2,
+      "oracle": {
+        "prompt": "choir, devotional, heavy reverb, soul, female vocals, dreamy, cinematic, distorted",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.5142749547958374,
+        "clap_to_query": 0.5142749547958374,
+        "audio": "assets/audio/calibrated/oracle_row3576.wav"
+      },
+      "head_calib": {
+        "prompt": "choir, devotional, heavy reverb, soul, female vocals, dreamy, cinematic, distorted",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.5142749547958374,
+        "clap_to_query": 0.041475437581539154,
+        "audio": "assets/audio/calibrated/head_calib_row3576.wav"
+      },
+      "head_zero": {
+        "prompt": "funk, guitar, acoustic, acoustic guitar, hindustani classical, indian classical, bamboo flute, bollywood film music",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.5325375199317932,
+        "clap_to_query": 0.0588538832962513,
+        "audio": "assets/audio/calibrated/head_zero_row3576.wav"
+      }
+    },
+    {
+      "row": 396,
+      "true_song": 8,
+      "oracle": {
+        "prompt": "bright, synth pads, dense mix, synthesizer, playful, drums, four-on-the-floor, r&b",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.7385233640670776,
+        "clap_to_query": 0.7385233640670776,
+        "audio": "assets/audio/calibrated/oracle_row396.wav"
+      },
+      "head_calib": {
+        "prompt": "warm, minimal, trap, synth pads, bright, new age, airy, electronic",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.6003247499465942,
+        "clap_to_query": -0.10672049969434738,
+        "audio": "assets/audio/calibrated/head_calib_row396.wav"
+      },
+      "head_zero": {
+        "prompt": "choir, devotional, heavy reverb, soul, female vocals, dreamy, cinematic, distorted",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.34778037667274475,
+        "clap_to_query": 0.0382913313806057,
+        "audio": "assets/audio/calibrated/head_zero_row396.wav"
+      }
+    },
+    {
+      "row": 815,
+      "true_song": 4,
+      "oracle": {
+        "prompt": "funk, guitar, acoustic, acoustic guitar, hindustani classical, indian classical, bamboo flute, bollywood film music",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.6033631563186646,
+        "clap_to_query": 0.6033631563186646,
+        "audio": "assets/audio/calibrated/oracle_row815.wav"
+      },
+      "head_calib": {
+        "prompt": "aggressive, distorted, goth rock, chiptune, brass, orchestral, fast tempo, mid-tempo",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.3934158682823181,
+        "clap_to_query": 0.13234680891036987,
+        "audio": "assets/audio/calibrated/head_calib_row815.wav"
+      },
+      "head_zero": {
+        "prompt": "choir, devotional, heavy reverb, soul, female vocals, dreamy, cinematic, distorted",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.15689785778522491,
+        "clap_to_query": 0.22545497119426727,
+        "audio": "assets/audio/calibrated/head_zero_row815.wav"
+      }
+    },
+    {
+      "row": 2382,
+      "true_song": 1,
+      "oracle": {
+        "prompt": "synthesizer, funk, hip hop, groovy, airy, slap bass, minimal, jazz",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.7310967445373535,
+        "clap_to_query": 0.7310967445373535,
+        "audio": "assets/audio/calibrated/oracle_row2382.wav"
+      },
+      "head_calib": {
+        "prompt": "indian folk, indian classical, hindustani classical, bamboo flute, percussion, tabla, reggaeton, latin",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.5659677982330322,
+        "clap_to_query": 0.18481391668319702,
+        "audio": "assets/audio/calibrated/head_calib_row2382.wav"
+      },
+      "head_zero": {
+        "prompt": "hip hop, driving beat, dholak, chiptune, trap, bass guitar, warm, tabla",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.07661338150501251,
+        "clap_to_query": -0.25408536195755005,
+        "audio": "assets/audio/calibrated/head_zero_row2382.wav"
+      }
+    },
+    {
+      "row": 4780,
+      "true_song": 1,
+      "oracle": {
+        "prompt": "synthesizer, funk, hip hop, groovy, airy, slap bass, minimal, jazz",
+        "desc_correct": 1,
+        "clap_to_stimulus": 0.5776462554931641,
+        "clap_to_query": 0.5776462554931641,
+        "audio": "assets/audio/calibrated/oracle_row4780.wav"
+      },
+      "head_calib": {
+        "prompt": "indian classical, indian folk, bamboo flute, hindustani classical, reggaeton, acoustic, funk, tabla",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.634788990020752,
+        "clap_to_query": 0.18998658657073975,
+        "audio": "assets/audio/calibrated/head_calib_row4780.wav"
+      },
+      "head_zero": {
+        "prompt": "hip hop, driving beat, dholak, chiptune, trap, bass guitar, warm, tabla",
+        "desc_correct": 0,
+        "clap_to_stimulus": 0.5255594253540039,
+        "clap_to_query": 0.03701773285865784,
+        "audio": "assets/audio/calibrated/head_zero_row4780.wav"
+      }
+    }
+  ]
+}
