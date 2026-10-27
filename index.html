@@ -68,6 +68,7 @@
       <a href="#protocol">Protocol audit</a>
       <a href="#method">Method</a>
       <a href="#results">Results</a>
+      <a href="#comparison">Comparison</a>
       <a href="#ablations">Ablations</a>
       <a href="#data">Data</a>
       <a href="#limits">Limits</a>
@@ -176,6 +177,35 @@
         <b>(b)</b> Subject-held-out folds .083–.130, mean .106 (chance .10). The CLAP alignment head is
         analyzed on NMED-T under block/subject splits; it is not part of the six-dataset encoder pretraining.</figcaption>
     </div>
+  </section>
+
+  <section id="comparison">
+    <h2>Other architectures</h2>
+    <p class="lead">We trained four standard supervised EEG models from scratch on the same per-subject
+      trial-wise splits, with both per-subject and pooled training. They remain below the frozen encoder
+      and far below band-power. These are reference points, not tuned SOTA baselines: the per-subject
+      training set has only ~17 windows per class, and EEGNet reaches 1.00 train / 0.14 test on a
+      representative subject, i.e., it overfits rather than underfits. BIOT, CBraMod and EEGPT pretrained
+      weights were not obtainable in this environment; we do not present random-init versions as
+      foundation-model comparisons.</p>
+
+    <div class="figcard">
+      <span class="figno">Fig 5 · supervised baselines</span>
+      <figure><img src="assets/fig/fig25_model_comparison.png" alt="EEGNet, ShallowConvNet, Deep4Net and EEG-Conformer versus frozen encoders"></figure>
+      <figcaption><b>Per-subject</b> and <b>pooled</b> training (5 repetitions). Dashed lines:
+        band-power 0.840, encoder 0.607, LaBraM 0.358, chance 0.10. The comparison is descriptive;
+        hyperparameters were not tuned per model.</figcaption>
+    </div>
+
+    <table class="restable">
+      <thead><tr><th>model</th><th>params</th><th>per-subject</th><th>pooled</th></tr></thead>
+      <tbody>
+        <tr><td>EEGNet</td><td>9K</td><td>0.118 ± 0.006</td><td>0.134 ± 0.005</td></tr>
+        <tr><td>ShallowConvNet</td><td>72K</td><td>0.258 ± 0.003</td><td>0.231 ± 0.008</td></tr>
+        <tr><td>Deep4Net</td><td>305K</td><td>0.107 ± 0.009</td><td>0.133 ± 0.008</td></tr>
+        <tr><td>EEG-Conformer</td><td>1.19M</td><td>0.142 ± 0.009</td><td>0.120 ± 0.005</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section id="data">

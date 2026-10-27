@@ -12,6 +12,8 @@ gradio>=4               # for app.py (the demo website)
 
 # --- added for the cross-subject / captioner analysis ---
 torchaudio>=2.0
+mne>=1.6
+braindecode>=1.8.1   # standard EEG baselines (EEGNet/Shallow/Deep4/Conformer)
 psutil>=5.9
 safetensors>=0.4
 tqdm>=4.66

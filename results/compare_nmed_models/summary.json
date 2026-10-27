@@ -1,0 +1,73 @@
+{
+  "protocol": {
+    "dataset": "NMED-T",
+    "split": "per-subject per-song 50/50",
+    "chance": 0.1,
+    "reps": 5,
+    "per_subject_epochs": 40,
+    "pooled_epochs": 60,
+    "note": "supervised models trained from scratch; frozen probes are separate"
+  },
+  "models": {
+    "eegnet": {
+      "params": 9418,
+      "per_subject": {
+        "mean": 0.11762711864406779,
+        "sd": 0.005721995296234509
+      },
+      "pooled": {
+        "mean": 0.13350282485875706,
+        "sd": 0.005087099267009465
+      }
+    },
+    "shallow": {
+      "params": 71930,
+      "per_subject": {
+        "mean": 0.25841807909604525,
+        "sd": 0.003051632039730241
+      },
+      "pooled": {
+        "mean": 0.23073446327683614,
+        "sd": 0.007762966796527764
+      }
+    },
+    "deep4": {
+      "params": 305410,
+      "per_subject": {
+        "mean": 0.10740112994350282,
+        "sd": 0.00923257883723177
+      },
+      "pooled": {
+        "mean": 0.13338983050847458,
+        "sd": 0.008301913380427307
+      }
+    },
+    "conformer": {
+      "params": 1194570,
+      "per_subject": {
+        "mean": 0.14242937853107343,
+        "sd": 0.009492534248243933
+      },
+      "pooled": {
+        "mean": 0.12011299435028248,
+        "sd": 0.00496323744554113
+      }
+    }
+  },
+  "frozen": {
+    "bandpower_82x22": {
+      "acc": 0.84,
+      "top1": 0.678
+    },
+    "encoder_6datasets": {
+      "acc": 0.607,
+      "sd": 0.006,
+      "clap_trial_top1": 0.435
+    },
+    "labram": {
+      "acc": 0.358,
+      "clap_trial_top1": 0.265
+    },
+    "chance": 0.1
+  }
+}

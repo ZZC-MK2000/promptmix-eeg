@@ -29,6 +29,16 @@ window InfoNCE, per-second dense InfoNCE, a song-ID auxiliary, and a subspace pl
 halves; this is not a zero-shot pipeline. Subject-held-out top-1 is at chance for all methods.
 Band-power remains the stronger closed-set label baseline.
 
+
+## Other architectures
+
+Four standard supervised EEG models were trained from scratch on the same per-subject trial-wise
+splits (5 repetitions): EEGNet .118/.134, ShallowConvNet .258/.231, Deep4Net .107/.133,
+EEG-Conformer .142/.120 (per-subject/pooled). They remain below the frozen encoder (.607) and
+band-power (.840). The per-subject training set has ~17 windows per class; EEGNet reaches 1.00 train
+but 0.14 test on a representative subject, so the baselines overfit. BIOT/CBraMod/EEGPT pretrained
+weights were not obtainable locally; no random-init versions are presented as foundation-model results.
+
 ## Protocol audit
 
 - Split ladder (NMED-T, band-power): random rows .896 / held-out blocks .873 / held-out subjects .106.
@@ -48,6 +58,7 @@ pairwise / EEG-only variants for answer-conditioned queries.
 - `assets/fig/fig22_method_losses.png` — encoder + CLAP alignment objectives.
 - `assets/fig/fig23_main_results.png` — NMED-T main results.
 - `assets/fig/fig24_ablations.png` — CLAP loss arms + subject-held-out controls.
+- `assets/fig/fig25_model_comparison.png` — supervised EEG baselines vs frozen encoders.
 - `code/auditory_encoder/` — encoder, six-dataset cache builder, evaluators, VQ pilot.
 - `code/figures/make_fig_*.py` — figure scripts.
 - Working manuscript is kept locally and is not published with the page.
